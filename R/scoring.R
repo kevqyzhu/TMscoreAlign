@@ -78,39 +78,6 @@ rmsd <- function(theta, phi, psi, dx, dy, dz, coord1, coord2) {
   return(sum(dist^2))
 }
 
-# Function to optimize the alignment
-optimise <- function(coord1, coord2, d02, d0s2, restart = TRUE) {
-  if (restart) {
-    default_values <- get_default_values(coord1, coord2)
-  } else {
-    default_values <- get_current_values()
-  }
 
-  result <- stats::optim(par = default_values, fn = tm, coord1 = coord1, coord2 = coord2, d02 = d02, method = "Nelder-Mead")
-  values <- result$par
-  return(list(values = values, tmscore = tm(values, coord1, coord2, d02), rmsd = sqrt(rmsd(values, coord1, coord2))))
-}
 
-# Function to get the default alignment values
-get_default_values <- function(coord1, coord2) {
-  values <- list()
-  values$dx <- 0
-  values$dy <- 0
-  values$dz <- 0
-  dist <- rowMeans(coord1 - coord2)
-  values$dx <- dist[1]
-  values$dy <- dist[2]
-  values$dz <- dist[3]
-  vec1 <- coord1[, 2] - coord1[, 4]
-  vec2 <- coord2[, 2] - coord2[, 4]
-  vec1 <- vec1 / sqrt(sum(vec1^2))
-  vec2 <- vec2 / sqrt(sum(vec2^2))
-  v <- crossprod(vec1, vec2)
-  s <- sqrt(sum(v^2)) + .Machine$double.eps
-  c <- sum(vec1 * vec2)
-  rotation_matrix <- diag(3) + tcrossprod(v) + tcrossprod(tcrossprod(v), tcrossprod(v)) * (1 - c) / (s * s)
-  values$theta <- atan2(rotation_matrix[3, 2], rotation_matrix[3, 3])
-  values$phi <- atan2(-rotation_matrix[3, 1], sqrt(rotation_matrix[3, 2]^2 + rotation_matrix[3, 3]^2))
-  values$psi <- atan2(rotation_matrix[2, 1], rotation_matrix[1, 1])
-  return(values)
-}
+
