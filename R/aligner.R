@@ -45,7 +45,7 @@ optimise <- function(coord1, coord2, d02, d0s2, restart = TRUE) {
   }
   result <- stats::optim(par = default_values, fn = tm, coord1 = coord1, coord2 = coord2, d02 = d02, method = "Nelder-Mead")
   values <- result$par
-  return(list(values = values, tmscore = tm(values, coord1, coord2, d02), rmsd = sqrt(rmsd(values, coord1, coord2))))
+  return(list(values = values, tmscore = -tm(values, coord1, coord2, d02), rmsd = sqrt(rmsd(values, coord1, coord2))))
 }
 
 
@@ -102,9 +102,10 @@ get_rmsd <- function(pdb1, pdb2, chain1 = 'A', chain2 = 'A', d0s = 5, method) {
 }
 
 write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE, pdb1, pdb2, chain_1, chain_2) {
-  browse()
-  values = alignment$values
+
+  values <- alignment$values
   matrix <- get_matrix(values)
+  # browser()
 
   out <- file(outputfile, "w")
   atomid <- 1
@@ -143,9 +144,4 @@ write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE, pdb1, 
 
   close(out)
 }
-
-# Example usage:
-# Assuming 'values', 'pdb1', 'pdb2', 'chain_1', and 'chain_2' are provided.
-
-# Example usage
 

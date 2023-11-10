@@ -44,22 +44,8 @@ get_matrix <- function(values) {
   rotation[2, 2] <- -stheta * spsi + ctheta * cphi * cpsi
   rotation[2, 3] <- ctheta * sphi
   rotation[3, 1] <- sphi * spsi
-  rotation[3, 2] <- -sphi * spsi
+  rotation[3, 2] <- -sphi * cpsi
   rotation[3, 3] <- cphi
-
-  # browse()
-
-  # rotation[1, 1] <- cphi * cpsi
-  # rotation[1, 2] <- -ctheta * spsi + stheta * sphi * cpsi
-  # rotation[1, 3] <- stheta * spsi + ctheta * sphi * cpsi
-  # rotation[2, 1] <- cphi * spsi
-  # rotation[2, 2] <- ctheta * cpsi + stheta * sphi * spsi
-  # rotation[2, 3] <- -stheta * cpsi + ctheta * sphi * spsi
-  # rotation[3, 1] <- -sphi
-  # rotation[3, 2] <- stheta * cphi
-  # rotation[3, 3] <- ctheta * cphi
-
-
 
   # Create the translation vector
   translation <- c(values["dx"], values["dy"], values["dz"])
@@ -76,9 +62,9 @@ tm <- function(values, coord1, coord2, d02) {
   matrix <- get_matrix(values)
   coord <- matrix %*% coord2
   dist <- coord - coord1
-  d_i2 <- rowSums(dist^2)
+  d_i2 <- colSums(dist^2)
   tm <- -1 / (1 + d_i2 / d02)
-  return(sum(tm))
+  return(mean(tm))
 }
 
 # Function to calculate the S score
@@ -87,7 +73,7 @@ s <- function(values, coord1, coord2, d0s2) {
   coord <- matrix %*% coord2
   dist <- coord - coord1
   d_i2 <- rowSums(dist^2)
-  tm <- -1 / (1 + d_i2 / d0s2)
+  tm <- -(1 / (1 + (d_i2 / d0s2)))
   return(sum(tm))
 }
 
@@ -96,7 +82,7 @@ rmsd <- function(values, coord1, coord2) {
   matrix <- get_matrix(values)
   coord <- matrix %*% coord2
   dist <- coord - coord1
-  return(sum(dist^2))
+  return(sqrt((mean(dist^2))))
 }
 
 
