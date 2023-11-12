@@ -1,7 +1,3 @@
-library(bio3d)
-library(geigen)
-library(Biostrings)
-
 # Define constants
 DTYPE <- 'numeric'
 

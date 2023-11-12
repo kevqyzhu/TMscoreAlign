@@ -1,5 +1,3 @@
-library(pracma)
-
 #' Load Data and Perform Sequence Alignment or Index-based Analysis
 #'
 #' This function reads two Protein Data Bank (PDB) files, extracts the CA atom coordinates
@@ -159,7 +157,7 @@ optimize <- function(coord1, coord2, d02, values = NULL, restart = TRUE) {
 #' Mathematics Stack Exchange: https://math.stackexchange.com/questions/180418/calculate-rotation-matrix-to-align-vector-a-to-vector-b-in-3d/897677#897677
 #'
 #' @export
-#' @importfrom pracma cross
+#' @importFrom pracma cross
 get_default_values <- function(coord1, coord2) {
   # Initialize a list to store the default values
   values <- list()
