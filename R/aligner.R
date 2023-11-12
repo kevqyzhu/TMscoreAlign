@@ -1,7 +1,41 @@
 source("R/scoring.R")
 library(pracma)
 
-# Function to load data from PDB files
+#' Load Data and Perform Alignment or Index-based Analysis
+#'
+#' This function reads two Protein Data Bank (PDB) files, extracts the CA atom coordinates
+#' for common residues between the specified chains, and returns the coordinates along with
+#' the number of common residues.
+#'
+#' @param pdb_file1 Character string. Path to the first PDB file.
+#' @param pdb_file2 Character string. Path to the second PDB file.
+#' @param chain1 Character string. Chain identifier for the first PDB file (default is 'A').
+#' @param chain2 Character string. Chain identifier for the second PDB file (default is 'A').
+#' @param method Character string. Method for residue selection. Options: "alignment" or "index"
+#'   - "alignment": Perform sequence alignment using pairwiseAlignment from Bioconductor.
+#'   - "index": Use residue indices based on the specified chains to identify common residues.
+#' @return A list containing the following components:
+#'   - coord1: 3D coordinates (matrix) of CA atoms for common residues in the first structure.
+#'   - coord2: 3D coordinates (matrix) of CA atoms for common residues in the second structure.
+#'   - N: Number of common residues.
+#'
+#' @examples
+#' \dontrun{
+#' # Example 1: Perform sequence alignment
+#' result_alignment <- load_data_alignment("path/to/file1.pdb", "path/to/file2.pdb", method = "alignment")
+#'
+#' # Example 2: Use residue indices for common residue selection
+#' result_index <- load_data_alignment("path/to/file1.pdb", "path/to/file2.pdb", method = "index")
+#' }
+#'
+#' @seealso
+#' \code{\link{pairwiseAlignment}} for sequence alignment.
+#' \code{\link{atom.select}} for atom selection in the \code{\link{bio3d}} package.
+#'
+#' @importFrom bio3d read.pdb clean.pdb pdbseq atom.select
+#' @importFrom Bioconductor.pairwiseAlignment pairwiseAlignment
+#'
+#' @export
 load_data_alignment <- function(pdb_file1, pdb_file2, chain1 = 'A', chain2 = 'A', method = "alignment") {
   # Read PDB structures
   pdb_data1 <- clean.pdb(read.pdb(pdb_file1), fix.chain = TRUE)
@@ -43,7 +77,10 @@ optimize <- function(coord1, coord2, d02, d0s2, restart = TRUE) {
   } else {
     default_values <- get_current_values()
   }
-  result <- stats::optim(par = default_values, fn = tm, coord1 = coord1, coord2 = coord2, d02 = d02, method = "Nelder-Mead", control = list(fnscale = -1))
+  # method <- "Nelder-Mead"
+  method <- "L-BFGS-B"
+  # method <- "Brent"
+  result <- stats::optim(par = default_values, fn = tm, coord1 = coord1, coord2 = coord2, d02 = d02, method = method, control = list(fnscale = -1))
   values <- result$par
   return(list(values = values, tmscore = tm(values, coord1, coord2, d02), rmsd = rmsd(values, coord1, coord2)))
 }
@@ -143,7 +180,7 @@ write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE, pdb1, 
   close(out)
 }
 
-visualize_alignment_pdb <- function(alignment_pdb = "out.pdb") {
+visualize_alignment_pdb <- function(alignment_pdb = "out.pdb", chain1 = "#636efa", chain2 = "#ff7f0e") {
   r3dmol(                         # Set up the initial viewer
     viewer_spec = m_viewer_spec(
       cartoonQuality = 10,
@@ -159,14 +196,15 @@ visualize_alignment_pdb <- function(alignment_pdb = "out.pdb") {
     m_set_style(                  # Set style of specific selection
       sel = m_sel(chain = "A"),      # (selecting by secondary)
       style = m_style_cartoon(
-        color = "#636efa",
+        color = chain1,
         arrows = TRUE
       )
     ) %>%
     m_set_style(                  # Style the alpha helix
       sel = m_sel(chain = "B"),      # (selecting by alpha helix)
       style = m_style_cartoon(
-        color = "#ff7f0e"
+        color = chain2,
+        arrows = TRUE
       )
     ) %>%
     m_rotate(                     # Rotate the scene by given angle on given axis
