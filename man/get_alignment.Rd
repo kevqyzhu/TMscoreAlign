@@ -11,13 +11,18 @@ get_alignment(pdb1, pdb2, chain1 = "A", chain2 = "A", method)
 
 \item{pdb2}{Character string. Path to the second PDB file.}
 
-\item{chain1}{Character string. Chain identifier for the first PDB file (default is 'A').}
+\item{chain1}{Character string. Chain identifier for the first PDB file
+(default is 'A').}
 
-\item{chain2}{Character string. Chain identifier for the second PDB file (default is 'A').}
+\item{chain2}{Character string. Chain identifier for the second PDB file
+(default is 'A').}
 
-\item{method}{Character string. Method for residue selection. Options: "alignment" or "index"
-- "alignment": Perform sequence alignment using pairwiseAlignment from Bioconductor.
-- "index": Use residue indices based on the specified chains to identify common residues.}
+\item{method}{Character string. Method for residue selection. Options:
+"alignment" or "index"
+ - "alignment": Perform sequence alignment using pairwiseAlignment from
+    Bioconductor.
+ - "index": Use residue indices based on the specified chains to identify
+    common residues.}
 }
 \value{
 A list containing the following components:
@@ -26,24 +31,25 @@ A list containing the following components:
   - rmsd: RMSD value calculated with the optimized parameters.
 }
 \description{
-This function performs structure alignment between two protein structures specified by PDB files.
-It uses the given method to select common residues and optimizes the alignment parameters based
-on 3D coordinates. The resulting alignment parameters, including translation and rotation values,
+This function performs structure alignment between two protein structures
+specified by PDB files. It uses the given method to select common residues
+and optimizes the alignment parameters based on 3D coordinates. The
+resulting alignment parameters, including translation and rotation values,
 are returned.
 }
 \examples{
 \dontrun{
-# Example: Get structure alignment parameters using sequence alignment method
-alignment_seq <- get_alignment("path/to/file1.pdb", "path/to/file2.pdb", chain1 = 'A', chain2 = 'B', method = "alignment")
+# Example: Get structure alignment parameters using alignment method
+alignment_seq <- get_alignment("path/to/file1.pdb", "path/to/file2.pdb",
+                                chain1 = 'A', chain2 = 'B',
+                                method = "alignment")
 
 # Example: Get structure alignment parameters using index-based method
-alignment_index <- get_alignment("path/to/file1.pdb", "path/to/file2.pdb", chain1 = 'A', chain2 = 'B', method = "index")
+alignment_index <- get_alignment("path/to/file1.pdb", "path/to/file2.pdb",
+                                  chain1 = 'A', chain2 = 'B',
+                                  method = "index")
 }
 
-}
-\references{
-- For residue selection: Please refer to the documentation of the load_data_alignment function.
-- For parameter optimization: Please refer to the documentation of the optimize function.
 }
 \seealso{
 \code{\link{load_data_alignment}} for loading and aligning PDB data.

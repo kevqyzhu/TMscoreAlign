@@ -7,39 +7,50 @@
 get_tmscore(pdb1, pdb2, chain1 = "A", chain2 = "A", method)
 }
 \arguments{
-\item{pdb1}{Character. Path to the first PDB file containing the coordinates of the first protein structure.}
+\item{pdb1}{Character. Path to the first PDB file containing the coordinates
+of the first protein structure.}
 
-\item{pdb2}{Character. Path to the second PDB file containing the coordinates of the second protein structure.}
+\item{pdb2}{Character. Path to the second PDB file containing the coordinates
+of the second protein structure.}
 
-\item{chain1}{Character. Chain identifier for the first protein structure. Default is 'A'.}
+\item{chain1}{Character. Chain identifier for the first protein structure.
+Default is 'A'.}
 
-\item{chain2}{Character. Chain identifier for the second protein structure. Default is 'A'.}
+\item{chain2}{Character. Chain identifier for the second protein structure.
+Default is 'A'.}
 
-\item{method}{Character. Alignment method to be used. Options are 'alignment' for sequence-based alignment
-or 'index' for index-based alignment.}
+\item{method}{Character. Alignment method to be used. Options are 'alignment'
+for sequence-based alignment or 'index' for index-based alignment.}
 }
 \value{
-The TM-Score between the two protein structures based on the specified alignment method.
+The TM-Score between the two protein structures based on the
+ specified alignment method.
 }
 \description{
-This function calculates the TM-Score (Template Modeling Score) between two protein structures
-based on their alignment. The alignment is performed using the specified method ('alignment' or 'index').
-The TM-Score is a measure of structural similarity and is commonly used in structural bioinformatics.
+This function calculates the TM-Score (Template Modeling Score) between two
+protein structures based on their alignment. The alignment is performed
+using the specified method ('alignment' or 'index'). The TM-Score is a
+measure of structural similarity and is commonly used in structural
+bioinformatics.
 }
 \examples{
 \dontrun{
 # Example 1: Calculate TM-Score using sequence-based alignment
-tm_score_seq <- get_tmscore("structure1.pdb", "structure2.pdb", chain1 = 'A', chain2 = 'A', method = 'alignment')
+tm_score_seq <- get_tmscore("structure1.pdb", "structure2.pdb", chain1 = 'A',
+                             chain2 = 'A', method = 'alignment')
 
 # Example 2: Calculate TM-Score using index-based alignment
-tm_score_index <- get_tmscore("structure1.pdb", "structure2.pdb", chain1 = 'A', chain2 = 'A', method = 'index')
+tm_score_index <- get_tmscore("structure1.pdb", "structure2.pdb",
+                               chain1 = 'A', chain2 = 'A',
+                               method = 'index')
 }
 
 }
 \references{
 Zhang, Y., and Skolnick, J. (2004). Scoring function for automated assessment
-of protein structure template quality. \emph{Proteins, Structure, Function, and
-Bioinformatics}, 57(4), 702–710. \href{https://doi.org/10.1002/prot.20264}{Link}
+of protein structure template quality. \emph{Proteins, Structure, Function,
+and Bioinformatics}, 57(4), 702–710.
+\href{https://doi.org/10.1002/prot.20264}{Link}
 }
 \seealso{
 \code{\link{get_alignment}} for obtaining alignment details.

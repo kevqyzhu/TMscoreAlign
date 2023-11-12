@@ -17,32 +17,43 @@ load_data_alignment(
 
 \item{pdb_file2}{Character string. Path to the second PDB file.}
 
-\item{chain1}{Character string. Chain identifier for the first PDB file (default is 'A').}
+\item{chain1}{Character string. Chain identifier for the first PDB file
+(default is 'A').}
 
-\item{chain2}{Character string. Chain identifier for the second PDB file (default is 'A').}
+\item{chain2}{Character string. Chain identifier for the second PDB file
+(default is 'A').}
 
-\item{method}{Character string. Method for residue selection. Options: "alignment" or "index"
-- "alignment": Perform sequence alignment using pairwiseAlignment from Bioconductor.
-- "index": Use residue indices based on the specified chains to identify common residues.}
+\item{method}{Character string. Method for residue selection.
+Options: "alignment" or "index"
+ - "alignment": Perform sequence alignment using pairwiseAlignment from
+    Bioconductor.
+ - "index": Use residue indices based on the specified chains to identify
+    common residues.}
 }
 \value{
 A list containing the following components:
-  - coord1: 3D coordinates (matrix) of CA atoms for common residues in the first structure.
-  - coord2: 3D coordinates (matrix) of CA atoms for common residues in the second structure.
+  - coord1: 3D coordinates (matrix) of CA atoms for common residues in the
+     first structure.
+  - coord2: 3D coordinates (matrix) of CA atoms for common residues in the
+     second structure.
   - N: Number of common residues.
 }
 \description{
-This function reads two Protein Data Bank (PDB) files, extracts the CA atom coordinates
-for common residues between the specified chains, and returns the coordinates along with
-the number of common residues.
+This function reads two Protein Data Bank (PDB) files, extracts the CA atom
+coordinates for common residues between the specified chains, and returns the
+coordinates along with the number of common residues.
 }
 \examples{
 \dontrun{
 # Example 1: Perform sequence alignment
-result_alignment <- load_data_alignment("path/to/file1.pdb", "path/to/file2.pdb", method = "alignment")
+result_alignment <- load_data_alignment("path/to/file1.pdb",
+                                        "path/to/file2.pdb",
+                                        method = "alignment")
 
 # Example 2: Use residue indices for common residue selection
-result_index <- load_data_alignment("path/to/file1.pdb", "path/to/file2.pdb", method = "index")
+result_index <- load_data_alignment("path/to/file1.pdb",
+                                    "path/to/file2.pdb",
+                                    method = "index")
 }
 
 }
@@ -59,5 +70,6 @@ manipulation of biological strings.
 }
 \seealso{
 \code{\link{pairwiseAlignment}} for sequence alignment.
-\code{\link{atom.select}} for atom selection in the \code{\link{bio3d}} package.
+\code{\link{atom.select}} for atom selection in the \code{\link{bio3d}}
+  package.
 }

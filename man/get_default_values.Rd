@@ -7,12 +7,15 @@
 get_default_values(coord1, coord2)
 }
 \arguments{
-\item{coord1}{Matrix. 3D coordinates of the first structure's atoms (rows: dimensions, columns: atoms).}
+\item{coord1}{Matrix. 3D coordinates of the first structure's atoms
+(rows: dimensions, columns: atoms).}
 
-\item{coord2}{Matrix. 3D coordinates of the second structure's atoms (rows: dimensions, columns: atoms).}
+\item{coord2}{Matrix. 3D coordinates of the second structure's atoms
+(rows: dimensions, columns: atoms).}
 }
 \value{
-A numeric vector containing default values for the structure alignment parameters:
+A numeric vector containing default values for the structure
+  alignment parameters:
   - dx: Translation along the x-axis.
   - dy: Translation along the y-axis.
   - dz: Translation along the z-axis.
@@ -21,9 +24,10 @@ A numeric vector containing default values for the structure alignment parameter
   - psi: Rotation angle around the z-axis.
 }
 \description{
-This function calculates default values for the parameters used in structure alignment.
-The parameters include translation along x, y, z axes (dx, dy, dz), and rotation angles
-(theta, phi, psi) based on the given 3D coordinates of two structures.
+This function calculates default values for the parameters used in structure
+alignment. The parameters include translation along x, y, z axes
+(dx, dy, dz), and rotation angles (theta, phi, psi) based on the given 3D
+coordinates of two structures.
 }
 \examples{
 \dontrun{
@@ -35,5 +39,6 @@ default_values <- get_default_values(coord1, coord2)
 \references{
 Borchers H (2022). pracma: Practical Numerical Math Functions. R package
 version 2.4.2, \href{https://CRAN.R-project.org/package=pracma}{Link}.
-Mathematics Stack Exchange: https://math.stackexchange.com/questions/180418/calculate-rotation-matrix-to-align-vector-a-to-vector-b-in-3d/897677#897677
+Mathematics Stack Exchange:
+\href{https://math.stackexchange.com/questions/180418}{Link}
 }

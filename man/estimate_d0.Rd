@@ -14,9 +14,10 @@ A list containing the following component:
   - d02: The square of the estimated d0 value for structure alignment.
 }
 \description{
-This function estimates the d0 parameter for structure alignment based on the number of common residues.
-The formula used for estimation is derived from empirical observations and is commonly used in structure
-alignment methods. The square of the estimated d0 value (d02) is returned.
+This function estimates the d0 parameter for structure alignment based on the
+number of common residues.The formula used for estimation is derived from
+empirical observations and is commonly used in structure alignment methods.
+The square of the estimated d0 value (d02) is returned.
 }
 \examples{
 \dontrun{
@@ -27,6 +28,7 @@ d0_values <- estimate_d0(N = 50)
 }
 \references{
 Zhang, Y., and Skolnick, J. (2004). Scoring function for automated assessment
-of protein structure template quality. \emph{Proteins, Structure, Function, and
-Bioinformatics}, 57(4), 702–710. \href{https://doi.org/10.1002/prot.20264}{Link}
+of protein structure template quality. \emph{Proteins, Structure, Function,
+and Bioinformatics}, 57(4), 702–710.
+\href{https://doi.org/10.1002/prot.20264}{Link}
 }

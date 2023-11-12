@@ -11,20 +11,24 @@ visualize_alignment_pdb(
 )
 }
 \arguments{
-\item{alignment_pdb}{Character. Path to the PDB file containing the aligned coordinates.
-The PDB file should include both the original and transformed coordinates of the protein structures.}
+\item{alignment_pdb}{Character. Path to the PDB file containing the aligned
+coordinates. The PDB file should include both the original and
+transformed coordinates of the protein structures.}
 
-\item{chain1}{Character. Color code (hexadecimal) for the first protein structure (default: "#636efa").}
+\item{chain1}{Character. Color code (hexadecimal) for the first protein
+structure (default: "#636efa").}
 
-\item{chain2}{Character. Color code (hexadecimal) for the second protein structure (default: "#ff7f0e").}
+\item{chain2}{Character. Color code (hexadecimal) for the second protein
+structure (default: "#ff7f0e").}
 }
 \value{
 A 3Dmol viewer displaying the aligned protein structures.
 }
 \description{
-This function visualizes the structural alignment of two protein structures by displaying
-the aligned coordinates in a 3D viewer. The viewer is set up using 3Dmol, and the alignment
-is represented by color-coded cartoon-style structures for each protein chain.
+This function visualizes the structural alignment of two protein structures
+by displaying the aligned coordinates in a 3D viewer. The viewer is set up
+using 3Dmol, and the alignment is represented by color-coded cartoon-style
+structures for each protein chain.
 }
 \examples{
 \dontrun{
@@ -32,7 +36,8 @@ is represented by color-coded cartoon-style structures for each protein chain.
 alignment_pdb_file <- "aligned_structure.pdb"
 chain1_color <- "#636efa"  # Blue
 chain2_color <- "#ff7f0e"  # Orange
-visualize_alignment_pdb(alignment_pdb_file, chain1 = chain1_color, chain2 = chain2_color)
+visualize_alignment_pdb(alignment_pdb_file, chain1 = chain1_color,
+                        chain2 = chain2_color)
 }
 
 }
@@ -42,6 +47,8 @@ Molecular Data. R package version 0.1.2.
 \href{https://CRAN.R-project.org/package=r3dmol}{Link}.
 }
 \seealso{
-\code{\link{write_pdb}} for generating a PDB file with transformed coordinates.
-\code{\link{get_alignment}} for obtaining structural alignment between two protein structures.
+\code{\link{write_pdb}} for generating a PDB file with transformed
+  coordinates.
+\code{\link{get_alignment}} for obtaining structural alignment between two
+  protein structures.
 }

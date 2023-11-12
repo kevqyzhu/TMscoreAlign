@@ -11,19 +11,24 @@ get_rmsd(pdb1, pdb2, chain1 = "A", chain2 = "A", method)
 
 \item{pdb2}{Character. Path to the PDB file of the second protein structure.}
 
-\item{chain1}{Character. Chain identifier for the first protein structure (default: 'A').}
+\item{chain1}{Character. Chain identifier for the first protein structure
+(default: 'A').}
 
-\item{chain2}{Character. Chain identifier for the second protein structure (default: 'A').}
+\item{chain2}{Character. Chain identifier for the second protein structure
+(default: 'A').}
 
-\item{method}{Character. The method used for structure alignment, either "alignment" or "index".}
+\item{method}{Character. The method used for structure alignment, either
+"alignment" or "index".}
 }
 \value{
-The Root Mean Square Deviation (RMSD) between the two protein structures.
+The Root Mean Square Deviation (RMSD) between the two protein
+ structures.
 }
 \description{
-This function calculates the Root Mean Square Deviation (RMSD) between two protein structures
-based on their atomic coordinates. The RMSD is a measure of the average distance between
-corresponding atoms in the two structures, providing an indication of structural similarity.
+This function calculates the Root Mean Square Deviation (RMSD) between two
+protein structures based on their atomic coordinates. The RMSD is a measure
+of the average distance between corresponding atoms in the two structures,
+providing an indication of structural similarity.
 }
 \examples{
 \dontrun{
@@ -33,10 +38,12 @@ pdb_file2 <- "path/to/structure2.pdb"
 chain_id1 <- 'A'
 chain_id2 <- 'B'
 alignment_method <- "alignment"
-rmsd_value <- get_rmsd(pdb_file1, pdb_file2, chain_id1, chain_id2, alignment_method)
+rmsd_value <- get_rmsd(pdb_file1, pdb_file2, chain_id1, chain_id2,
+                       alignment_method)
 }
 
 }
 \seealso{
-\code{\link{get_alignment}} for obtaining structural alignment between two protein structures.
+\code{\link{get_alignment}} for obtaining structural alignment between two
+  protein structures.
 }

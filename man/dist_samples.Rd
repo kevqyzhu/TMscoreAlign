@@ -7,44 +7,53 @@
 dist_samples(values, coord1, coord2)
 }
 \arguments{
-\item{values}{Numeric vector. Alignment parameters obtained from structure alignment.
-The vector includes the following elements:
-- dx: Translation along the x-axis.
-- dy: Translation along the y-axis.
-- dz: Translation along the z-axis.
-- theta: Rotation angle around the x-axis.
-- phi: Rotation angle around the y-axis.
-- psi: Rotation angle around the z-axis.}
+\item{values}{Numeric vector. Alignment parameters obtained from structure
+alignment.
+ The vector includes the following elements:
+ - dx: Translation along the x-axis.
+ - dy: Translation along the y-axis.
+ - dz: Translation along the z-axis.
+ - theta: Rotation angle around the x-axis.
+ - phi: Rotation angle around the y-axis.
+ - psi: Rotation angle around the z-axis.}
 
-\item{coord1}{Matrix. 3D coordinates of the first structure's atoms (rows: dimensions, columns: atoms).}
+\item{coord1}{Matrix. 3D coordinates of the first structure's atoms
+(rows: dimensions, columns: atoms).}
 
-\item{coord2}{Matrix. 3D coordinates of the second structure's atoms (rows: dimensions, columns: atoms).}
+\item{coord2}{Matrix. 3D coordinates of the second structure's atoms
+(rows: dimensions, columns: atoms).}
 }
 \value{
-A matrix of Euclidean distances between the transformed coordinates (coord) and the original
+A matrix of Euclidean distances between the transformed coordinates
+ (coord) and the original
   coordinates of the first structure (coord1).
 }
 \description{
-This function calculates the Euclidean distances between transformed coordinates
-based on a 4x4 transformation matrix obtained from the alignment parameters. The
-alignment parameters include translation along x, y, z axes (dx, dy, dz), and rotation
-angles (theta, phi, psi). The transformed coordinates are calculated by applying the
-transformation matrix to the original coordinates of the second structure (coord2).
+This function calculates the Euclidean distances between transformed
+coordinates based on a 4x4 transformation matrix obtained from the alignment
+parameters. The alignment parameters include translation along x, y, z axes
+(dx, dy, dz), and rotation angles (theta, phi, psi). The transformed
+coordinates are calculated by applying the transformation matrix to the
+original coordinates of the second structure (coord2).
 }
 \examples{
 \dontrun{
 # Example: Calculate distances between transformed coordinates
-alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2, psi = 0.3)
+alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
+                      psi = 0.3)
 original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, byrow = TRUE)
-transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3, byrow = TRUE)
-distances <- dist_samples(alignment_params, original_coordinates, transformed_coordinates)
+transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3,
+                                  byrow = TRUE)
+distances <- dist_samples(alignment_params, original_coordinates,
+                          transformed_coordinates)
 }
 
 }
 \references{
 For further details on the transformation matrix, refer to:
-https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/geometry/geo-tran.html#:~:text=A%20rotation%20matrix%20and%20a,rotations%20followed%20by%20a%20translation.
+\href{https://math.stackexchange.com/questions/532249}{Link}
 }
 \seealso{
-\code{\link{get_matrix}} for obtaining the transformation matrix from alignment parameters.
+\code{\link{get_matrix}} for obtaining the transformation matrix from
+  alignment parameters.
 }

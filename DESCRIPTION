@@ -1,17 +1,27 @@
 Package: TMscoreAlign
 Type: Package
-Title: What the Package Does (Title Case)
+Title: TMscoreAlign: Protein Structure Alignment using TM-score
 Version: 0.1.0
 Author: Kevin Zhu
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Maintainer: Kevin Zhu <kevqyzhu@gmail.com.com>
+Description: 
+    The TMscoreAlign package provides tools for performing protein structure 
+    alignment using the TM-score metric. It includes functions for optimizing 
+    alignments, calculating TM-scores and RMSD, and visualizing aligned 
+    structures. The alignment optimization is based on the L-BFGS-B 
+    minimization algorithm.
 Imports:
     Biostrings,
     bio3d,
     pracma,
-    r3dmol,
-License: What license is it under?
+    r3dmol
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Depends: R (>= 3.1.0)
 RoxygenNote: 7.2.3
+URL: https://github.com/kevqyzhu/TMscoreAlign
+
+
+
+

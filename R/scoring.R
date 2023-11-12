@@ -3,9 +3,10 @@ DTYPE <- 'numeric'
 
 #' Estimate d0 for Structure Alignment
 #'
-#' This function estimates the d0 parameter for structure alignment based on the number of common residues.
-#' The formula used for estimation is derived from empirical observations and is commonly used in structure
-#' alignment methods. The square of the estimated d0 value (d02) is returned.
+#' This function estimates the d0 parameter for structure alignment based on the
+#' number of common residues.The formula used for estimation is derived from
+#' empirical observations and is commonly used in structure alignment methods.
+#' The square of the estimated d0 value (d02) is returned.
 #'
 #' @param N Numeric. Number of common residues between two structures.
 #' @return A list containing the following component:
@@ -19,8 +20,9 @@ DTYPE <- 'numeric'
 #'
 #' @references
 #' Zhang, Y., and Skolnick, J. (2004). Scoring function for automated assessment
-#' of protein structure template quality. \emph{Proteins, Structure, Function, and
-#' Bioinformatics}, 57(4), 702–710. \href{https://doi.org/10.1002/prot.20264}{Link}
+#' of protein structure template quality. \emph{Proteins, Structure, Function,
+#' and Bioinformatics}, 57(4), 702–710.
+#' \href{https://doi.org/10.1002/prot.20264}{Link}
 #'
 #' @export
 estimate_d0 <- function(N) {
@@ -32,13 +34,14 @@ estimate_d0 <- function(N) {
 
 #' Get Transformation Matrix from Alignment Parameters
 #'
-#' This function constructs a 4x4 transformation matrix based on the alignment parameters
-#' obtained from the structure alignment. The alignment parameters include translation
-#' along x, y, z axes (dx, dy, dz), and rotation angles (theta, phi, psi). The resulting
-#' transformation matrix can be used to transform the coordinates of one structure to
-#' align with the other.
+#' This function constructs a 4x4 transformation matrix based on the alignment
+#' parameters obtained from the structure alignment. The alignment parameters
+#' include translation along x, y, z axes (dx, dy, dz), and rotation angles
+#' (theta, phi, psi). The resulting transformation matrix can be used to
+#' transform the coordinates of one structure to align with the other.
 #'
-#' @param values Numeric vector. Alignment parameters obtained from structure alignment.
+#' @param values Numeric vector. Alignment parameters obtained from structure
+#'  alignment.
 #'   The vector includes the following elements:
 #'   - dx: Translation along the x-axis.
 #'   - dy: Translation along the y-axis.
@@ -46,20 +49,22 @@ estimate_d0 <- function(N) {
 #'   - theta: Rotation angle around the x-axis.
 #'   - phi: Rotation angle around the y-axis.
 #'   - psi: Rotation angle around the z-axis.
-#' @return A 4x4 transformation matrix for aligning structures based on the input alignment parameters.
+#' @return A 4x4 transformation matrix for aligning structures based on the
+#'  input alignment parameters.
 #'
 #' @examples
 #' \dontrun{
 #' # Example: Get transformation matrix for structure alignment
-#' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2, psi = 0.3)
+#' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
+#'                       psi = 0.3)
 #' transformation_matrix <- get_matrix(alignment_params)
 #' }
 #'
 #' @references
 #' The construction of the rotation matrix is based on:
-#' https://easyspin.org/documentation/eulerangles.html
-#' The construction of the transformation matrix is based on:
-#' https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/geometry/geo-tran.html#:~:text=A%20rotation%20matrix%20and%20a,rotations%20followed%20by%20a%20translation.
+#' \href{https://easyspin.org/documentation/eulerangles.html}{Link}
+#' Mathematics Stack Exchange:
+#' \href{https://math.stackexchange.com/questions/532249}{Link}
 #'
 #' @export
 get_matrix <- function(values) {
@@ -94,13 +99,15 @@ get_matrix <- function(values) {
 
 #' Calculate Distances Between Transformed Coordinates
 #'
-#' This function calculates the Euclidean distances between transformed coordinates
-#' based on a 4x4 transformation matrix obtained from the alignment parameters. The
-#' alignment parameters include translation along x, y, z axes (dx, dy, dz), and rotation
-#' angles (theta, phi, psi). The transformed coordinates are calculated by applying the
-#' transformation matrix to the original coordinates of the second structure (coord2).
+#' This function calculates the Euclidean distances between transformed
+#' coordinates based on a 4x4 transformation matrix obtained from the alignment
+#' parameters. The alignment parameters include translation along x, y, z axes
+#' (dx, dy, dz), and rotation angles (theta, phi, psi). The transformed
+#' coordinates are calculated by applying the transformation matrix to the
+#' original coordinates of the second structure (coord2).
 #'
-#' @param values Numeric vector. Alignment parameters obtained from structure alignment.
+#' @param values Numeric vector. Alignment parameters obtained from structure
+#'  alignment.
 #'   The vector includes the following elements:
 #'   - dx: Translation along the x-axis.
 #'   - dy: Translation along the y-axis.
@@ -108,26 +115,33 @@ get_matrix <- function(values) {
 #'   - theta: Rotation angle around the x-axis.
 #'   - phi: Rotation angle around the y-axis.
 #'   - psi: Rotation angle around the z-axis.
-#' @param coord1 Matrix. 3D coordinates of the first structure's atoms (rows: dimensions, columns: atoms).
-#' @param coord2 Matrix. 3D coordinates of the second structure's atoms (rows: dimensions, columns: atoms).
-#' @return A matrix of Euclidean distances between the transformed coordinates (coord) and the original
+#' @param coord1 Matrix. 3D coordinates of the first structure's atoms
+#'  (rows: dimensions, columns: atoms).
+#' @param coord2 Matrix. 3D coordinates of the second structure's atoms
+#'  (rows: dimensions, columns: atoms).
+#' @return A matrix of Euclidean distances between the transformed coordinates
+#'  (coord) and the original
 #'   coordinates of the first structure (coord1).
 #'
 #' @examples
 #' \dontrun{
 #' # Example: Calculate distances between transformed coordinates
-#' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2, psi = 0.3)
+#' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
+#'                       psi = 0.3)
 #' original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, byrow = TRUE)
-#' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3, byrow = TRUE)
-#' distances <- dist_samples(alignment_params, original_coordinates, transformed_coordinates)
+#' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3,
+#'                                   byrow = TRUE)
+#' distances <- dist_samples(alignment_params, original_coordinates,
+#'                           transformed_coordinates)
 #' }
 #'
 #' @references
 #' For further details on the transformation matrix, refer to:
-#' https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/geometry/geo-tran.html#:~:text=A%20rotation%20matrix%20and%20a,rotations%20followed%20by%20a%20translation.
+#' \href{https://math.stackexchange.com/questions/532249}{Link}
 #'
 #' @seealso
-#' \code{\link{get_matrix}} for obtaining the transformation matrix from alignment parameters.
+#' \code{\link{get_matrix}} for obtaining the transformation matrix from
+#'   alignment parameters.
 #'
 #' @export
 dist_samples <- function(values, coord1, coord2) {
@@ -137,20 +151,22 @@ dist_samples <- function(values, coord1, coord2) {
   # Apply the transformation matrix to the coordinates of the second structure
   coord <- matrix %*% coord2
 
-  # Calculate the Euclidean distances between the transformed coordinates and coord1
+  # Calculate the distances between the transformed coordinates and coord1
   dist <- coord - coord1
   return(dist)
 }
 
 #' Calculate TM-Score Between Transformed Coordinates
 #'
-#' This function calculates the TM-Score (Template Modeling Score) between the transformed
-#' coordinates and the original coordinates of two structures. The TM-Score is a measure of
-#' structural similarity and is commonly used in structural bioinformatics. The alignment
-#' parameters, original coordinates of the first structure (coord1), original coordinates
-#' of the second structure (coord2), and the square of the d0 parameter (d02) are required.
+#' This function calculates the TM-Score (Template Modeling Score) between the
+#' transformed coordinates and the original coordinates of two structures. The
+#' TM-Score is a measure of structural similarity and is commonly used in
+#' structural bioinformatics. The alignment parameters, original coordinates of
+#' the first structure (coord1), original coordinates of the second structure
+#' (coord2), and the square of the d0 parameter (d02) are required.
 #'
-#' @param values Numeric vector. Alignment parameters obtained from structure alignment.
+#' @param values Numeric vector. Alignment parameters obtained from structure
+#'  alignment.
 #'   The vector includes the following elements:
 #'   - dx: Translation along the x-axis.
 #'   - dy: Translation along the y-axis.
@@ -158,29 +174,39 @@ dist_samples <- function(values, coord1, coord2) {
 #'   - theta: Rotation angle around the x-axis.
 #'   - phi: Rotation angle around the y-axis.
 #'   - psi: Rotation angle around the z-axis.
-#' @param coord1 Matrix. 3D coordinates of the first structure's atoms (rows: dimensions, columns: atoms).
-#' @param coord2 Matrix. 3D coordinates of the second structure's atoms (rows: dimensions, columns: atoms).
-#' @param d02 Numeric. The square of the d0 parameter, a critical parameter in the TM-Score calculation.
-#'   It represents an effective distance cutoff for defining structural similarity.
-#' @return The TM-Score between the transformed coordinates and the original coordinates of the structures.
+#' @param coord1 Matrix. 3D coordinates of the first structure's atoms
+#'  (rows: dimensions, columns: atoms).
+#' @param coord2 Matrix. 3D coordinates of the second structure's atoms
+#'  (rows: dimensions, columns: atoms).
+#' @param d02 Numeric. The square of the d0 parameter, a critical parameter in
+#'  the TM-Score calculation.
+#'   It represents an effective distance cutoff for defining structural
+#'   similarity.
+#' @return The TM-Score between the transformed coordinates and the original
+#'  coordinates of the structures.
 #'
 #' @examples
 #' \dontrun{
 #' # Example: Calculate TM-Score between transformed coordinates
-#' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2, psi = 0.3)
+#' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
+#'                       psi = 0.3)
 #' original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, byrow = TRUE)
-#' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3, byrow = TRUE)
+#' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3,
+#'                                   byrow = TRUE)
 #' d0_squared <- 5.0
-#' tm_score <- tm_samples(alignment_params, original_coordinates, transformed_coordinates, d0_squared)
+#' tm_score <- tm_samples(alignment_params, original_coordinates,
+#'                        transformed_coordinates, d0_squared)
 #' }
 #'
 #' @references
 #' Zhang, Y., and Skolnick, J. (2004). Scoring function for automated assessment
-#' of protein structure template quality. \emph{Proteins, Structure, Function, and
-#' Bioinformatics}, 57(4), 702–710. \href{https://doi.org/10.1002/prot.20264}{Link}
+#' of protein structure template quality. \emph{Proteins, Structure, Function,
+#' and Bioinformatics}, 57(4), 702–710.
+#' \href{https://doi.org/10.1002/prot.20264}{Link}
 #'
 #' @seealso
-#' \code{\link{dist_samples}} for calculating distances between transformed coordinates.
+#' \code{\link{dist_samples}} for calculating distances between transformed
+#'   coordinates.
 #'
 #' @export
 tm_samples <- function(values, coord1, coord2, d02) {
@@ -197,13 +223,16 @@ tm_samples <- function(values, coord1, coord2, d02) {
 
 #' Calculate Average TM-Score Between Transformed Coordinates
 #'
-#' This function calculates the average TM-Score (Template Modeling Score) between the transformed
-#' coordinates and the original coordinates of two structures. The TM-Score is a measure of structural
-#' similarity and is commonly used in structural bioinformatics. The alignment parameters, original
-#' coordinates of the first structure (coord1), original coordinates of the second structure (coord2),
-#' and the square of the d0 parameter (d02) are required.
+#' This function calculates the average TM-Score (Template Modeling Score)
+#' between the transformed coordinates and the original coordinates of two
+#' structures. The TM-Score is a measure of structural similarity and is
+#' commonly used in structural bioinformatics. The alignment parameters,
+#' original coordinates of the first structure (coord1), original coordinates of
+#' the second structure (coord2), and the square of the d0 parameter (d02) are
+#' required.
 #'
-#' @param values Numeric vector. Alignment parameters obtained from structure alignment.
+#' @param values Numeric vector. Alignment parameters obtained from structure
+#'  alignment.
 #'   The vector includes the following elements:
 #'   - dx: Translation along the x-axis.
 #'   - dy: Translation along the y-axis.
@@ -211,26 +240,34 @@ tm_samples <- function(values, coord1, coord2, d02) {
 #'   - theta: Rotation angle around the x-axis.
 #'   - phi: Rotation angle around the y-axis.
 #'   - psi: Rotation angle around the z-axis.
-#' @param coord1 Matrix. 3D coordinates of the first structure's atoms (rows: dimensions, columns: atoms).
-#' @param coord2 Matrix. 3D coordinates of the second structure's atoms (rows: dimensions, columns: atoms).
-#' @param d02 Numeric. The square of the d0 parameter, a critical parameter in the TM-Score calculation.
-#'   It represents an effective distance cutoff for defining structural similarity.
-#' @return The average TM-Score between the transformed coordinates and the original coordinates of the structures.
+#' @param coord1 Matrix. 3D coordinates of the first structure's atoms
+#'  (rows: dimensions, columns: atoms).
+#' @param coord2 Matrix. 3D coordinates of the second structure's atoms
+#'  (rows: dimensions, columns: atoms).
+#' @param d02 Numeric. The square of the d0 parameter, a critical parameter in
+#'  the TM-Score calculation.
+#'   It represents a distance cutoff for defining structural similarity.
+#' @return The average TM-Score between the transformed coordinates and the
+#'  original coordinates of the structures.
 #'
 #' @examples
 #' \dontrun{
 #' # Example: Calculate average TM-Score between transformed coordinates
-#' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2, psi = 0.3)
+#' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
+#'                       psi = 0.3)
 #' original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, byrow = TRUE)
-#' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3, byrow = TRUE)
+#' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3,
+#'                                   byrow = TRUE)
 #' d0_squared <- 5.0
-#' avg_tm_score <- tm(alignment_params, original_coordinates, transformed_coordinates, d0_squared)
+#' avg_tm_score <- tm(alignment_params, original_coordinates,
+#'                    transformed_coordinates, d0_squared)
 #' }
 #'
 #' @references
 #' Zhang, Y., and Skolnick, J. (2004). Scoring function for automated assessment
-#' of protein structure template quality. \emph{Proteins, Structure, Function, and
-#' Bioinformatics}, 57(4), 702–710. \href{https://doi.org/10.1002/prot.20264}{Link}
+#' of protein structure template quality. \emph{Proteins, Structure, Function,
+#' and Bioinformatics}, 57(4), 702–710.
+#' \href{https://doi.org/10.1002/prot.20264}{Link}
 #'
 #' @seealso
 #' \code{\link{tm_samples}} for calculating individual TM-Scores.
@@ -248,13 +285,15 @@ tm <- function(values, coord1, coord2, d02) {
 
 #' Calculate Root Mean Square Deviation (RMSD) Between Transformed Coordinates
 #'
-#' This function calculates the Root Mean Square Deviation (RMSD) between the transformed coordinates
-#' and the original coordinates of two structures. The RMSD is a measure of the average distance
-#' between corresponding atoms in the two structures after optimal superposition. The alignment
-#' parameters, original coordinates of the first structure (coord1), and original coordinates of
-#' the second structure (coord2) are required.
+#' This function calculates the Root Mean Square Deviation (RMSD) between the
+#' transformed coordinates and the original coordinates of two structures. The
+#' RMSD is a measure of the average distance between corresponding atoms in the
+#' two structures after optimal superposition. The alignment parameters,
+#' original coordinates of the first structure (coord1), and original
+#' coordinates of the second structure (coord2) are required.
 #'
-#' @param values Numeric vector. Alignment parameters obtained from structure alignment.
+#' @param values Numeric vector. Alignment parameters obtained from structure
+#'  alignment.
 #'   The vector includes the following elements:
 #'   - dx: Translation along the x-axis.
 #'   - dy: Translation along the y-axis.
@@ -262,22 +301,29 @@ tm <- function(values, coord1, coord2, d02) {
 #'   - theta: Rotation angle around the x-axis.
 #'   - phi: Rotation angle around the y-axis.
 #'   - psi: Rotation angle around the z-axis.
-#' @param coord1 Matrix. 3D coordinates of the first structure's atoms (rows: dimensions, columns: atoms).
-#' @param coord2 Matrix. 3D coordinates of the second structure's atoms (rows: dimensions, columns: atoms).
-#' @return The Root Mean Square Deviation (RMSD) between the transformed coordinates and the original
+#' @param coord1 Matrix. 3D coordinates of the first structure's atoms
+#'  (rows: dimensions, columns: atoms).
+#' @param coord2 Matrix. 3D coordinates of the second structure's atoms
+#'  (rows: dimensions, columns: atoms).
+#' @return The Root Mean Square Deviation (RMSD) between the transformed
+#'  coordinates and the original
 #'   coordinates of the structures.
 #'
 #' @examples
 #' \dontrun{
 #' # Example: Calculate RMSD between transformed coordinates
-#' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2, psi = 0.3)
+#' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
+#'                       psi = 0.3)
 #' original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, byrow = TRUE)
-#' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3, byrow = TRUE)
-#' rmsd_value <- rmsd(alignment_params, original_coordinates, transformed_coordinates)
+#' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3,
+#'                                   byrow = TRUE)
+#' rmsd_value <- rmsd(alignment_params, original_coordinates,
+#'                    transformed_coordinates)
 #' }
 #'
 #' @seealso
-#' \code{\link{dist_samples}} for calculating distances between transformed coordinates.
+#' \code{\link{dist_samples}} for calculating distances between transformed
+#'   coordinates.
 #'
 #' @export
 rmsd <- function(values, coord1, coord2) {
@@ -289,7 +335,3 @@ rmsd <- function(values, coord1, coord2) {
 
   return(rmsd_value)
 }
-
-
-
-

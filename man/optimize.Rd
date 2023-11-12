@@ -14,21 +14,25 @@ optimize(coord1, coord2, d02, values = NULL, restart = TRUE)
 \item{d02}{Numeric. Reference distance for the TM-score calculation.}
 
 \item{values}{Numeric vector. Initial values for the optimization parameters.
-If provided, the optimization continues from these values; otherwise, default values are used.}
+If provided, the optimization continues from these values; otherwise,
+default values are used.}
 
-\item{restart}{Logical. If TRUE, the optimization is restarted with default values; otherwise, it continues.}
+\item{restart}{Logical. If TRUE, the optimization is restarted with default
+values; otherwise, it continues.}
 }
 \value{
 A list containing the optimized values, TM-score, and RMSD.
   - values: Numeric vector. Optimized parameters for the alignment.
   - tmscore: Numeric. TM-score of the aligned structures.
-  - rmsd: Numeric. Root Mean Square Deviation (RMSD) between the aligned structures.
+  - rmsd: Numeric. Root Mean Square Deviation (RMSD) between the aligned
+     structures.
 }
 \description{
-This function performs optimization to improve the alignment of two protein structures based
-on their atomic coordinates. The optimization aims to find the best parameters that minimize
-the objective function, which includes the TM-score and RMSD calculations. The optimization
-can be restarted with default values or continue from a given set of values.
+This function performs optimization to improve the alignment of two protein
+structures based on their atomic coordinates. The optimization aims to find
+the best parameters that minimize the objective function, which includes the
+TM-score and RMSD calculations. The optimization can be restarted with
+default values or continue from a given set of values.
 }
 \examples{
 \dontrun{
@@ -36,7 +40,9 @@ can be restarted with default values or continue from a given set of values.
 reference_structure <- matrix(rnorm(300), ncol = 3)
 target_structure <- matrix(rnorm(300), ncol = 3)
 reference_d0 <- 10
-optimization_results <- optimize(coord1 = reference_structure, coord2 = target_structure, d02 = reference_d0)
+optimization_results <- optimize(coord1 = reference_structure,
+                                 coord2 = target_structure,
+                                 d02 = reference_d0)
 }
 
 }
@@ -47,7 +53,7 @@ A limited memory algorithm for bound constrained optimization.
 \href{https://doi.org/10.1137/091606}{Link}
 }
 \seealso{
-\code{\link{get_default_values}} and \code{\link{get_current_values}} for parameter initialization.
+\code{\link{get_default_values}} for parameter initialization.
 \code{\link{tm}} and \code{\link{rmsd}} for TM-score and RMSD calculation.
-\code{\link{stats::optim}} for optimization functions.
+\code{\link{optim}} for optimization functions.
 }
