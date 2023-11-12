@@ -15,19 +15,6 @@ estimate_d0 <- function(N, d0s = 5) {
 
 # Function to calculate the rotation-translation matrix
 get_matrix <- function(values) {
-  # Convert angles from degrees to radians
-  # theta <- theta * pi / 180
-  # phi <- phi * pi / 180
-  # psi <- psi * pi / 180
-
-  # Calculate trigonometric values
-  # ctheta <- cos(values$theta)
-  # stheta <- sin(values$theta)
-  # cphi <- cos(values$phi)
-  # sphi <- sin(values$phi)
-  # cpsi <- cos(values$psi)
-  # spsi <- sin(values$psi)
-
   ctheta <- cos(values["theta"])
   stheta <- sin(values["theta"])
   cphi <- cos(values["phi"])
@@ -57,31 +44,29 @@ get_matrix <- function(values) {
   return(matrix)
 }
 
-# Function to calculate the TM score
-tm <- function(values, coord1, coord2, d02) {
+dist_samples <- function(values, coord1, coord2) {
   matrix <- get_matrix(values)
   coord <- matrix %*% coord2
   dist <- coord - coord1
-  d_i2 <- colSums(dist^2)
-  tm <- -1 / (1 + d_i2 / d02)
-  return(mean(tm))
+  return(dist)
 }
 
-# Function to calculate the S score
-s <- function(values, coord1, coord2, d0s2) {
-  matrix <- get_matrix(values)
-  coord <- matrix %*% coord2
-  dist <- coord - coord1
-  d_i2 <- rowSums(dist^2)
-  tm <- -(1 / (1 + (d_i2 / d0s2)))
-  return(sum(tm))
+tm_samples <- function(values, coord1, coord2, d02) {
+  dist <- dist_samples(values, coord1, coord2)
+  d_i2 <- colSums(dist^2)
+  tm <- 1 / (1 + d_i2 / d02)
+  return(tm)
+}
+
+# Function to calculate the TM score
+tm <- function(values, coord1, coord2, d02) {
+  tm <- tm_samples(values, coord1, coord2, d02)
+  return(mean(tm))
 }
 
 # Function to calculate the RMSD
 rmsd <- function(values, coord1, coord2) {
-  matrix <- get_matrix(values)
-  coord <- matrix %*% coord2
-  dist <- coord - coord1
+  dist <- dist_samples(values, coord1, coord2)
   return(sqrt((mean(dist^2))))
 }
 

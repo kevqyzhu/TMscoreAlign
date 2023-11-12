@@ -37,17 +37,16 @@ load_data_alignment <- function(pdb_file1, pdb_file2, chain1 = 'A', chain2 = 'A'
 }
 
 # Function to optimize the alignment
-optimise <- function(coord1, coord2, d02, d0s2, restart = TRUE) {
+optimize <- function(coord1, coord2, d02, d0s2, restart = TRUE) {
   if (restart) {
     default_values <- get_default_values(coord1, coord2)
   } else {
     default_values <- get_current_values()
   }
-  result <- stats::optim(par = default_values, fn = tm, coord1 = coord1, coord2 = coord2, d02 = d02, method = "Nelder-Mead")
+  result <- stats::optim(par = default_values, fn = tm, coord1 = coord1, coord2 = coord2, d02 = d02, method = "Nelder-Mead", control = list(fnscale = -1))
   values <- result$par
-  return(list(values = values, tmscore = -tm(values, coord1, coord2, d02), rmsd = sqrt(rmsd(values, coord1, coord2))))
+  return(list(values = values, tmscore = tm(values, coord1, coord2, d02), rmsd = rmsd(values, coord1, coord2)))
 }
-
 
 # Function to get the default alignment values
 get_default_values <- function(coord1, coord2) {
@@ -85,7 +84,7 @@ get_alignment <- function(pdb1, pdb2, chain1 = 'A', chain2 = 'A', d0s = 5, metho
   d0s2 <- d0_values$d0s2
 
   # Optimize the alignment
-  alignment <- optimise(data$coord1, data$coord2, d02, d0s2)
+  alignment <- optimize(data$coord1, data$coord2, d02, d0s2)
   return(alignment)
 }
 
@@ -117,8 +116,7 @@ write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE, pdb1, 
       if (!grepl("^ATOM", line) || (substring(line, 22, 22) != " " && substring(line, 22, 22) != chain_1)) {
         next
       }
-
-      cat(substr(line, 1, 7), sprintf("%4d", atomid), substr(line, 12, 21), "A", substr(line, 23), "\n", file = out)
+      cat(substr(line, 1, 6), sprintf("%4d", atomid), substr(line, 13, 20), "A", substr(line, 24, nchar(line)), "\n", file = out)
       atomid <- atomid + 1
     }
   }
@@ -137,11 +135,44 @@ write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE, pdb1, 
     vec <- c(x, y, z, 1)
     transformed_vec <- matrix %*% vec
 
-    cat(substr(line, 1, 7), sprintf("%4d", atomid), substr(line, 12, 21), "B", substr(line, 23, 30),
-        sprintf("%8.3f%8.3f%8.3f", transformed_vec[1], transformed_vec[2], transformed_vec[3]), substr(line, 55), "\n", file = out)
+    cat(substr(line, 1, 6), sprintf("%4d", atomid), substr(line, 13, 20), "B", substr(line, 24, 29),
+        sprintf("%8.3f%8.3f%8.3f", transformed_vec[1], transformed_vec[2], transformed_vec[3]), substr(line, 56, nchar(line)), "\n", file = out)
     atomid <- atomid + 1
   }
 
   close(out)
+}
+
+visualize_alignment_pdb <- function(alignment_pdb = "out.pdb") {
+  r3dmol(                         # Set up the initial viewer
+    viewer_spec = m_viewer_spec(
+      cartoonQuality = 10,
+      lowerZoomLimit = 50,
+      upperZoomLimit = 350
+    )
+  ) %>%
+    m_add_model(                  # Add model to scene
+      data = "out.pdb",
+      format = "pdb"
+    ) %>%
+    m_zoom_to() %>%               # Zoom to encompass the whole scene
+    m_set_style(                  # Set style of specific selection
+      sel = m_sel(chain = "A"),      # (selecting by secondary)
+      style = m_style_cartoon(
+        color = "#636efa",
+        arrows = TRUE
+      )
+    ) %>%
+    m_set_style(                  # Style the alpha helix
+      sel = m_sel(chain = "B"),      # (selecting by alpha helix)
+      style = m_style_cartoon(
+        color = "#ff7f0e"
+      )
+    ) %>%
+    m_rotate(                     # Rotate the scene by given angle on given axis
+      angle = 90,
+      axis = "y"
+    ) %>%
+    m_spin()                      # Animate the scene by spinning it
 }
 
