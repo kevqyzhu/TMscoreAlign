@@ -49,29 +49,28 @@ There are 5 functions in `TMscoreAlign`
 protein structures specified by PDB files. First, it selects common
 residues using a user-specified method (either based on ‘index’ or
 ‘alignment’). Then, the alignment parameters, including translation and
-rotation values, are optimized for TM-score (Template Modeling Score)
-and returned to the user as a list. Other values such as TM-score and
-RMSD are also returned in the list.
+rotation values, are initialized. These values can be further optimized
+for TM-score (Template Modeling score) before being returned to the
+user.
 
 `optimize`: This function performs optimization to improve the alignment
-of two protein structures based on their atomic coordinates. The
-optimization aims to find the best parameters that minimize the
-objective function (TM-score). The optimization can be restarted with
-default values or continue from a given set of values.
+of two protein structures based on their atomic coordinates. This
+function takes in translation and rotation values and aims to find the
+best parameters that minimize the objective function (TM-score). The
+optimization can be restarted with default values or continue from a
+given set of values.
 
-`get_tmscore`: This function calculates the TM-Score (Template Modeling
-Score) between two protein structures based on their alignment. The
-alignment is performed using the specified method (‘alignment’ or
-‘index’). This function is a wrapper for `get_alignment` so that the
-user can directly calculate the TM-score of two protein structures given
-their PDB files.
+`get_tmscore`: This function calculates the TM-score from the alignment
+parameters and coordinates obtained in a structural alignment between
+two protein structures.
+
+`get_tm_samples`:This function calculates the TM local scores from the
+alignment parameters and coordinates obtained in a structural alignment
+between two protein structures.
 
 `get_rmsd`: This function calculates the RMSD (root mean square
-deviation) between two protein structures based on their alignment. The
-alignment is performed using the specified method (‘alignment’ or
-‘index’). This function is a wrapper for `get_alignment` so that the
-user can directly calculate the RMSD of two protein structures given
-their PDB files.
+deviation) between two protein structures based on their alignment
+parameters.
 
 `visualize_alignment_pdb`: This function visualizes the structural
 alignment of two protein structures by displaying the aligned
@@ -79,12 +78,6 @@ coordinates in a 3D viewer. The viewer is set up using `3Dmol`, and the
 alignment is represented by color-coded cartoon-style structures for
 each protein chain. The user can specify the alignment parameters and
 chain coloration.
-
-Below is a flowchart demonstart the work flow of this package.
-
-<img src="./inst/extdata/flowchart.jpeg" style="width:75.0%" /> See
-`help(package = "DeregGenes")` for further details and references
-provided by `citation("DeregGenes")`.
 
 ## Contributions
 

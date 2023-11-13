@@ -2,47 +2,39 @@
 % Please edit documentation in R/aligner.R
 \name{optimize}
 \alias{optimize}
-\title{Optimize Protein Structure Alignment}
+\title{Optimize Protein Structure Alignment Parameters}
 \usage{
-optimize(coord1, coord2, d02, values = NULL, restart = TRUE)
+optimize(alignment, restart = TRUE)
 }
 \arguments{
-\item{coord1}{Numeric matrix. Coordinates of the reference protein structure.}
+\item{alignment}{List. Structure alignment results, including alignment
+parameters, coordinates, and other information.
+The list should contain the following elements:
+- N: Numeric. Number of common residues in the alignment.
+- coord1: Matrix. 3D coordinates of CA atoms for common residues in the
+  first structure.
+- coord2: Matrix. 3D coordinates of CA atoms for common residues in the
+  second structure.
+- values: Numeric vector. Initial alignment parameters.}
 
-\item{coord2}{Numeric matrix. Coordinates of the target protein structure.}
-
-\item{d02}{Numeric. Reference distance for the TM-score calculation.}
-
-\item{values}{Numeric vector. Initial values for the optimization parameters.
-If provided, the optimization continues from these values; otherwise,
-default values are used.}
-
-\item{restart}{Logical. If TRUE, the optimization is restarted with default
-values; otherwise, it continues.}
+\item{restart}{Logical. If TRUE, the optimization starts from the default
+values. If FALSE, it continues from the current alignment parameters.}
 }
 \value{
-A list containing the optimized values, TM-score, and RMSD.
-  - values: Numeric vector. Optimized parameters for the alignment.
-  - tmscore: Numeric. TM-score of the aligned structures.
-  - rmsd: Numeric. Root Mean Square Deviation (RMSD) between the aligned
-     structures.
+The input alignment list updated with optimized parameters
 }
 \description{
-This function performs optimization to improve the alignment of two protein
-structures based on their atomic coordinates. The optimization aims to find
-the best parameters that minimize the objective function, which includes the
-TM-score and RMSD calculations. The optimization can be restarted with
-default values or continue from a given set of values.
+This function optimizes the alignment parameters for better accuracy of the
+structural alignment between two protein structures.
 }
 \examples{
 \dontrun{
-# Example: Optimize protein structure alignment
-reference_structure <- matrix(rnorm(300), ncol = 3)
-target_structure <- matrix(rnorm(300), ncol = 3)
-reference_d0 <- 10
-optimization_results <- optimize(coord1 = reference_structure,
-                                 coord2 = target_structure,
-                                 d02 = reference_d0)
+# Example: Optimize alignment parameters
+alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
+                                  chain1 = 'A', chain2 = 'A',
+                                  method = "alignment", optimize = FALSE)
+optimized_results <- optimize(alignment_results, restart = TRUE)
+print(optimized_results)
 }
 
 }

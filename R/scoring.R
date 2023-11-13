@@ -28,7 +28,7 @@ DTYPE <- 'numeric'
 estimate_d0 <- function(N) {
   d0 <- 1.24 * (N - 15)^(1/3) - 1.8
   d02 <- d0^2
-  return(list(d02 = d02))
+  return(list(d0 = d0, d02 = d02))
 }
 
 

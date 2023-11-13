@@ -2,56 +2,54 @@
 % Please edit documentation in R/aligner.R
 \name{get_alignment}
 \alias{get_alignment}
-\title{Get Structure Alignment Parameters}
+\title{Get Protein Structure Alignment}
 \usage{
-get_alignment(pdb1, pdb2, chain1 = "A", chain2 = "A", method)
+get_alignment(pdb1, pdb2, chain1 = "A", chain2 = "A", method, optimize = TRUE)
 }
 \arguments{
-\item{pdb1}{Character string. Path to the first PDB file.}
+\item{pdb1}{Character. Path to the PDB file of the first protein structure.}
 
-\item{pdb2}{Character string. Path to the second PDB file.}
+\item{pdb2}{Character. Path to the PDB file of the second protein structure.}
 
-\item{chain1}{Character string. Chain identifier for the first PDB file
-(default is 'A').}
+\item{chain1}{Character. Chain identifier for the first protein structure.
+Defaults to 'A'.}
 
-\item{chain2}{Character string. Chain identifier for the second PDB file
-(default is 'A').}
+\item{chain2}{Character. Chain identifier for the second protein structure.
+Defaults to 'A'.}
 
-\item{method}{Character string. Method for residue selection. Options:
-"alignment" or "index"
- - "alignment": Perform sequence alignment using pairwiseAlignment from
-    Bioconductor.
- - "index": Use residue indices based on the specified chains to identify
-    common residues.}
+\item{method}{Character. Alignment method to be used. Options are "alignment"
+for sequence-based alignment or "index" for index-based alignment.}
+
+\item{optimize}{Logical. If TRUE, the alignment parameters are optimized for
+better accuracy. Defaults to TRUE.}
 }
 \value{
-A list containing the following components:
-  - values: Optimized parameters for structure alignment.
-  - tmscore: TM-score value calculated with the optimized parameters.
-  - rmsd: RMSD value calculated with the optimized parameters.
+A list containing the following elements:
+  - N: Numeric. Number of common residues in the alignment.
+  - coord1: Matrix. 3D coordinates of CA atoms for common residues in the
+    first structure.
+  - coord2: Matrix. 3D coordinates of CA atoms for common residues in the
+    second structure.
+  - values: Numeric vector. Alignment parameters obtained from structure
+    alignment.
 }
 \description{
-This function performs structure alignment between two protein structures
-specified by PDB files. It uses the given method to select common residues
-and optimizes the alignment parameters based on 3D coordinates. The
-resulting alignment parameters, including translation and rotation values,
-are returned.
+This function performs structural alignment between two protein structures
+specified by PDB files. It can use either a specified alignment method or
+index-based alignment. Additionally, it provides an option to optimize the
+alignment parameters for better accuracy.
 }
 \examples{
 \dontrun{
-# Example: Get structure alignment parameters using alignment method
-alignment_seq <- get_alignment("path/to/file1.pdb", "path/to/file2.pdb",
-                                chain1 = 'A', chain2 = 'B',
-                                method = "alignment")
-
-# Example: Get structure alignment parameters using index-based method
-alignment_index <- get_alignment("path/to/file1.pdb", "path/to/file2.pdb",
-                                  chain1 = 'A', chain2 = 'B',
-                                  method = "index")
+# Example: Get structural alignment
+alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
+                                  chain1 = 'A', chain2 = 'A',
+                                  method = "alignment", optimize = TRUE)
+print(alignment_results)
 }
 
 }
 \seealso{
-\code{\link{load_data_alignment}} for loading and aligning PDB data.
-\code{\link{optimize}} for optimizing structure alignment parameters.
+\code{\link{load_data_alignment}} for loading data for structure alignment.
+\code{\link{optimize}} for optimizing alignment parameters.
 }

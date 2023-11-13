@@ -94,37 +94,33 @@ load_data_alignment <- function(pdb_file1, pdb_file2, chain1 = 'A',
   return(list(coord1 = coord1, coord2 = coord2, N = length(common_residues)))
 }
 
-#' Optimize Protein Structure Alignment
+#' Optimize Protein Structure Alignment Parameters
 #'
-#' This function performs optimization to improve the alignment of two protein
-#' structures based on their atomic coordinates. The optimization aims to find
-#' the best parameters that minimize the objective function, which includes the
-#' TM-score and RMSD calculations. The optimization can be restarted with
-#' default values or continue from a given set of values.
+#' This function optimizes the alignment parameters for better accuracy of the
+#' structural alignment between two protein structures.
 #'
-#' @param coord1 Numeric matrix. Coordinates of the reference protein structure.
-#' @param coord2 Numeric matrix. Coordinates of the target protein structure.
-#' @param d02 Numeric. Reference distance for the TM-score calculation.
-#' @param values Numeric vector. Initial values for the optimization parameters.
-#'  If provided, the optimization continues from these values; otherwise,
-#'  default values are used.
-#' @param restart Logical. If TRUE, the optimization is restarted with default
-#'  values; otherwise, it continues.
-#' @return A list containing the optimized values, TM-score, and RMSD.
-#'   - values: Numeric vector. Optimized parameters for the alignment.
-#'   - tmscore: Numeric. TM-score of the aligned structures.
-#'   - rmsd: Numeric. Root Mean Square Deviation (RMSD) between the aligned
-#'      structures.
+#' @param alignment List. Structure alignment results, including alignment
+#'   parameters, coordinates, and other information.
+#'   The list should contain the following elements:
+#'   - N: Numeric. Number of common residues in the alignment.
+#'   - coord1: Matrix. 3D coordinates of CA atoms for common residues in the
+#'     first structure.
+#'   - coord2: Matrix. 3D coordinates of CA atoms for common residues in the
+#'     second structure.
+#'   - values: Numeric vector. Initial alignment parameters.
+#' @param restart Logical. If TRUE, the optimization starts from the default
+#'   values. If FALSE, it continues from the current alignment parameters.
+#'
+#' @return The input alignment list updated with optimized parameters
 #'
 #' @examples
 #' \dontrun{
-#' # Example: Optimize protein structure alignment
-#' reference_structure <- matrix(rnorm(300), ncol = 3)
-#' target_structure <- matrix(rnorm(300), ncol = 3)
-#' reference_d0 <- 10
-#' optimization_results <- optimize(coord1 = reference_structure,
-#'                                  coord2 = target_structure,
-#'                                  d02 = reference_d0)
+#' # Example: Optimize alignment parameters
+#' alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
+#'                                   chain1 = 'A', chain2 = 'A',
+#'                                   method = "alignment", optimize = FALSE)
+#' optimized_results <- optimize(alignment_results, restart = TRUE)
+#' print(optimized_results)
 #' }
 #'
 #' @references
@@ -140,19 +136,24 @@ load_data_alignment <- function(pdb_file1, pdb_file2, chain1 = 'A',
 #'
 #' @export
 #' @importFrom stats optim
-optimize <- function(coord1, coord2, d02, values = NULL, restart = TRUE) {
+optimize <- function(alignment, restart = TRUE) {
+  coord1 <- alignment$coord1
+  coord2 <- alignment$coord2
+  d0_values <- estimate_d0(alignment$N)
+  d02 <- d0_values$d02
+
   if (restart) {
     default_values <- get_default_values(coord1, coord2)
   } else {
-    default_values <- values
+    default_values <- alignment$values
   }
+
   method <- "L-BFGS-B"
   result <- stats::optim(par = default_values, fn = tm, coord1 = coord1,
                          coord2 = coord2, d02 = d02, method = method,
                          control = list(fnscale = -1))
-  values <- result$par
-  return(list(values = values, tmscore = tm(values, coord1, coord2, d02),
-              rmsd = rmsd(values, coord1, coord2)))
+  alignment$values <- result$par
+  return(alignment)
 }
 
 #' Get Default Values for Structure Alignment Parameters
@@ -226,93 +227,93 @@ get_default_values <- function(coord1, coord2) {
   return(unlist(values))
 }
 
-#' Get Structure Alignment Parameters
+#' Get Protein Structure Alignment
 #'
-#' This function performs structure alignment between two protein structures
-#' specified by PDB files. It uses the given method to select common residues
-#' and optimizes the alignment parameters based on 3D coordinates. The
-#' resulting alignment parameters, including translation and rotation values,
-#' are returned.
+#' This function performs structural alignment between two protein structures
+#' specified by PDB files. It can use either a specified alignment method or
+#' index-based alignment. The alignment parameters, including translation and
+#' rotation values, are initialized and can be further optimized.
 #'
-#' @param pdb1 Character string. Path to the first PDB file.
-#' @param pdb2 Character string. Path to the second PDB file.
-#' @param chain1 Character string. Chain identifier for the first PDB file
-#'  (default is 'A').
-#' @param chain2 Character string. Chain identifier for the second PDB file
-#'  (default is 'A').
-#' @param method Character string. Method for residue selection. Options:
-#'  "alignment" or "index"
-#'   - "alignment": Perform sequence alignment using pairwiseAlignment from
-#'      Bioconductor.
-#'   - "index": Use residue indices based on the specified chains to identify
-#'      common residues.
-#' @return A list containing the following components:
-#'   - values: Optimized parameters for structure alignment.
-#'   - tmscore: TM-score value calculated with the optimized parameters.
-#'   - rmsd: RMSD value calculated with the optimized parameters.
+#' @param pdb1 Character. Path to the PDB file of the first protein structure.
+#' @param pdb2 Character. Path to the PDB file of the second protein structure.
+#' @param chain1 Character. Chain identifier for the first protein structure.
+#'   Defaults to 'A'.
+#' @param chain2 Character. Chain identifier for the second protein structure.
+#'   Defaults to 'A'.
+#' @param method Character. Alignment method to be used. Options are "alignment"
+#'   for sequence-based alignment or "index" for index-based alignment.
+#' @param optimize Logical. If TRUE, the alignment parameters are optimized for
+#'   better accuracy. Defaults to TRUE.
+#'
+#' @return A list containing the following elements:
+#'   - N: Numeric. Number of common residues in the alignment.
+#'   - coord1: Matrix. 3D coordinates of CA atoms for common residues in the
+#'     first structure.
+#'   - coord2: Matrix. 3D coordinates of CA atoms for common residues in the
+#'     second structure.
+#'   - values: Numeric vector. Alignment parameters obtained from structure
+#'     alignment.
 #'
 #' @examples
 #' \dontrun{
-#' # Example: Get structure alignment parameters using alignment method
-#' alignment_seq <- get_alignment("path/to/file1.pdb", "path/to/file2.pdb",
-#'                                 chain1 = 'A', chain2 = 'B',
-#'                                 method = "alignment")
-#'
-#' # Example: Get structure alignment parameters using index-based method
-#' alignment_index <- get_alignment("path/to/file1.pdb", "path/to/file2.pdb",
-#'                                   chain1 = 'A', chain2 = 'B',
-#'                                   method = "index")
+#' # Example: Get structural alignment
+#' alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
+#'                                   chain1 = 'A', chain2 = 'A',
+#'                                   method = "alignment", optimize = TRUE)
+#' print(alignment_results)
 #' }
 #'
 #' @seealso
-#' \code{\link{load_data_alignment}} for loading and aligning PDB data.
-#' \code{\link{optimize}} for optimizing structure alignment parameters.
+#' \code{\link{load_data_alignment}} for loading data for structure alignment.
+#' \code{\link{optimize}} for optimizing alignment parameters.
 #'
 #' @export
-get_alignment <- function(pdb1, pdb2, chain1 = 'A', chain2 = 'A', method) {
+get_alignment <- function(pdb1, pdb2, chain1 = 'A', chain2 = 'A', method,
+                          optimize = TRUE) {
   # Load data alignment
   data <- load_data_alignment(pdb1, pdb2, chain1, chain2, method)
 
-  # Estimate d0
-  d0_values <- estimate_d0(data$N)
-  d02 <- d0_values$d02
+  default_values <- get_default_values(data$coord1, data$coord2)
 
-  # Optimize the alignment
-  alignment <- optimize(data$coord1, data$coord2, d02)
+  alignment <- list(N = data$N,
+                    coord1 = data$coord1,
+                    coord2 = data$coord2,
+                    values = default_values)
+  if (optimize) {
+    # Optimize the alignment
+    alignment <- optimize(alignment)
+  }
+
   return(alignment)
 }
 
-#' Get TM-Score Between Two Protein Structures
+#' Get TM Score from Protein Structure Alignment
 #'
-#' This function calculates the TM-Score (Template Modeling Score) between two
-#' protein structures based on their alignment. The alignment is performed
-#' using the specified method ('alignment' or 'index'). The TM-Score is a
-#' measure of structural similarity and is commonly used in structural
-#' bioinformatics.
+#' This function calculates the TM score from the alignment parameters and
+#' coordinates obtained in a structural alignment between two protein
+#' structures.
 #'
-#' @param pdb1 Character. Path to the first PDB file containing the coordinates
-#'  of the first protein structure.
-#' @param pdb2 Character. Path to the second PDB file containing the coordinates
-#'  of the second protein structure.
-#' @param chain1 Character. Chain identifier for the first protein structure.
-#'  Default is 'A'.
-#' @param chain2 Character. Chain identifier for the second protein structure.
-#'  Default is 'A'.
-#' @param method Character. Alignment method to be used. Options are 'alignment'
-#'  for sequence-based alignment or 'index' for index-based alignment.
-#' @return The TM-Score between the two protein structures based on the
-#'  specified alignment method.
+#' @param alignment List. Structure alignment results, including alignment
+#'   parameters, coordinates, and other information.
+#'   The list should contain the following elements:
+#'   - N: Numeric. Number of common residues in the alignment.
+#'   - coord1: Matrix. 3D coordinates of CA atoms for common residues in the
+#'     first structure.
+#'   - coord2: Matrix. 3D coordinates of CA atoms for common residues in the
+#'     second structure.
+#'   - values: Numeric vector. Alignment parameters.
+#'
+#' @return Numeric. TM score of the protein structure alignment.
 #'
 #' @examples
 #' \dontrun{
-#' # Example 1: Calculate TM-Score using sequence-based alignment
-#' tm_score_seq <- get_tmscore("structure1.pdb", "structure2.pdb", chain1 = 'A',
-#'                              chain2 = 'A', method = 'alignment')
-#'
-#' # Example 2: Calculate TM-Score using index-based alignment
-#' tm_score_index <- get_tmscore("structure1.pdb", "structure2.pdb",
-#'                                chain1 = 'A', chain2 = 'A',
-#'                                method = 'index')
+#' # Example: Calculate TM score from alignment
+#' alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
+#'                                   chain1 = 'A', chain2 = 'A',
+#'                                   method = "alignment")
+#' optimized_alignment <- optimize(alignment_results)
+#' tmscore <- get_tmscore(optimized_alignment)
+#' print(tmscore)
 #' }
 #'
 #' @references
@@ -323,229 +324,116 @@ get_alignment <- function(pdb1, pdb2, chain1 = 'A', chain2 = 'A', method) {
 #'
 #' @seealso
 #' \code{\link{get_alignment}} for obtaining alignment details.
+#' \code{\link{optimize}} for optimizing alignment parameters.
+#' \code{\link{estimate_d0}} for estimating initial distance parameters.
+#' \code{\link{tm}} for calculating TM-score.
 #'
 #' @export
-get_tmscore <- function(pdb1, pdb2, chain1 = 'A', chain2 = 'A', method) {
-  # Get alignment details
-  alignment <- get_alignment(pdb1, pdb2, chain1, chain2, method)
-
+get_tmscore <- function(alignment) {
   # Return the TM-Score from the alignment
-  return(alignment$tmscore)
+  tmscore <- tm(alignment$values,
+                alignment$coord1,
+                alignment$coord2,
+                estimate_d0(alignment$N)$d02)
+  return(tmscore)
 }
 
-#' Calculate Root Mean Square Deviation (RMSD) Between Two Protein Structures
+#' Get TM local scores from Protein Structure Alignment
 #'
-#' This function calculates the Root Mean Square Deviation (RMSD) between two
-#' protein structures based on their atomic coordinates. The RMSD is a measure
-#' of the average distance between corresponding atoms in the two structures,
-#' providing an indication of structural similarity.
-#'
-#' @param pdb1 Character. Path to the PDB file of the first protein structure.
-#' @param pdb2 Character. Path to the PDB file of the second protein structure.
-#' @param chain1 Character. Chain identifier for the first protein structure
-#'  (default: 'A').
-#' @param chain2 Character. Chain identifier for the second protein structure
-#'  (default: 'A').
-#' @param method Character. The method used for structure alignment, either
-#'  "alignment" or "index".
-#' @return The Root Mean Square Deviation (RMSD) between the two protein
-#'  structures.
-#'
-#' @examples
-#' \dontrun{
-#' # Example: Calculate RMSD between two protein structures
-#' pdb_file1 <- "path/to/structure1.pdb"
-#' pdb_file2 <- "path/to/structure2.pdb"
-#' chain_id1 <- 'A'
-#' chain_id2 <- 'B'
-#' alignment_method <- "alignment"
-#' rmsd_value <- get_rmsd(pdb_file1, pdb_file2, chain_id1, chain_id2,
-#'                        alignment_method)
-#' }
-#'
-#' @seealso
-#' \code{\link{get_alignment}} for obtaining structural alignment between two
-#'   protein structures.
-#'
-#' @export
-get_rmsd <- function(pdb1, pdb2, chain1 = 'A', chain2 = 'A', method) {
-  # Obtain structural alignment between two protein structures
-  alignment <- get_alignment(pdb1, pdb2, chain1, chain2, method)
-
-  # Return the Root Mean Square Deviation (RMSD)
-  return(alignment$rmsd)
-}
-
-#' Write Transformed Coordinates to PDB File
-#'
-#' This function writes the transformed coordinates obtained from a structure
-#' alignment to a new PDB file. The transformed coordinates are generated by
-#' applying the alignment parameters to the original coordinates of the second
-#' protein structure. The resulting PDB file includes the transformed
-#' coordinates alongside the original coordinates of the first structure.
+#' This function calculates the TM local scores from the alignment parameters
+#' and coordinates obtained in a structural alignment between two protein
+#' structures.
 #'
 #' @param alignment List. Structure alignment results, including alignment
-#'  parameters and transformed coordinates.
+#'   parameters, coordinates, and other information.
 #'   The list should contain the following elements:
-#'   - values: Numeric vector. Alignment parameters obtained from structure
-#'    alignment.
-#'   - rmsd: Numeric. Root Mean Square Deviation (RMSD) between the two protein
-#'    structures.
-#' @param outputfile Character. The name of the output PDB file to be created
-#'  (default: "out.pdb").
-#' @param appended Logical. If TRUE, the transformed coordinates are appended to
-#'  the original coordinates
-#'   in the output PDB file. If FALSE, the output PDB file contains only the
-#'    transformed coordinates.
-#' @param pdb1 Character. Path to the PDB file of the first protein structure.
-#' @param pdb2 Character. Path to the PDB file of the second protein structure.
-#' @param chain_1 Character. Chain identifier for the first protein structure in
-#'  output file.
-#' @param chain_2 Character. Chain identifier for the second protein structure
-#'  in output file.
+#'   - N: Numeric. Number of common residues in the alignment.
+#'   - coord1: Matrix. 3D coordinates of CA atoms for common residues in the
+#'     first structure.
+#'   - coord2: Matrix. 3D coordinates of CA atoms for common residues in the
+#'     second structure.
+#'   - values: Numeric vector. Alignment parameters.
+#'
+#' @return Numeric vector. TM samples of the protein structure alignment.
 #'
 #' @examples
 #' \dontrun{
-#' # Example: Write transformed coordinates to a new PDB file
+#' # Example: Calculate TM samples from alignment
 #' alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
-#'                                     chain1 = 'A', chain2 = 'A',
-#'                                     method = "alignment")
-#' write_pdb(alignment_results, outputfile = "aligned_structure.pdb",
-#'          appended = TRUE, pdb1 = "structure1.pdb", pdb2 = "structure2.pdb",
-#'          chain_1 = 'A', chain_2 = 'A')
+#'                                   chain1 = 'A', chain2 = 'A',
+#'                                   method = "alignment")
+#' tm_samples <- get_tm_samples(alignment_results)
+#' print(tm_samples)
 #' }
 #'
 #' @references
-#' PDB formatting:
-#' \href{https://www.wwpdb.org/documentation/file-format-content/format33/sect9.html}{Link}
+#' Zhang, Y., and Skolnick, J. (2004). Scoring function for automated assessment
+#' of protein structure template quality. \emph{Proteins, Structure, Function,
+#' and Bioinformatics}, 57(4), 702–710.
+#' \href{https://doi.org/10.1002/prot.20264}{Link}
 #'
 #' @seealso
-#' \code{\link{get_alignment}} for obtaining structural alignment between two
-#'   protein structures.
-#' \code{\link{get_matrix}} for obtaining the transformation matrix from
-#'   alignment parameters.
+#' \code{\link{get_alignment}} for obtaining alignment details.
+#' \code{\link{optimize}} for optimizing alignment parameters.
+#' \code{\link{estimate_d0}} for estimating initial distance parameters.
+#' \code{\link{tm_samples}} for calculating TM local scores
 #'
 #' @export
-write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
-                      pdb1, pdb2, chain_1, chain_2) {
-
-  values <- alignment$values
-  matrix <- get_matrix(values)
-  # browser()
-
-  out <- file(outputfile, "w")
-  atomid <- 1
-
-  if (appended) {
-    # Process the first PDB file
-    lines <- readLines(pdb1)
-    for (line in lines) {
-      if (!grepl("^ATOM", line) || (substring(line, 22, 22) != " " &&
-                                    substring(line, 22, 22) != chain_1)) {
-        next
-      }
-      cat(substr(line, 1, 6), sprintf("%4d", atomid), substr(line, 13, 20), "A",
-          substr(line, 24, nchar(line)), "\n", file = out)
-      atomid <- atomid + 1
-    }
-  }
-
-  # Process the second PDB file
-  lines <- readLines(pdb2)
-  for (line in lines) {
-    if (!grepl("^ATOM", line) || (substring(line, 22, 22) != " " &&
-                                  substring(line, 22, 22) != chain_2)) {
-      next
-    }
-
-    x <- as.numeric(substr(line, 32, 38))
-    y <- as.numeric(substr(line, 39, 46))
-    z <- as.numeric(substr(line, 48, 54))
-
-    vec <- c(x, y, z, 1)
-    transformed_vec <- matrix %*% vec
-
-    cat(substr(line, 1, 6), sprintf("%4d", atomid), substr(line, 13, 20), "B",
-        substr(line, 24, 29),
-        sprintf("%8.3f%8.3f%8.3f", transformed_vec[1], transformed_vec[2],
-                transformed_vec[3]), substr(line, 56, nchar(line)), "\n",
-        file = out)
-    atomid <- atomid + 1
-  }
-
-  close(out)
+get_tm_samples <- function(alignment) {
+  # Return the TM-samoles from the alignment
+  tm_samples <- tm_samples(alignment$values,
+                alignment$coord1,
+                alignment$coord2,
+                estimate_d0(alignment$N)$d02)
+  return(tm_samples)
 }
 
-#' Visualize Protein Structure Alignment Using 3Dmol
+#' Get Root Mean Square Deviation (RMSD) from Protein Structure Alignment
 #'
-#' This function visualizes the structural alignment of two protein structures
-#' by displaying the aligned coordinates in a 3D viewer. The viewer is set up
-#' using 3Dmol, and the alignment is represented by color-coded cartoon-style
-#' structures for each protein chain.
+#' This function calculates the Root Mean Square Deviation (RMSD) from the
+#' alignment parameters and coordinates obtained in a structural alignment
+#' between two protein structures.
 #'
-#' @param alignment_pdb Character. Path to the PDB file containing the aligned
-#'  coordinates. The PDB file should include both the original and
-#'  transformed coordinates of the protein structures.
-#' @param chain1 Character. Color code (hexadecimal) for the first protein
-#'  structure (default: "#636efa").
-#' @param chain2 Character. Color code (hexadecimal) for the second protein
-#'  structure (default: "#ff7f0e").
-#' @return A 3Dmol viewer displaying the aligned protein structures.
+#' @param alignment List. Structure alignment results, including alignment
+#'   parameters, coordinates, and other information.
+#'   The list should contain the following elements:
+#'   - N: Numeric. Number of common residues in the alignment.
+#'   - coord1: Matrix. 3D coordinates of CA atoms for common residues in the
+#'     first structure.
+#'   - coord2: Matrix. 3D coordinates of CA atoms for common residues in the
+#'     second structure.
+#'   - values: Numeric vector. Alignment parameters.
+#'
+#' @return Numeric. Root Mean Square Deviation (RMSD) of the protein structure
+#'   alignment.
 #'
 #' @examples
 #' \dontrun{
-#' # Example: Visualize protein structure alignment
-#' alignment_pdb_file <- "aligned_structure.pdb"
-#' chain1_color <- "#636efa"  # Blue
-#' chain2_color <- "#ff7f0e"  # Orange
-#' visualize_alignment_pdb(alignment_pdb_file, chain1 = chain1_color,
-#'                         chain2 = chain2_color)
+#' # Example: Calculate RMSD from alignment
+#' alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
+#'                                   chain1 = 'A', chain2 = 'A',
+#'                                   method = "alignment")
+#' rmsd_value <- get_rmsd(alignment_results)
+#' print(rmsd_value)
 #' }
 #'
 #' @references
-#' Su W, Johnston B (2021). r3dmol: Create Interactive 3D Visualizations of
-#' Molecular Data. R package version 0.1.2.
-#' \href{https://CRAN.R-project.org/package=r3dmol}{Link}.
+#' RMSD calculation:
+#' \href{https://zhanglab.ccmb.med.umich.edu/}{Zhang Lab}.
 #'
 #' @seealso
-#' \code{\link{write_pdb}} for generating a PDB file with transformed
-#'   coordinates.
 #' \code{\link{get_alignment}} for obtaining structural alignment between two
 #'   protein structures.
+#' \code{\link{optimize}} for optimizing alignment parameters.
+#' \code{\link{estimate_d0}} for estimating initial distance parameters.
+#' \code{\link{rmsd}} for calculating RMSD.
 #'
 #' @export
-#' @import r3dmol
-visualize_alignment_pdb <- function(alignment_pdb = "out.pdb",
-                                    chain1 = "#636efa", chain2 = "#ff7f0e") {
-  r3dmol(                         # Set up the initial viewer
-    viewer_spec = m_viewer_spec(
-      cartoonQuality = 40,
-      lowerZoomLimit = 50,
-      upperZoomLimit = 350
-    )
-  ) %>%
-    m_add_model(                  # Add model to scene
-      data = alignment_pdb,
-      format = "pdb"
-    ) %>%
-    m_zoom_to() %>%               # Zoom to encompass the whole scene
-    m_set_style(                  # Style the first chain
-      sel = m_sel(chain = "A"),
-      style = m_style_cartoon(
-        color = chain1,
-        arrows = TRUE
-      )
-    ) %>%
-    m_set_style(                  # Style the second chain
-      sel = m_sel(chain = "B"),
-      style = m_style_cartoon(
-        color = chain2,
-        arrows = TRUE
-      )
-    ) %>%
-    m_rotate(                     # Rotate the scene
-      angle = 90,
-      axis = "y"
-    ) %>%
-    m_spin()                      # Animate the scene by spinning it
+get_rmsd <- function(alignment) {
+  rmsd <- rmsd(alignment$values,
+                alignment$coord1,
+                alignment$coord2)
+
+  # Return the Root Mean Square Deviation (RMSD)
+  return(rmsd)
 }
