@@ -61,10 +61,9 @@ estimate_d0 <- function(N) {
 #' }
 #'
 #' @references
-#' The construction of the rotation matrix is based on:
-#' \href{https://easyspin.org/documentation/eulerangles.html}{Link}
-#' Mathematics Stack Exchange:
-#' \href{https://math.stackexchange.com/questions/532249}{Link}
+#' Jordi Cruzado (https://math.stackexchange.com/users/96872/jordi-cruzado),
+#' Explain 3d transformation matrix..., URL (version: 2023-05-30):
+#' \href{https://math.stackexchange.com/q/532974}{Link}
 #'
 #' @export
 get_matrix <- function(values) {
@@ -136,8 +135,9 @@ get_matrix <- function(values) {
 #' }
 #'
 #' @references
-#' For further details on the transformation matrix, refer to:
-#' \href{https://math.stackexchange.com/questions/532249}{Link}
+#' Jordi Cruzado (https://math.stackexchange.com/users/96872/jordi-cruzado),
+#' Explain 3d transformation matrix..., URL (version: 2023-05-30):
+#' \href{https://math.stackexchange.com/q/532974}{Link}
 #'
 #' @seealso
 #' \code{\link{get_matrix}} for obtaining the transformation matrix from

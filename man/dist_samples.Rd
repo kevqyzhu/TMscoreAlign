@@ -50,8 +50,9 @@ distances <- dist_samples(alignment_params, original_coordinates,
 
 }
 \references{
-For further details on the transformation matrix, refer to:
-\href{https://math.stackexchange.com/questions/532249}{Link}
+Jordi Cruzado (https://math.stackexchange.com/users/96872/jordi-cruzado),
+Explain 3d transformation matrix..., URL (version: 2023-05-30):
+\href{https://math.stackexchange.com/q/532974}{Link}
 }
 \seealso{
 \code{\link{get_matrix}} for obtaining the transformation matrix from

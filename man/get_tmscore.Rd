@@ -22,7 +22,8 @@ Numeric. TM score of the protein structure alignment.
 }
 \description{
 This function calculates the TM score from the alignment parameters and
-coordinates obtained in a structural alignment between two protein structures.
+coordinates obtained in a structural alignment between two protein
+structures.
 }
 \examples{
 \dontrun{

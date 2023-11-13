@@ -85,6 +85,9 @@ The package is created by Kevin Zhu.
 
 ## References
 
+- Berman, H., Henrick, K. and Nakamura, H. Announcing the worldwide
+  Protein Data Bank. *Nature Structural & Molecular Biology*, 10, 980
+  (2003). <https://doi.org/10.1038/nsb1203-980>
 - Borchers H (2022). *pracma: Practical Numerical Math Functions*. R
   package version 2.4.2 <https://CRAN.R-project.org/package=pracma>
 - Byrd, R. H., Lu, P., Nocedal, J., & Zhu, C. (1995). A limited memory
@@ -95,6 +98,14 @@ The package is created by Kevin Zhu.
   analysis of protein structures*. *Bioinformatics*, 22, 2695–2696.
   <https://doi.org/10.1093/bioinformatics/btl461> R package version
   2.4.4, <https://cran.r-project.org/web/packages/bio3d/index.html>
+- Jordi Cruzado
+  (<https://math.stackexchange.com/users/96872/jordi-cruzado>), Explain
+  3d transformation matrix…, URL (version: 2023-05-30):
+  <https://math.stackexchange.com/q/532974>
+- Jur van den Berg
+  (<https://math.stackexchange.com/users/91768/jur-van-den-berg>),
+  Calculate Rotation Matrix to align Vector $A$ to Vector $B$ in $3D$?,
+  URL (version: 2016-09-01): <https://math.stackexchange.com/q/476311>
 - Pagès H, Aboyoun P, Gentleman R, DebRoy S (2023). *Biostrings:
   Efficient manipulation of biological strings*. R package version
   2.68.1, <https://doi.org/10.18129/B9.bioc.Biostrings>

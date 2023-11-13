@@ -36,8 +36,8 @@ A list containing the following elements:
 \description{
 This function performs structural alignment between two protein structures
 specified by PDB files. It can use either a specified alignment method or
-index-based alignment. Additionally, it provides an option to optimize the
-alignment parameters for better accuracy.
+index-based alignment. The alignment parameters, including translation and
+rotation values, are initialized and can be further optimized.
 }
 \examples{
 \dontrun{

@@ -42,7 +42,7 @@ print(optimized_results)
 Byrd, R. H., Lu, P., Nocedal, J., & Zhu, C. (1995).
 A limited memory algorithm for bound constrained optimization.
 \emph{SIAM Journal on Scientific Computing}, 16(5), 1190–1208.
-\href{https://doi.org/10.1137/091606}{Link}
+\href{https://epubs.siam.org/doi/10.1137/0916069}{Link}
 }
 \seealso{
 \code{\link{get_default_values}} for parameter initialization.

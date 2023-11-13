@@ -38,8 +38,7 @@ transformation_matrix <- get_matrix(alignment_params)
 
 }
 \references{
-The construction of the rotation matrix is based on:
-\href{https://easyspin.org/documentation/eulerangles.html}{Link}
-Mathematics Stack Exchange:
-\href{https://math.stackexchange.com/questions/532249}{Link}
+Jordi Cruzado (https://math.stackexchange.com/users/96872/jordi-cruzado),
+Explain 3d transformation matrix..., URL (version: 2023-05-30):
+\href{https://math.stackexchange.com/q/532974}{Link}
 }

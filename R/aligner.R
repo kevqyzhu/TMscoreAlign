@@ -185,8 +185,12 @@ optimize <- function(alignment, restart = TRUE) {
 #' @references
 #' Borchers H (2022). pracma: Practical Numerical Math Functions. R package
 #' version 2.4.2, \href{https://CRAN.R-project.org/package=pracma}{Link}.
-#' Mathematics Stack Exchange:
-#' \href{https://math.stackexchange.com/questions/180418}{Link}
+#'
+#' Jur van den Berg
+#' (https://math.stackexchange.com/users/91768/jur-van-den-berg),
+#' Calculate Rotation Matrix to align Vector $A$ to Vector $B$ in $3D$?,
+#' URL (version: 2016-09-01):
+#' \href{https://math.stackexchange.com/q/476311}{Link}
 #'
 #' @export
 #' @importFrom pracma cross
@@ -416,10 +420,6 @@ get_tm_samples <- function(alignment) {
 #' rmsd_value <- get_rmsd(alignment_results)
 #' print(rmsd_value)
 #' }
-#'
-#' @references
-#' RMSD calculation:
-#' \href{https://zhanglab.ccmb.med.umich.edu/}{Zhang Lab}.
 #'
 #' @seealso
 #' \code{\link{get_alignment}} for obtaining structural alignment between two

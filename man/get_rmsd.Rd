@@ -37,10 +37,6 @@ print(rmsd_value)
 }
 
 }
-\references{
-RMSD calculation:
-\href{https://zhanglab.ccmb.med.umich.edu/}{Zhang Lab}.
-}
 \seealso{
 \code{\link{get_alignment}} for obtaining structural alignment between two
   protein structures.
