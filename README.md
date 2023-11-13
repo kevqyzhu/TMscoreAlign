@@ -43,7 +43,7 @@ data(package = "TMscoreAlign")
 browseVignettes("TMscoreAlign")
 ```
 
-There are 5 functions in `TMscoreAlign`
+There are 6 functions in `TMscoreAlign`
 
 `get_alignment`: This function performs structure alignment between two
 protein structures specified by PDB files. First, it selects common
