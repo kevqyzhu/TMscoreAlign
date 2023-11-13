@@ -90,21 +90,26 @@ alignment parameters and chain coloration.
 The package is created by Kevin Zhu.
 
 ## References
-- [Borchers H (2022). _pracma: Practical Numerical Math Functions_. R package 
-version 2.4.2](https://CRAN.R-project.org/package=pracma)
-- [Byrd, R. H., Lu, P., Nocedal, J., & Zhu, C. (1995). A limited memory 
+- Borchers H (2022). _pracma: Practical Numerical Math Functions_. R package 
+version 2.4.2 https://CRAN.R-project.org/package=pracma
+- Byrd, R. H., Lu, P., Nocedal, J., & Zhu, C. (1995). A limited memory 
 algorithm for bound constrained optimization.
-*SIAM Journal on Scientific Computing*, 16(5), 1190–1208.](https://epubs.siam.org/doi/10.1137/0916069)
-- [Grant, B.J. et al. (2006). _Bio3D: An R package for the comparative analysis
-of protein structures_. *Bioinformatics*, 22, 2695--2696.](https://doi.org/10.1093/bioinformatics/btl461) 
-[R package version 2.4.4](https://cran.r-project.org/web/packages/bio3d/index.html)
-- [Pagès H, Aboyoun P, Gentleman R, DebRoy S (2023). _Biostrings: Efficient
-manipulation of biological strings_. R package version 2.68.1](https://doi.org/10.18129/B9.bioc.Biostrings)
-- [Su W, Johnston B (2021). _r3dmol: Create Interactive 3D Visualizations of Molecular Data_. 
-R package version 0.1.2](https://CRAN.R-project.org/package=r3dmol)
--[ Zhang, Y., and Skolnick, J. (2004). Scoring function for automated assessment
-#' of protein structure template quality. *Proteins, Structure, Function, and Bioinformatics*, 
-57(4), 702–710.](https://doi.org/10.1002/prot.20264)
+*SIAM Journal on Scientific Computing*, 16(5), 1190–1208. 
+https://epubs.siam.org/doi/10.1137/0916069
+- Grant, B.J. et al. (2006). _Bio3D: An R package for the comparative analysis
+of protein structures_. *Bioinformatics*, 22, 2695--2696. 
+https://doi.org/10.1093/bioinformatics/btl461
+R package version 2.4.4, https://cran.r-project.org/web/packages/bio3d/index.html
+- Pagès H, Aboyoun P, Gentleman R, DebRoy S (2023). _Biostrings: Efficient manipulation of biological strings_. 
+R package version 2.68.1, https://doi.org/10.18129/B9.bioc.Biostrings
+- R Core Team (2023). R: A language and environment for statistical computing. 
+R Foundation for Statistical Computing, Vienna, Austria. 
+https://www.R-project.org/
+- Su W, Johnston B (2021). _r3dmol: Create Interactive 3D Visualizations of Molecular Data_. 
+R package version 0.1.2, https://CRAN.R-project.org/package=r3dmol
+- Zhang, Y., and Skolnick, J. (2004). Scoring function for automated assessment 
+of protein structure template quality. *Proteins, Structure, Function, and Bioinformatics*, 
+57(4), 702–710. https://doi.org/10.1002/prot.20264
 
 ## Acknowledgements
 This package was developed as part of an assessment for 2023 BCB410H: Applied 
