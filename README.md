@@ -82,3 +82,23 @@ chain coloration.
 ## Contributions
 
 The package is created by Kevin Zhu.
+
+## References
+
+- \[Byrd, R. H., Lu, P., Nocedal, J., & Zhu, C. (1995). A limited memory
+  algorithm for bound constrained optimization. *SIAM Journal on
+  Scientific Computing*, 16(5), 1190–1208.\]
+  (<https://doi.org/10.1137/091606>)
+- \[Grant, B.J. et al. (2006). Bio3D: An R package for the comparative
+  analysis of protein structures. *Bioinformatics*, 22, 2695–2696.\]
+  (<https://doi.org/10.1093/bioinformatics/btl461>) \[R package version
+  2.4.4\] (<https://cran.r-project.org/web/packages/bio3d/index.html>)
+
+## Acknowledgements
+
+This package was developed as part of an assessment for 2023 BCB410H:
+Applied Bioinformatics course at the University of Toronto, Toronto,
+CANADA. `TMscoreAlign` welcomes issues, enhancement requests, and other
+contributions. To submit an issue, use the [GitHub
+issues](https://github.com/anjalisilva/TestingPackage/issues). Many
+thanks to those who provided feedback to improve this package.
