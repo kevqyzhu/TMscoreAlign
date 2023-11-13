@@ -93,10 +93,10 @@ The package is created by Kevin Zhu.
 ## References
 - [Byrd, R. H., Lu, P., Nocedal, J., & Zhu, C. (1995). A limited memory 
 algorithm for bound constrained optimization. 
-*SIAM Journal on Scientific Computing*, 16(5), 1190–1208.](https://doi.org/10.1137/091606)
+*SIAM Journal on Scientific Computing*, 16(5), 1190–1208.](https://epubs.siam.org/doi/10.1137/0916069)
 - [Grant, B.J. et al. (2006). Bio3D: An R package for the comparative analysis
-of protein structures. *Bioinformatics*, 22, 2695--2696.]
-(https://doi.org/10.1093/bioinformatics/btl461) [R package version 2.4.4] (https://cran.r-project.org/web/packages/bio3d/index.html)
+of protein structures. *Bioinformatics*, 22, 2695--2696.](https://doi.org/10.1093/bioinformatics/btl461) 
+[R package version 2.4.4] (https://cran.r-project.org/web/packages/bio3d/index.html)
 
 
 ## Acknowledgements
