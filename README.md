@@ -55,7 +55,7 @@ user.
 
 `optimize_alignment`: This function performs optimization to improve the
 alignment of two protein structures based on their atomic coordinates.
-This function takes in translation and rotation values and aims to find
+It takes as input the translation and rotation values and aims to find
 the best parameters that minimize the objective function (TM-score).
 Note that this process can be initialized with default values or
 continue from a given set of values. Optimization is performed via the
