@@ -25,12 +25,12 @@ better accuracy. Defaults to TRUE.}
 }
 \value{
 A list containing the following elements: \cr
-  - N: Numeric. Number of common residues in the alignment. \cr
+  - N: Integer. Number of common residues in the alignment. \cr
   - coord1: Matrix. 3D coordinates of CA atoms for common residues in the
     first structure. \cr
   - coord2: Matrix. 3D coordinates of CA atoms for common residues in the
     second structure. \cr
-  - values: Numeric vector. Alignment parameters obtained from structure
+  - values: Double vector. Alignment parameters obtained from structure
     alignment.
 }
 \description{

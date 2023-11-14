@@ -23,12 +23,12 @@
 #'   better accuracy. Defaults to TRUE.
 #'
 #' @return A list containing the following elements: \cr
-#'   - N: Numeric. Number of common residues in the alignment. \cr
+#'   - N: Integer. Number of common residues in the alignment. \cr
 #'   - coord1: Matrix. 3D coordinates of CA atoms for common residues in the
 #'     first structure. \cr
 #'   - coord2: Matrix. 3D coordinates of CA atoms for common residues in the
 #'     second structure. \cr
-#'   - values: Numeric vector. Alignment parameters obtained from structure
+#'   - values: Double vector. Alignment parameters obtained from structure
 #'     alignment.
 #'
 #' @examples
@@ -188,7 +188,7 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
 #' @param alignment List. Structure alignment results, including alignment
 #'   parameters, coordinates, and other information.
 #'   The list should contain the following elements:\cr
-#'   - N: Numeric. Number of common residues in the alignment.\cr
+#'   - N: Integer Number of common residues in the alignment.\cr
 #'   - coord1: Matrix. 3D coordinates of CA atoms for common residues in the
 #'     first structure.\cr
 #'   - coord2: Matrix. 3D coordinates of CA atoms for common residues in the

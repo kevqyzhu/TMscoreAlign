@@ -42,8 +42,10 @@ coordinates of the second structure (coord2) are required.
 alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
                       psi = 0.3
                       )
-original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, byrow = TRUE)
-transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3,
+original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8), nrow = 4,
+                               byrow = TRUE
+                               )
+transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7, 1, 8), nrow = 4,
                                   byrow = TRUE
                                   )
 rmsd_value <- rmsd(alignment_params, original_coordinates,

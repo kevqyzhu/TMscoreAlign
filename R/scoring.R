@@ -4,9 +4,6 @@
 # Version: 1.0.0
 # Bugs and Issues: N/A
 
-# Define constants
-DTYPE <- 'numeric'
-
 #' Get TM Score from Protein Structure Alignment
 #'
 #' This function calculates the TM score from the alignment parameters and
@@ -237,8 +234,10 @@ estimate_d0 <- function(N) {
 #' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
 #'                       psi = 0.3
 #'                       )
-#' original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, byrow = TRUE)
-#' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3,
+#' original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8), nrow = 4,
+#'                                byrow = TRUE
+#'                                )
+#' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7, 1, 8), nrow = 4,
 #'                                   byrow = TRUE
 #'                                   )
 #' distances <- dist_samples(alignment_params, original_coordinates,
@@ -303,8 +302,10 @@ dist_samples <- function(values, coord1, coord2) {
 #' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
 #'                       psi = 0.3
 #'                       )
-#' original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, byrow = TRUE)
-#' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3,
+#' original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8), nrow = 4,
+#'                                byrow = TRUE
+#'                                )
+#' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7, 1, 8), nrow = 4,
 #'                                   byrow = TRUE
 #'                                   )
 #' d0_squared <- 5.0
@@ -370,8 +371,10 @@ tm_samples <- function(values, coord1, coord2, d02) {
 #' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
 #'                       psi = 0.3
 #'                       )
-#' original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, byrow = TRUE)
-#' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3,
+#' original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8), nrow = 4,
+#'                                byrow = TRUE
+#'                                )
+#' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7, 1, 8), nrow = 4,
 #'                                   byrow = TRUE
 #'                                   )
 #' d0_squared <- 5.0
@@ -432,8 +435,10 @@ tm <- function(values, coord1, coord2, d02) {
 #' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
 #'                       psi = 0.3
 #'                       )
-#' original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, byrow = TRUE)
-#' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3,
+#' original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8), nrow = 4,
+#'                                byrow = TRUE
+#'                                )
+#' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7, 1, 8), nrow = 4,
 #'                                   byrow = TRUE
 #'                                   )
 #' rmsd_value <- rmsd(alignment_params, original_coordinates,
