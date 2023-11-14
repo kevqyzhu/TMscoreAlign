@@ -55,12 +55,18 @@ coordinates alongside the original coordinates of the first structure.
 \examples{
 \dontrun{
 # Example: Write transformed coordinates to a new PDB file
-alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
+pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
+                          package="TMscoreAlign"
+                          )
+pdb_file2 <- system.file("extdata", "1LNIA_decoy1_180.pdb",
+                          package="TMscoreAlign"
+                          )
+alignment_results <- get_alignment(pdb_file1, pdb_file2,
                                     chain1 = 'A', chain2 = 'A',
                                     method = "alignment"
                                     )
 write_pdb(alignment_results, outputfile = "aligned_structure.pdb",
-         appended = TRUE, pdb1 = "structure1.pdb", pdb2 = "structure2.pdb",
+         appended = TRUE, pdb1 = pdb_file1, pdb2 = pdb_file2,
          chain_1 = 'A', chain_2 = 'A'
          )
 }

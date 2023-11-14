@@ -79,9 +79,13 @@ chain we want to use in this analysis.
 
 ``` r
 # our first PDB file
-pdb_file1 <- "/Users/kevinzhu/Documents/UTORONTO/Courses/FINAL/BCH/tmscore_testing/3DRobot_set/1BYIA/decoy0_1.pdb"
+pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb", 
+                          package="TMscoreAlign"
+                          )
 # our second PDB file
-pdb_file2 <- "/Users/kevinzhu/Documents/UTORONTO/Courses/FINAL/BCH/tmscore_testing/3DRobot_set/1BYIA/decoy6_37.pdb"
+pdb_file2 <- system.file("extdata", "1LNIA_decoy1_180.pdb", 
+                          package="TMscoreAlign"
+                          )
 
 # the chain identifier for pdb_file1
 chain1 <- 'A'
@@ -202,6 +206,9 @@ Byrd, R. H., Lu, P., Nocedal, J., & Zhu, C. (1995). A limited memory
 algorithm for bound constrained optimization.
 *SIAM Journal on Scientific Computing*, 16(5), 1190–1208. 
 https://epubs.siam.org/doi/10.1137/0916069
+
+Deng, H., Jia, Y., and Zhang, Y. (2016). 3DRobot: Automated Generation of 
+Diverse and Well-packed Protein Structure Decoys. *Boinformatics*, 32, 378-387.https://doi.org/10.1093/bioinformatics/btv601
 
 Grant, B.J. et al. (2006). _Bio3D: An R package for the comparative analysis
 of protein structures_. *Bioinformatics*, 22, 2695--2696. 

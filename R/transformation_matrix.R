@@ -27,6 +27,18 @@
 #' @examples
 #' \dontrun{
 #' # Example: Get default values for structure alignment parameters
+#' pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
+#'                           package="TMscoreAlign"
+#'                           )
+#' pdb_file2 <- system.file("extdata", "1LNIA_decoy1_180.pdb",
+#'                           package="TMscoreAlign"
+#'                           )
+#' alignment_results <- get_alignment(pdb_file1, pdb_file2,
+#'                                   chain1 = 'A', chain2 = 'A',
+#'                                   method = "alignment", optimize = FALSE
+#'                                   )
+#' coord1 <- alignment_results$coord1
+#' coord2 <- alignment_results$coord2
 #' default_values <- get_default_values(coord1, coord2)
 #' }
 #'

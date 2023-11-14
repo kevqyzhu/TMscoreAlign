@@ -1,0 +1,82 @@
+#' PDB information for 1LNIA decoy1_4
+#'
+#' Correctly formatted PDB file
+#'
+#' @source 3DRobot_set from Zhang Lab \cr
+#' Deng, H., Jia, Y., and Zhang, Y. (2016). 3DRobot: Automated Generation of
+#' Diverse and Well-packed Protein Structure Decoys. \emph{Boinformatics}, 32,
+#' 378-387.\href{https://doi.org/10.1093/bioinformatics/btv601}{Link}
+#'
+#' @format Returns a list of class "pdb" representing the decoy1_180 of the
+#'    1LNIA protein. This list has the following components as described by
+#'    the bio3d documentation:
+#' \describe{
+#'  \item{atom}{a data.frame containing all atomic coordinate ATOM and HETATM
+#'      data, with a row per ATOM/HETATM and a column per record type
+#'      }
+#'  \item{helix}{‘start’, ‘end’ and ‘length’ of H type sse, where start and end
+#'      are residue numbers “resno”
+#'      }
+#'  \item{sheet}{‘start’, ‘end’ and ‘length’ of E type sse, where start and end
+#'      are residue numbers “resno”
+#'      }
+#'  \item{seqres}{sequence from SEQRES field}
+#'  \item{xyz}{a numeric matrix of class "xyz" containing the ATOM and HETATM
+#'      coordinate data.
+#'      }
+#'  \item{calpha}{logical vector with length equal to nrow(atom) with TRUE
+#'      values indicating a C-alpha “elety”
+#'      }
+#'  \item{remark}{a list object containing information taken from REMARK
+#'      records of the PDB file
+#'      }
+#'  \item{call}{the matched call}
+#'
+#' }
+#' @examples
+#' \dontrun{
+#'  sample_pdb1
+#' }
+"sample_pdb1"
+
+#' PDB information for 1LNIA decoy1_180
+#'
+#' Correctly formatted PDB file
+#'
+#' @source 3DRobot_set from Zhang Lab \cr
+#' Deng, H., Jia, Y., and Zhang, Y. (2016). 3DRobot: Automated Generation of
+#' Diverse and Well-packed Protein Structure Decoys. \emph{Boinformatics}, 32,
+#' 378-387.\href{https://doi.org/10.1093/bioinformatics/btv601}{Link}
+#'
+#' @format Returns a list of class "pdb" representing the decoy1_180 of the
+#'    1LNIA protein. This list has the following components as described by
+#'    the bio3d documentation:
+#' \describe{
+#'  \item{atom}{a data.frame containing all atomic coordinate ATOM and HETATM
+#'      data, with a row per ATOM/HETATM and a column per record type
+#'      }
+#'  \item{helix}{‘start’, ‘end’ and ‘length’ of H type sse, where start and end
+#'      are residue numbers “resno”
+#'      }
+#'  \item{sheet}{‘start’, ‘end’ and ‘length’ of E type sse, where start and end
+#'      are residue numbers “resno”
+#'      }
+#'  \item{seqres}{sequence from SEQRES field.}
+#'  \item{xyz}{a numeric matrix of class "xyz" containing the ATOM and HETATM
+#'      coordinate data
+#'      }
+#'  \item{calpha}{logical vector with length equal to nrow(atom) with TRUE
+#'      values indicating a C-alpha “elety”
+#'      }
+#'  \item{remark}{a list object containing information taken from REMARK
+#'      records of the PDB file
+#'      }
+#'  \item{call}{the matched call}
+#'
+#' }
+#' @examples
+#' \dontrun{
+#'  sample_pdb2
+#' }
+"sample_pdb2"
+

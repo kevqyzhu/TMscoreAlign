@@ -106,11 +106,14 @@ generative AI tools were used in the development of this package.
 Bank. *Nature Structural & Molecular Biology*, 10, 980 (2003). 
 https://doi.org/10.1038/nsb1203-980
 - Borchers H (2022). _pracma: Practical Numerical Math Functions_. R package 
-version 2.4.2 https://CRAN.R-project.org/package=pracma
+version 2.4.2, 
+https://CRAN.R-project.org/package=pracma
 - Byrd, R. H., Lu, P., Nocedal, J., & Zhu, C. (1995). A limited memory 
 algorithm for bound constrained optimization.
 *SIAM Journal on Scientific Computing*, 16(5), 1190–1208. 
 https://epubs.siam.org/doi/10.1137/0916069
+- Deng, H., Jia, Y., and Zhang, Y. (2016). 3DRobot: Automated Generation of 
+Diverse and Well-packed Protein Structure Decoys. *Boinformatics*, 32, 378-387.https://doi.org/10.1093/bioinformatics/btv601
 - Grant, B.J. et al. (2006). _Bio3D: An R package for the comparative analysis
 of protein structures_. *Bioinformatics*, 22, 2695--2696. 
 https://doi.org/10.1093/bioinformatics/btl461
