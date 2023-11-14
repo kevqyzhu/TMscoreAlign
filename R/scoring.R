@@ -30,7 +30,8 @@ DTYPE <- 'numeric'
 #' # Example: Calculate TM score from alignment
 #' alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
 #'                                   chain1 = 'A', chain2 = 'A',
-#'                                   method = "alignment")
+#'                                   method = "alignment"
+#'                                   )
 #' optimized_alignment <- optimize(alignment_results)
 #' tmscore <- get_tmscore(optimized_alignment)
 #' print(tmscore)
@@ -81,7 +82,8 @@ get_tmscore <- function(alignment) {
 #' # Example: Calculate TM samples from alignment
 #' alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
 #'                                   chain1 = 'A', chain2 = 'A',
-#'                                   method = "alignment")
+#'                                   method = "alignment"
+#'                                   )
 #' tm_samples <- get_tm_samples(alignment_results)
 #' print(tm_samples)
 #' }
@@ -132,7 +134,8 @@ get_tm_samples <- function(alignment) {
 #' # Example: Calculate RMSD from alignment
 #' alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
 #'                                   chain1 = 'A', chain2 = 'A',
-#'                                   method = "alignment")
+#'                                   method = "alignment"
+#'                                   )
 #' rmsd_value <- get_rmsd(alignment_results)
 #' print(rmsd_value)
 #' }
@@ -214,12 +217,15 @@ estimate_d0 <- function(N) {
 #' \dontrun{
 #' # Example: Calculate distances between transformed coordinates
 #' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
-#'                       psi = 0.3)
+#'                       psi = 0.3
+#'                       )
 #' original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, byrow = TRUE)
 #' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3,
-#'                                   byrow = TRUE)
+#'                                   byrow = TRUE
+#'                                   )
 #' distances <- dist_samples(alignment_params, original_coordinates,
-#'                           transformed_coordinates)
+#'                           transformed_coordinates
+#'                           )
 #' }
 #'
 #' @references
@@ -277,10 +283,12 @@ dist_samples <- function(values, coord1, coord2) {
 #' \dontrun{
 #' # Example: Calculate TM-Score between transformed coordinates
 #' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
-#'                       psi = 0.3)
+#'                       psi = 0.3
+#'                       )
 #' original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, byrow = TRUE)
 #' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3,
-#'                                   byrow = TRUE)
+#'                                   byrow = TRUE
+#'                                   )
 #' d0_squared <- 5.0
 #' tm_score <- tm_samples(alignment_params, original_coordinates,
 #'                        transformed_coordinates, d0_squared)
@@ -342,13 +350,16 @@ tm_samples <- function(values, coord1, coord2, d02) {
 #' \dontrun{
 #' # Example: Calculate average TM-Score between transformed coordinates
 #' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
-#'                       psi = 0.3)
+#'                       psi = 0.3
+#'                       )
 #' original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, byrow = TRUE)
 #' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3,
-#'                                   byrow = TRUE)
+#'                                   byrow = TRUE
+#'                                   )
 #' d0_squared <- 5.0
 #' avg_tm_score <- tm(alignment_params, original_coordinates,
-#'                    transformed_coordinates, d0_squared)
+#'                    transformed_coordinates, d0_squared
+#'                    )
 #' }
 #'
 #' @references
@@ -401,12 +412,15 @@ tm <- function(values, coord1, coord2, d02) {
 #' \dontrun{
 #' # Example: Calculate RMSD between transformed coordinates
 #' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
-#'                       psi = 0.3)
+#'                       psi = 0.3
+#'                       )
 #' original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, byrow = TRUE)
 #' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3,
-#'                                   byrow = TRUE)
+#'                                   byrow = TRUE
+#'                                   )
 #' rmsd_value <- rmsd(alignment_params, original_coordinates,
-#'                    transformed_coordinates)
+#'                    transformed_coordinates
+#'                    )
 #' }
 #'
 #' @seealso

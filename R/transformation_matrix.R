@@ -67,12 +67,14 @@ get_default_values <- function(coord1, coord2) {
   # Calculate rotation parameters
   s <- sqrt(sum(v^2)) + .Machine$double.eps
   c <- sum(vec1 * vec2)
-  vx <- matrix(c(0, -v[3], v[2], v[3], 0, -v[1], -v[2], v[1], 0), nrow = 3,
-               byrow = TRUE)
+  vx <- matrix(c(0, -v[3], v[2], v[3], 0, -v[1], -v[2], v[1], 0),
+               nrow = 3, byrow = TRUE
+               )
   rotation_matrix <- diag(3) + vx + vx%*%vx * (1 - c) / (s * s)
   values$theta <- atan2(rotation_matrix[3, 2], rotation_matrix[3, 3])
   values$phi <- atan2(-rotation_matrix[3, 1],
-                      sqrt(rotation_matrix[3, 2]^2 + rotation_matrix[3, 3]^2))
+                      sqrt(rotation_matrix[3, 2]^2 + rotation_matrix[3, 3]^2)
+                      )
   values$psi <- atan2(rotation_matrix[2, 1], rotation_matrix[1, 1])
 
   # Convert the list to a numeric vector

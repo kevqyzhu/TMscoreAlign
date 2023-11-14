@@ -30,7 +30,8 @@ structures.
 # Example: Calculate TM score from alignment
 alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
                                   chain1 = 'A', chain2 = 'A',
-                                  method = "alignment")
+                                  method = "alignment"
+                                  )
 optimized_alignment <- optimize(alignment_results)
 tmscore <- get_tmscore(optimized_alignment)
 print(tmscore)

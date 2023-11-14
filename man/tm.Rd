@@ -44,13 +44,16 @@ required.
 \dontrun{
 # Example: Calculate average TM-Score between transformed coordinates
 alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
-                      psi = 0.3)
+                      psi = 0.3
+                      )
 original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, byrow = TRUE)
 transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7), nrow = 3,
-                                  byrow = TRUE)
+                                  byrow = TRUE
+                                  )
 d0_squared <- 5.0
 avg_tm_score <- tm(alignment_params, original_coordinates,
-                   transformed_coordinates, d0_squared)
+                   transformed_coordinates, d0_squared
+                   )
 }
 
 }

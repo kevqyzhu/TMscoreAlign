@@ -32,7 +32,8 @@ structural alignment between two protein structures.
 # Example: Optimize alignment parameters
 alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
                                   chain1 = 'A', chain2 = 'A',
-                                  method = "alignment", optimize = FALSE)
+                                  method = "alignment", optimize = FALSE
+                                  )
 optimized_results <- optimize(alignment_results, restart = TRUE)
 print(optimized_results)
 }

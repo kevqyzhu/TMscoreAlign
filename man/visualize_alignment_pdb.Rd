@@ -37,7 +37,8 @@ alignment_pdb_file <- "aligned_structure.pdb"
 chain1_color <- "#636efa"  # Blue
 chain2_color <- "#ff7f0e"  # Orange
 visualize_alignment_pdb(alignment_pdb_file, chain1 = chain1_color,
-                        chain2 = chain2_color)
+                        chain2 = chain2_color
+                        )
 }
 
 }

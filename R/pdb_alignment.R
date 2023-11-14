@@ -41,10 +41,12 @@
 #' # Example: Write transformed coordinates to a new PDB file
 #' alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
 #'                                     chain1 = 'A', chain2 = 'A',
-#'                                     method = "alignment")
+#'                                     method = "alignment"
+#'                                     )
 #' write_pdb(alignment_results, outputfile = "aligned_structure.pdb",
 #'          appended = TRUE, pdb1 = "structure1.pdb", pdb2 = "structure2.pdb",
-#'          chain_1 = 'A', chain_2 = 'A')
+#'          chain_1 = 'A', chain_2 = 'A'
+#'          )
 #' }
 #'
 #' @references
@@ -61,7 +63,8 @@
 #'
 #' @export
 write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
-                      pdb1, pdb2, chain_1, chain_2) {
+                      pdb1, pdb2, chain_1, chain_2
+                      ) {
 
   values <- alignment$values
   matrix <- get_matrix(values)
@@ -75,11 +78,14 @@ write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
     lines <- readLines(pdb1)
     for (line in lines) {
       if (!grepl("^ATOM", line) || (substring(line, 22, 22) != " " &&
-                                    substring(line, 22, 22) != chain_1)) {
+                                    substring(line, 22, 22) != chain_1
+                                    )
+          ) {
         next
       }
       cat(substr(line, 1, 6), sprintf("%4d", atomid), substr(line, 13, 20), "A",
-          substr(line, 24, nchar(line)), "\n", file = out)
+          substr(line, 24, nchar(line)), "\n", file = out
+          )
       atomid <- atomid + 1
     }
   }
@@ -88,9 +94,11 @@ write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
   lines <- readLines(pdb2)
   for (line in lines) {
     if (!grepl("^ATOM", line) || (substring(line, 22, 22) != " " &&
-                                  substring(line, 22, 22) != chain_2)) {
+                                  substring(line, 22, 22) != chain_2
+                                  )
+        ) {
       next
-    }
+      }
 
     x <- as.numeric(substr(line, 32, 38))
     y <- as.numeric(substr(line, 39, 46))
@@ -102,8 +110,10 @@ write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
     cat(substr(line, 1, 6), sprintf("%4d", atomid), substr(line, 13, 20), "B",
         substr(line, 24, 29),
         sprintf("%8.3f%8.3f%8.3f", transformed_vec[1], transformed_vec[2],
-                transformed_vec[3]), substr(line, 56, nchar(line)), "\n",
-        file = out)
+                transformed_vec[3]
+                ),
+        substr(line, 56, nchar(line)), "\n", file = out
+        )
     atomid <- atomid + 1
   }
 
@@ -133,7 +143,8 @@ write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
 #' chain1_color <- "#636efa"  # Blue
 #' chain2_color <- "#ff7f0e"  # Orange
 #' visualize_alignment_pdb(alignment_pdb_file, chain1 = chain1_color,
-#'                         chain2 = chain2_color)
+#'                         chain2 = chain2_color
+#'                         )
 #' }
 #'
 #' @references
@@ -181,5 +192,5 @@ visualize_alignment_pdb <- function(alignment_pdb = "out.pdb",
       angle = 90,
       axis = "y"
     ) %>%
-    m_spin()                      # Animate the scene by spinning it
+    m_spin()                      # Animate the chains by spinning them
 }

@@ -57,10 +57,12 @@ coordinates alongside the original coordinates of the first structure.
 # Example: Write transformed coordinates to a new PDB file
 alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
                                     chain1 = 'A', chain2 = 'A',
-                                    method = "alignment")
+                                    method = "alignment"
+                                    )
 write_pdb(alignment_results, outputfile = "aligned_structure.pdb",
          appended = TRUE, pdb1 = "structure1.pdb", pdb2 = "structure2.pdb",
-         chain_1 = 'A', chain_2 = 'A')
+         chain_1 = 'A', chain_2 = 'A'
+         )
 }
 
 }

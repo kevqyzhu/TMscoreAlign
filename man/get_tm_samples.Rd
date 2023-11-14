@@ -30,7 +30,8 @@ structures.
 # Example: Calculate TM samples from alignment
 alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
                                   chain1 = 'A', chain2 = 'A',
-                                  method = "alignment")
+                                  method = "alignment"
+                                  )
 tm_samples <- get_tm_samples(alignment_results)
 print(tm_samples)
 }

@@ -31,7 +31,8 @@ between two protein structures.
 # Example: Calculate RMSD from alignment
 alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
                                   chain1 = 'A', chain2 = 'A',
-                                  method = "alignment")
+                                  method = "alignment"
+                                  )
 rmsd_value <- get_rmsd(alignment_results)
 print(rmsd_value)
 }
