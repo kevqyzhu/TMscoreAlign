@@ -9,12 +9,12 @@ tm_samples(values, coord1, coord2, d02)
 \arguments{
 \item{values}{Numeric vector. Alignment parameters obtained from structure
 alignment.
- The vector includes the following elements:
- - dx: Translation along the x-axis.
- - dy: Translation along the y-axis.
- - dz: Translation along the z-axis.
- - theta: Rotation angle around the x-axis.
- - phi: Rotation angle around the y-axis.
+ The vector includes the following elements:\cr
+ - dx: Translation along the x-axis.\cr
+ - dy: Translation along the y-axis.\cr
+ - dz: Translation along the z-axis.\cr
+ - theta: Rotation angle around the x-axis.\cr
+ - phi: Rotation angle around the y-axis.\cr
  - psi: Rotation angle around the z-axis.}
 
 \item{coord1}{Matrix. 3D coordinates of the first structure's atoms

@@ -1,3 +1,9 @@
+# Purpose: Instantiate and optimize alignment
+# Author: Kevin Zhu
+# Date: 11.14.2023
+# Version: 1.0.0
+# Bugs and Issues: N/A
+
 #' Load Data and Perform Sequence Alignment or Index-based Analysis
 #'
 #' This function reads two Protein Data Bank (PDB) files, extracts the CA atom
@@ -11,16 +17,16 @@
 #' @param chain2 Character string. Chain identifier for the second PDB file
 #'  (default is 'A').
 #' @param method Character string. Method for residue selection.
-#'  Options: "alignment" or "index"
+#'  Options: "alignment" or "index"\cr
 #'   - "alignment": Perform sequence alignment using pairwiseAlignment from
-#'      Bioconductor.
+#'      Bioconductor.\cr
 #'   - "index": Use residue indices based on the specified chains to identify
 #'      common residues.
-#' @return A list containing the following components:
+#' @return A list containing the following components:\cr
 #'   - coord1: 3D coordinates (matrix) of CA atoms for common residues in the
-#'      first structure.
+#'      first structure.\cr
 #'   - coord2: 3D coordinates (matrix) of CA atoms for common residues in the
-#'      second structure.
+#'      second structure.\cr
 #'   - N: Number of common residues.
 #'
 #' @examples
@@ -101,12 +107,12 @@ load_data_alignment <- function(pdb_file1, pdb_file2, chain1 = 'A',
 #'
 #' @param alignment List. Structure alignment results, including alignment
 #'   parameters, coordinates, and other information.
-#'   The list should contain the following elements:
-#'   - N: Numeric. Number of common residues in the alignment.
+#'   The list should contain the following elements:\cr
+#'   - N: Numeric. Number of common residues in the alignment.\cr
 #'   - coord1: Matrix. 3D coordinates of CA atoms for common residues in the
-#'     first structure.
+#'     first structure.\cr
 #'   - coord2: Matrix. 3D coordinates of CA atoms for common residues in the
-#'     second structure.
+#'     second structure.\cr
 #'   - values: Numeric vector. Initial alignment parameters.
 #' @param restart Logical. If TRUE, the optimization starts from the default
 #'   values. If FALSE, it continues from the current alignment parameters.
@@ -156,81 +162,6 @@ optimize <- function(alignment, restart = TRUE) {
   return(alignment)
 }
 
-#' Get Default Values for Structure Alignment Parameters
-#'
-#' This function calculates default values for the parameters used in structure
-#' alignment. The parameters include translation along x, y, z axes
-#' (dx, dy, dz), and rotation angles (theta, phi, psi) based on the given 3D
-#' coordinates of two structures.
-#'
-#' @param coord1 Matrix. 3D coordinates of the first structure's atoms
-#'  (rows: dimensions, columns: atoms).
-#' @param coord2 Matrix. 3D coordinates of the second structure's atoms
-#'  (rows: dimensions, columns: atoms).
-#' @return A numeric vector containing default values for the structure
-#'   alignment parameters:
-#'   - dx: Translation along the x-axis.
-#'   - dy: Translation along the y-axis.
-#'   - dz: Translation along the z-axis.
-#'   - theta: Rotation angle around the x-axis.
-#'   - phi: Rotation angle around the y-axis.
-#'   - psi: Rotation angle around the z-axis.
-#'
-#' @examples
-#' \dontrun{
-#' # Example: Get default values for structure alignment parameters
-#' default_values <- get_default_values(coord1, coord2)
-#' }
-#'
-#' @references
-#' Borchers H (2022). pracma: Practical Numerical Math Functions. R package
-#' version 2.4.2, \href{https://CRAN.R-project.org/package=pracma}{Link}.
-#'
-#' Jur van den Berg
-#' (https://math.stackexchange.com/users/91768/jur-van-den-berg),
-#' Calculate Rotation Matrix to align Vector $A$ to Vector $B$ in $3D$?,
-#' URL (version: 2016-09-01):
-#' \href{https://math.stackexchange.com/q/476311}{Link}
-#'
-#' @export
-#' @importFrom pracma cross
-get_default_values <- function(coord1, coord2) {
-  # Initialize a list to store the default values
-  values <- list()
-
-  # Set initial translation values to zero
-  values$dx <- 0
-  values$dy <- 0
-  values$dz <- 0
-
-  # Calculate the mean displacement along each axis
-  dist <- rowMeans(coord1 - coord2)
-  values$dx <- dist[1]
-  values$dy <- dist[2]
-  values$dz <- dist[3]
-
-  # Calculate normalized vectors and cross product
-  vec1 <- coord1[-nrow(coord1), 2] - coord1[-nrow(coord1), ncol(coord1)]
-  vec2 <- coord2[-nrow(coord2), 2] - coord2[-nrow(coord2), ncol(coord1)]
-  vec1 <- vec1 / sqrt(sum(vec1^2))
-  vec2 <- vec2 / sqrt(sum(vec2^2))
-  v <- cross(vec1, vec2)
-
-  # Calculate rotation parameters
-  s <- sqrt(sum(v^2)) + .Machine$double.eps
-  c <- sum(vec1 * vec2)
-  vx <- matrix(c(0, -v[3], v[2], v[3], 0, -v[1], -v[2], v[1], 0), nrow = 3,
-               byrow = TRUE)
-  rotation_matrix <- diag(3) + vx + vx%*%vx * (1 - c) / (s * s)
-  values$theta <- atan2(rotation_matrix[3, 2], rotation_matrix[3, 3])
-  values$phi <- atan2(-rotation_matrix[3, 1],
-                      sqrt(rotation_matrix[3, 2]^2 + rotation_matrix[3, 3]^2))
-  values$psi <- atan2(rotation_matrix[2, 1], rotation_matrix[1, 1])
-
-  # Convert the list to a numeric vector
-  return(unlist(values))
-}
-
 #' Get Protein Structure Alignment
 #'
 #' This function performs structural alignment between two protein structures
@@ -249,12 +180,12 @@ get_default_values <- function(coord1, coord2) {
 #' @param optimize Logical. If TRUE, the alignment parameters are optimized for
 #'   better accuracy. Defaults to TRUE.
 #'
-#' @return A list containing the following elements:
-#'   - N: Numeric. Number of common residues in the alignment.
+#' @return A list containing the following elements: \cr
+#'   - N: Numeric. Number of common residues in the alignment. \cr
 #'   - coord1: Matrix. 3D coordinates of CA atoms for common residues in the
-#'     first structure.
+#'     first structure. \cr
 #'   - coord2: Matrix. 3D coordinates of CA atoms for common residues in the
-#'     second structure.
+#'     second structure. \cr
 #'   - values: Numeric vector. Alignment parameters obtained from structure
 #'     alignment.
 #'
@@ -291,149 +222,3 @@ get_alignment <- function(pdb1, pdb2, chain1 = 'A', chain2 = 'A', method,
   return(alignment)
 }
 
-#' Get TM Score from Protein Structure Alignment
-#'
-#' This function calculates the TM score from the alignment parameters and
-#' coordinates obtained in a structural alignment between two protein
-#' structures.
-#'
-#' @param alignment List. Structure alignment results, including alignment
-#'   parameters, coordinates, and other information.
-#'   The list should contain the following elements:
-#'   - N: Numeric. Number of common residues in the alignment.
-#'   - coord1: Matrix. 3D coordinates of CA atoms for common residues in the
-#'     first structure.
-#'   - coord2: Matrix. 3D coordinates of CA atoms for common residues in the
-#'     second structure.
-#'   - values: Numeric vector. Alignment parameters.
-#'
-#' @return Numeric. TM score of the protein structure alignment.
-#'
-#' @examples
-#' \dontrun{
-#' # Example: Calculate TM score from alignment
-#' alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
-#'                                   chain1 = 'A', chain2 = 'A',
-#'                                   method = "alignment")
-#' optimized_alignment <- optimize(alignment_results)
-#' tmscore <- get_tmscore(optimized_alignment)
-#' print(tmscore)
-#' }
-#'
-#' @references
-#' Zhang, Y., and Skolnick, J. (2004). Scoring function for automated assessment
-#' of protein structure template quality. \emph{Proteins, Structure, Function,
-#' and Bioinformatics}, 57(4), 702–710.
-#' \href{https://doi.org/10.1002/prot.20264}{Link}
-#'
-#' @seealso
-#' \code{\link{get_alignment}} for obtaining alignment details.
-#' \code{\link{optimize}} for optimizing alignment parameters.
-#' \code{\link{estimate_d0}} for estimating initial distance parameters.
-#' \code{\link{tm}} for calculating TM-score.
-#'
-#' @export
-get_tmscore <- function(alignment) {
-  # Return the TM-Score from the alignment
-  tmscore <- tm(alignment$values,
-                alignment$coord1,
-                alignment$coord2,
-                estimate_d0(alignment$N)$d02)
-  return(tmscore)
-}
-
-#' Get TM local scores from Protein Structure Alignment
-#'
-#' This function calculates the TM local scores from the alignment parameters
-#' and coordinates obtained in a structural alignment between two protein
-#' structures.
-#'
-#' @param alignment List. Structure alignment results, including alignment
-#'   parameters, coordinates, and other information.
-#'   The list should contain the following elements:
-#'   - N: Numeric. Number of common residues in the alignment.
-#'   - coord1: Matrix. 3D coordinates of CA atoms for common residues in the
-#'     first structure.
-#'   - coord2: Matrix. 3D coordinates of CA atoms for common residues in the
-#'     second structure.
-#'   - values: Numeric vector. Alignment parameters.
-#'
-#' @return Numeric vector. TM samples of the protein structure alignment.
-#'
-#' @examples
-#' \dontrun{
-#' # Example: Calculate TM samples from alignment
-#' alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
-#'                                   chain1 = 'A', chain2 = 'A',
-#'                                   method = "alignment")
-#' tm_samples <- get_tm_samples(alignment_results)
-#' print(tm_samples)
-#' }
-#'
-#' @references
-#' Zhang, Y., and Skolnick, J. (2004). Scoring function for automated assessment
-#' of protein structure template quality. \emph{Proteins, Structure, Function,
-#' and Bioinformatics}, 57(4), 702–710.
-#' \href{https://doi.org/10.1002/prot.20264}{Link}
-#'
-#' @seealso
-#' \code{\link{get_alignment}} for obtaining alignment details.
-#' \code{\link{optimize}} for optimizing alignment parameters.
-#' \code{\link{estimate_d0}} for estimating initial distance parameters.
-#' \code{\link{tm_samples}} for calculating TM local scores
-#'
-#' @export
-get_tm_samples <- function(alignment) {
-  # Return the TM-samoles from the alignment
-  tm_samples <- tm_samples(alignment$values,
-                alignment$coord1,
-                alignment$coord2,
-                estimate_d0(alignment$N)$d02)
-  return(tm_samples)
-}
-
-#' Get Root Mean Square Deviation (RMSD) from Protein Structure Alignment
-#'
-#' This function calculates the Root Mean Square Deviation (RMSD) from the
-#' alignment parameters and coordinates obtained in a structural alignment
-#' between two protein structures.
-#'
-#' @param alignment List. Structure alignment results, including alignment
-#'   parameters, coordinates, and other information.
-#'   The list should contain the following elements:
-#'   - N: Numeric. Number of common residues in the alignment.
-#'   - coord1: Matrix. 3D coordinates of CA atoms for common residues in the
-#'     first structure.
-#'   - coord2: Matrix. 3D coordinates of CA atoms for common residues in the
-#'     second structure.
-#'   - values: Numeric vector. Alignment parameters.
-#'
-#' @return Numeric. Root Mean Square Deviation (RMSD) of the protein structure
-#'   alignment.
-#'
-#' @examples
-#' \dontrun{
-#' # Example: Calculate RMSD from alignment
-#' alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
-#'                                   chain1 = 'A', chain2 = 'A',
-#'                                   method = "alignment")
-#' rmsd_value <- get_rmsd(alignment_results)
-#' print(rmsd_value)
-#' }
-#'
-#' @seealso
-#' \code{\link{get_alignment}} for obtaining structural alignment between two
-#'   protein structures.
-#' \code{\link{optimize}} for optimizing alignment parameters.
-#' \code{\link{estimate_d0}} for estimating initial distance parameters.
-#' \code{\link{rmsd}} for calculating RMSD.
-#'
-#' @export
-get_rmsd <- function(alignment) {
-  rmsd <- rmsd(alignment$values,
-                alignment$coord1,
-                alignment$coord2)
-
-  # Return the Root Mean Square Deviation (RMSD)
-  return(rmsd)
-}

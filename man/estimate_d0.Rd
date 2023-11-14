@@ -10,7 +10,7 @@ estimate_d0(N)
 \item{N}{Numeric. Number of common residues between two structures.}
 }
 \value{
-A list containing the following component:
+A list containing the following component:\cr
   - d02: The square of the estimated d0 value for structure alignment.
 }
 \description{

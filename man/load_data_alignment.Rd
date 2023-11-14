@@ -24,18 +24,18 @@ load_data_alignment(
 (default is 'A').}
 
 \item{method}{Character string. Method for residue selection.
-Options: "alignment" or "index"
+Options: "alignment" or "index"\cr
  - "alignment": Perform sequence alignment using pairwiseAlignment from
-    Bioconductor.
+    Bioconductor.\cr
  - "index": Use residue indices based on the specified chains to identify
     common residues.}
 }
 \value{
-A list containing the following components:
+A list containing the following components:\cr
   - coord1: 3D coordinates (matrix) of CA atoms for common residues in the
-     first structure.
+     first structure.\cr
   - coord2: 3D coordinates (matrix) of CA atoms for common residues in the
-     second structure.
+     second structure.\cr
   - N: Number of common residues.
 }
 \description{

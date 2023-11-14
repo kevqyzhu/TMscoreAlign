@@ -9,12 +9,12 @@ optimize(alignment, restart = TRUE)
 \arguments{
 \item{alignment}{List. Structure alignment results, including alignment
 parameters, coordinates, and other information.
-The list should contain the following elements:
-- N: Numeric. Number of common residues in the alignment.
+The list should contain the following elements:\cr
+- N: Numeric. Number of common residues in the alignment.\cr
 - coord1: Matrix. 3D coordinates of CA atoms for common residues in the
-  first structure.
+  first structure.\cr
 - coord2: Matrix. 3D coordinates of CA atoms for common residues in the
-  second structure.
+  second structure.\cr
 - values: Numeric vector. Initial alignment parameters.}
 
 \item{restart}{Logical. If TRUE, the optimization starts from the default

@@ -24,12 +24,12 @@ for sequence-based alignment or "index" for index-based alignment.}
 better accuracy. Defaults to TRUE.}
 }
 \value{
-A list containing the following elements:
-  - N: Numeric. Number of common residues in the alignment.
+A list containing the following elements: \cr
+  - N: Numeric. Number of common residues in the alignment. \cr
   - coord1: Matrix. 3D coordinates of CA atoms for common residues in the
-    first structure.
+    first structure. \cr
   - coord2: Matrix. 3D coordinates of CA atoms for common residues in the
-    second structure.
+    second structure. \cr
   - values: Numeric vector. Alignment parameters obtained from structure
     alignment.
 }

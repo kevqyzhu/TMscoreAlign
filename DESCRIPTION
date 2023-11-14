@@ -21,7 +21,7 @@ LazyData: true
 Depends: R (>= 3.1.0)
 RoxygenNote: 7.2.3
 URL: https://github.com/kevqyzhu/TMscoreAlign
-
-
-
-
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

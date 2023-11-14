@@ -17,13 +17,13 @@ write_pdb(
 \arguments{
 \item{alignment}{List. Structure alignment results, including alignment
 parameters and transformed coordinates.
- The list should contain the following elements:
+ The list should contain the following elements:\cr
  - coord1: 3D coordinates (matrix) of CA atoms for common residues in the
-    first structure.
+    first structure.\cr
  - coord2: 3D coordinates (matrix) of CA atoms for common residues in the
-    second structure.
+    second structure.\cr
  - values: Numeric vector. Alignment parameters obtained from structure
-  alignment.
+  alignment.\cr
  - rmsd: Numeric. Root Mean Square Deviation (RMSD) between the two protein
   structures.}
 
@@ -68,7 +68,7 @@ write_pdb(alignment_results, outputfile = "aligned_structure.pdb",
 Berman, H., Henrick, K. and Nakamura, H.
 Announcing the worldwide Protein Data Bank.
 \emph{Nature Structural & Molecular Biology}, 10, 980 (2003).
-\href{https://doi.org/10.1038/nsb1203-980}
+\href{https://doi.org/10.1038/nsb1203-980}{Link}
 }
 \seealso{
 \code{\link{get_alignment}} for obtaining structural alignment between two
