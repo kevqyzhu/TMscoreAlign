@@ -1,3 +1,9 @@
+# Purpose: PDB files for protein decoys
+# Author: Kevin Zhu
+# Date: 11.14.2023
+# Version: 1.0.0
+# Bugs and Issues: N/A
+
 #' PDB information for 1LNIA decoy1_4
 #'
 #' Correctly formatted PDB file
