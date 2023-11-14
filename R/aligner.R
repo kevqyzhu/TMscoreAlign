@@ -169,7 +169,8 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
 #' Optimize Protein Structure Alignment Parameters
 #'
 #' This function optimizes the alignment parameters for better accuracy of the
-#' structural alignment between two protein structures.
+#' structural alignment between two protein structures. Optimization is
+#' performed via the limited-memory Broyden–Fletcher–Goldfarb–Shanno algorithm.
 #'
 #' @param alignment List. Structure alignment results, including alignment
 #'   parameters, coordinates, and other information.
@@ -182,6 +183,7 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
 #'   - values: Numeric vector. Initial alignment parameters.
 #' @param restart Logical. If TRUE, the optimization starts from the default
 #'   values. If FALSE, it continues from the current alignment parameters.
+#' @param maxit Numeric. The maximum number of iterations for optimization.
 #'
 #' @return The input alignment list updated with optimized parameters
 #'
@@ -209,7 +211,7 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
 #'
 #' @export
 #' @importFrom stats optim
-optimize <- function(alignment, restart = TRUE) {
+optimize <- function(alignment, restart = FALSE, maxit = 300) {
   coord1 <- alignment$coord1
   coord2 <- alignment$coord2
   d0_values <- estimate_d0(alignment$N)
@@ -224,7 +226,8 @@ optimize <- function(alignment, restart = TRUE) {
   method <- "L-BFGS-B"
   result <- stats::optim(par = default_values, fn = tm,
                          coord1 = coord1, coord2 = coord2, d02 = d02,
-                         method = method, control = list(fnscale = -1)
+                         method = method,
+                         control = list(fnscale = -1, maxit = maxit),
                          )
   alignment$values <- result$par
   return(alignment)

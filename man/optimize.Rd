@@ -4,7 +4,7 @@
 \alias{optimize}
 \title{Optimize Protein Structure Alignment Parameters}
 \usage{
-optimize(alignment, restart = TRUE)
+optimize(alignment, restart = FALSE, maxit = 300)
 }
 \arguments{
 \item{alignment}{List. Structure alignment results, including alignment
@@ -19,13 +19,16 @@ The list should contain the following elements:\cr
 
 \item{restart}{Logical. If TRUE, the optimization starts from the default
 values. If FALSE, it continues from the current alignment parameters.}
+
+\item{maxit}{Numeric. The maximum number of iterations for optimization.}
 }
 \value{
 The input alignment list updated with optimized parameters
 }
 \description{
 This function optimizes the alignment parameters for better accuracy of the
-structural alignment between two protein structures.
+structural alignment between two protein structures. Optimization is
+performed via the limited-memory Broyden–Fletcher–Goldfarb–Shanno algorithm.
 }
 \examples{
 \dontrun{
