@@ -138,5 +138,5 @@ This package was developed as part of an assessment for 2023 BCB410H:
 Applied Bioinformatics course at the University of Toronto, Toronto,
 CANADA. `TMscoreAlign` welcomes issues, enhancement requests, and other
 contributions. To submit an issue, use the [GitHub
-issues](https://github.com/anjalisilva/TestingPackage/issues). Many
-thanks to those who provided feedback to improve this package.
+issues](https://github.com/kevqyzhu/TMscoreAlign/issues). Many thanks to
+those who provided feedback to improve this package.
