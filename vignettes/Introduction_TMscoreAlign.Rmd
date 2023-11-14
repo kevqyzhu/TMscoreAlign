@@ -77,17 +77,17 @@ that we will perform structural alignment on. Note that PDB files can have
 multiple chains, so it is necessary to also specify for each PDB file which 
 chain we want to use in this analysis.
 
-``` r
-# our first PDB file
-pdb_file1 <- "/Users/kevinzhu/Documents/UTORONTO/Courses/FINAL/BCH/tmscore_testing/3DRobot_set/1BYIA/decoy0_1.pdb"
-# our second PDB file
-pdb_file2 <- "/Users/kevinzhu/Documents/UTORONTO/Courses/FINAL/BCH/tmscore_testing/3DRobot_set/1BYIA/decoy6_37.pdb"
+<!-- ``` r -->
+<!-- # our first PDB file -->
+<!-- pdb_file1 <- "/Users/kevinzhu/Documents/UTORONTO/Courses/FINAL/BCH/tmscore_testing/3DRobot_set/1BYIA/decoy0_1.pdb" -->
+<!-- # our second PDB file -->
+<!-- pdb_file2 <- "/Users/kevinzhu/Documents/UTORONTO/Courses/FINAL/BCH/tmscore_testing/3DRobot_set/1BYIA/decoy6_37.pdb" -->
 
-# the chain identifier for pdb_file1
-chain1 <- 'A'
-# the chain identifier for pdb_file2
-chain2 <- 'A'
-```
+<!-- # the chain identifier for pdb_file1 -->
+<!-- chain1 <- 'A' -->
+<!-- # the chain identifier for pdb_file2 -->
+<!-- chain2 <- 'A' -->
+<!-- ``` -->
 
 ### Step 2: Read and align
 Now that we have specified the paths for our PDB files, as well as the chain
@@ -102,19 +102,19 @@ In this case, we input "index" into the `method` parameter. When comparing two
 protein structures that have different residue orderings, a sequence alignment 
 can be performed first by inputting "alignment" into the `method` parameter.
 
-``` r
-# aligning residues by index before the structural alignment
-alignment <- get_alignment(pdb_file1, pdb_file2, 
-                          chain1, chain2, method="index",
-                          optimize = FALSE
-                          )
-                          
-# using a sequence alignment before the structural alignment
-alignment <- get_alignment(pdb_file1, pdb_file2, 
-                          chain1, chain2, method="alignment",
-                          optimize = FALSE
-                          )
-```
+<!-- ``` r -->
+<!-- # aligning residues by index before the structural alignment -->
+<!-- alignment <- get_alignment(pdb_file1, pdb_file2,  -->
+<!--                           chain1, chain2, method="index", -->
+<!--                           optimize = FALSE -->
+<!--                           ) -->
+
+<!-- # using a sequence alignment before the structural alignment -->
+<!-- alignment <- get_alignment(pdb_file1, pdb_file2,  -->
+<!--                           chain1, chain2, method="alignment", -->
+<!--                           optimize = FALSE -->
+<!--                           ) -->
+<!-- ``` -->
 
 The output of this function is a `List` that contains structure alignment 
 results, including alignment parameters, coordinates, and other information.
@@ -131,15 +131,17 @@ Note that in the `get_alignment` call, we specified `optimize = FALSE`. This
 initializes the default alignment parameters into `values` but does not optimize
 them.
 
-``` r
-# we can instantiate the alignment parameters and then optimize them directly 
-alignment <- get_alignment(pdb_file1, pdb_file2, 
-                          chain1, chain2, method="alignment",
-                          optimize = TRUE
-                          )
-```
+<!-- ``` r -->
+<!-- # we can instantiate the alignment parameters and then optimize them directly  -->
+<!-- alignment <- get_alignment(pdb_file1, pdb_file2,  -->
+<!--                           chain1, chain2, method="alignment", -->
+<!--                           optimize = TRUE -->
+<!--                           ) -->
+<!-- ``` -->
 
-### Step 3: Optimize
+### Step 3: Optimize alignment
+
+
 
 
 ----
