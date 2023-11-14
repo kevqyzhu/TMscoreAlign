@@ -5,7 +5,7 @@
 \alias{sample_pdb1}
 \title{PDB information for 1LNIA decoy1_4}
 \format{
-Returns a list of class "pdb" representing the decoy1_180 of the
+Returns a list of class "pdb" representing the decoy2_180 of the
    1LNIA protein. This list has the following components as described by
    the bio3d documentation:
 \describe{

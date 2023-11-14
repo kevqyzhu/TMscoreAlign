@@ -7,7 +7,7 @@
 #' Diverse and Well-packed Protein Structure Decoys. \emph{Boinformatics}, 32,
 #' 378-387.\href{https://doi.org/10.1093/bioinformatics/btv601}{Link}
 #'
-#' @format Returns a list of class "pdb" representing the decoy1_180 of the
+#' @format Returns a list of class "pdb" representing the decoy2_180 of the
 #'    1LNIA protein. This list has the following components as described by
 #'    the bio3d documentation:
 #' \describe{
@@ -39,7 +39,7 @@
 #' }
 "sample_pdb1"
 
-#' PDB information for 1LNIA decoy1_180
+#' PDB information for 1LNIA decoy2_180
 #'
 #' Correctly formatted PDB file
 #'
@@ -48,7 +48,7 @@
 #' Diverse and Well-packed Protein Structure Decoys. \emph{Boinformatics}, 32,
 #' 378-387.\href{https://doi.org/10.1093/bioinformatics/btv601}{Link}
 #'
-#' @format Returns a list of class "pdb" representing the decoy1_180 of the
+#' @format Returns a list of class "pdb" representing the decoy2_180 of the
 #'    1LNIA protein. This list has the following components as described by
 #'    the bio3d documentation:
 #' \describe{

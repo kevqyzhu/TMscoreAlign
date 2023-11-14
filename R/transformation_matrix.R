@@ -30,7 +30,7 @@
 #' pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
 #'                           package="TMscoreAlign"
 #'                           )
-#' pdb_file2 <- system.file("extdata", "1LNIA_decoy1_180.pdb",
+#' pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb",
 #'                           package="TMscoreAlign"
 #'                           )
 #' alignment_results <- get_alignment(pdb_file1, pdb_file2,

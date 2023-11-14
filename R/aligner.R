@@ -37,7 +37,7 @@
 #' pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
 #'                           package="TMscoreAlign"
 #'                           )
-#' pdb_file2 <- system.file("extdata", "1LNIA_decoy1_180.pdb",
+#' pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb",
 #'                           package="TMscoreAlign"
 #'                           )
 #' alignment_results <- get_alignment(pdb_file1, pdb_file2,
@@ -103,7 +103,7 @@ get_alignment <- function(pdb1, pdb2, chain1 = 'A', chain2 = 'A', method,
 #' pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
 #'                           package="TMscoreAlign"
 #'                           )
-#' pdb_file2 <- system.file("extdata", "1LNIA_decoy1_180.pdb",
+#' pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb",
 #'                           package="TMscoreAlign"
 #'                           )
 #' result_alignment <- load_data_alignment(pdb_file1,
@@ -206,7 +206,7 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
 #' pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
 #'                           package="TMscoreAlign"
 #'                           )
-#' pdb_file2 <- system.file("extdata", "1LNIA_decoy1_180.pdb",
+#' pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb",
 #'                           package="TMscoreAlign"
 #'                           )
 #' alignment_results <- get_alignment(pdb_file1, pdb_file2,
