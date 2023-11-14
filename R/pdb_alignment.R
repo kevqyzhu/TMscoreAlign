@@ -46,7 +46,7 @@
 #' Berman, H., Henrick, K. and Nakamura, H.
 #' Announcing the worldwide Protein Data Bank.
 #' \emph{Nature Structural & Molecular Biology}, 10, 980 (2003).
-#' \href{https://doi.org/10.1038/nsb1203-980}{Link}
+#' \href{https://doi.org/10.1038/nsb1203-980}
 #'
 #' @seealso
 #' \code{\link{get_alignment}} for obtaining structural alignment between two

@@ -87,7 +87,17 @@ cartoon-style structures for each protein chain. The user can specify the
 alignment parameters and chain coloration. 
 
 ## Contributions
-The package is created by Kevin Zhu.
+The package is created by Kevin Zhu. `get_alignment` calls a helper function 
+that uses `read.pdb`, `clean.pdb`, `pdbseq`, and `atom.select` from the `bio3d`
+package to read the input PDB files. The `pairwiseAlignment` and `subject` 
+functions from `Biostrings` were used to generate the sequence alignment. The 
+`optimize` function uses the `optim` function from the `stats` package in order 
+to optimize the alignment parameters for maximum TM-score. Furthermore, when 
+generating the transformation matrix to represent the alignment parameters, the
+`cross` function from the `pracma` package was used to generate the vector cross 
+product. The visualization from this package is accomplished using `r3dmol`.
+All functions from this package were written by the author. No generative AI
+tools were used in the development of this package. 
 
 ## References
 - Berman, H., Henrick, K. and Nakamura, H. Announcing the worldwide Protein Data
