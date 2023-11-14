@@ -1,149 +1,19 @@
 ---
-title: "A tutorial for TMscoreAlign"
-author: "Kevin Zhu"
-date: "`r format(Sys.time(), '%d %b %Y')`"
-output: 
-  rmarkdown::html_vignette:
-    toc: true
-    number_sections: false
+title: "Introduction_TMscoreAlign"
+output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{A tutorial for TMscoreAlign}
+  %\VignetteIndexEntry{Introduction_TMscoreAlign}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup1, include=FALSE}
-library(knitr)
-opts_chunk$set(fig.align = "center", 
-               out.width = "90%",
-               fig.width = 6, fig.height = 5.5,
-               dev.args=list(pointsize=10),
-               par = TRUE, # needed for setting hook 
-               collapse = TRUE, # collapse input & ouput code in chunks
-               warning = FALSE)
-knit_hooks$set(par = function(before, options, envir)
-  { if(before && options$fig.show != "none") 
-       par(family = "sans", mar=c(4.1,4.1,1.1,1.1), mgp=c(3,1,0), tcl=-0.5)
-})
-set.seed(1) # for exact reproducibility
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
 ```
 
 ```{r setup}
-require("devtools")
-devtools::install_github("kevqyzhu/TMscoreAlign")
 library(TMscoreAlign)
-```
-
-## Introduction
-`TMscoreAlign` is an R package that implements the TM-align program in R 
-([Zhang & Skolnick, 2005](https://doi.org/10.1002/prot.20264)). 
-TM-align is a method for aligning proteins based on TM-score 
-(Template Modelling score), which calculates topological similarity between two 
-protein structures 
-([Zhang & Skolnick, 2004](https://doi.org/10.1093/nar/gki524)). TM-score 
-improves upon existing means of structural comparison such as RMSD 
-(root-mean-square deviation) as it is length-independent and more sensitive to 
-global similarities between structures rather than local deviations. This 
-package is targeted for structural biologists who may use this package to 
-investigate different conformations of the same protein, informing a structural
-basis of protein functions. The tool includes functions that performs structure 
-alignment, calculates TM-scores and RMSD, and visualizes aligned structures. 
-
-See `help(package = "TMscoreAlign")` for further details. 
-To download **TMscoreAlign**, use the following commands:
-
-``` r
-require("devtools")
-devtools::install_github("kevqyzhu/TMscoreAlign", build_vignettes = TRUE)
-library("TMscoreAlign")
-```
-
-To list all sample functions available in the package:
-``` r
-ls("package:TMscoreAlign")
-```
-
-To list all sample datasets available in the package:
-``` r
-data(package = "TMscoreAlign")
-```
-
-## Workflow
-
-### Step 1: Preparing the inputs 
-
-First, we will read in two PDB files. These will contain the protein structures
-that we will perform structural alignment on. Note that PDB files can have 
-multiple chains, so it is necessary to also specify for each PDB file which 
-chain we want to use in this analysis.
-
-``` r
-# our first PDB file
-pdb_file1 <- "/Users/kevinzhu/Documents/UTORONTO/Courses/FINAL/BCH/tmscore_testing/3DRobot_set/1BYIA/decoy0_1.pdb"
-# our second PDB file
-pdb_file2 <- "/Users/kevinzhu/Documents/UTORONTO/Courses/FINAL/BCH/tmscore_testing/3DRobot_set/1BYIA/decoy6_37.pdb"
-
-# the chain identifier for pdb_file1
-chain1 <- 'A'
-# the chain identifier for pdb_file2
-chain2 <- 'A'
-```
-
-### Step 2: Read and align
-Now that we have specified the paths for our PDB files, as well as the chain
-identifiers for each file, we can actually begin aligning them. The 
-`get_alignment` function takes as input these file paths and chain identifiers.
-
-Note that before structural alignment occurs, we must first identify which 
-residues appear in both the template and target structures. Thus, when comparing
-two protein structures that have the same residue order, we can use the 
-C-alpha (the carbon that is one away from an aldehyde or ketone group) ordering.
-In this case, we input "index" into the `method` parameter. When comparing two 
-protein structures that have different residue orderings, a sequence alignment 
-can be performed first by inputting "alignment" into the `method` parameter.
-
-``` r
-# aligning residues by index before the structural alignment
-alignment <- get_alignment(pdb_file1, pdb_file2, 
-                          chain1, chain2, method="index",
-                          optimize = FALSE
-                          )
-                          
-# using a sequence alignment before the structural alignment
-alignment <- get_alignment(pdb_file1, pdb_file2, 
-                          chain1, chain2, method="alignment",
-                          optimize = FALSE
-                          )
-```
-
-The output of this function is a `List` that contains structure alignment 
-results, including alignment parameters, coordinates, and other information.
-The list has the following elements:
-
-* `N`: Numeric. Number of common residues in the alignment.
-* `coord1`: Matrix. 3D coordinates of C-alpha atoms for common residues in the 
-first structure.
-* `coord2`: Matrix. 3D coordinates of C-alpha atoms for common residues in the 
-second structure.
-* `values`: Numeric vector. Initial alignment parameters.
-
-Note that in the `get_alignment` call, we specified `optimize = FALSE`. This 
-initializes the default alignment parameters into `values` but does not optimize
-them.
-
-``` r
-# we can instantiate the alignment parameters and then optimize them directly 
-alignment <- get_alignment(pdb_file1, pdb_file2, 
-                          chain1, chain2, method="alignment",
-                          optimize = TRUE
-                          )
-```
-
-### Step 3: Optimize
-
-
-----
-
-```{r sessioninfo, message=FALSE}
-sessionInfo()
 ```
