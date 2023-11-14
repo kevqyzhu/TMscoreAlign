@@ -51,5 +51,5 @@ print(alignment_results)
 }
 \seealso{
 \code{\link{load_data_alignment}} for loading data for structure alignment.
-\code{\link{optimize}} for optimizing alignment parameters.
+\code{\link{optimize_alignment}} for optimizing alignment parameters.
 }

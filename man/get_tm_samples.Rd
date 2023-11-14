@@ -45,7 +45,7 @@ and Bioinformatics}, 57(4), 702–710.
 }
 \seealso{
 \code{\link{get_alignment}} for obtaining alignment details.
-\code{\link{optimize}} for optimizing alignment parameters.
+\code{\link{optimize_alignment}} for optimizing alignment parameters.
 \code{\link{estimate_d0}} for estimating initial distance parameters.
 \code{\link{tm_samples}} for calculating TM local scores
 }

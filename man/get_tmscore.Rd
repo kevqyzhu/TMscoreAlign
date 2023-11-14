@@ -32,7 +32,7 @@ alignment_results <- get_alignment("structure1.pdb", "structure2.pdb",
                                   chain1 = 'A', chain2 = 'A',
                                   method = "alignment"
                                   )
-optimized_alignment <- optimize(alignment_results)
+optimized_alignment <- optimize_alignment(alignment_results)
 tmscore <- get_tmscore(optimized_alignment)
 print(tmscore)
 }
@@ -46,7 +46,7 @@ and Bioinformatics}, 57(4), 702–710.
 }
 \seealso{
 \code{\link{get_alignment}} for obtaining alignment details.
-\code{\link{optimize}} for optimizing alignment parameters.
+\code{\link{optimize_alignment}} for optimizing alignment parameters.
 \code{\link{estimate_d0}} for estimating initial distance parameters.
 \code{\link{tm}} for calculating TM-score.
 }

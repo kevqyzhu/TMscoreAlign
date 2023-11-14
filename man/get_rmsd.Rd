@@ -41,7 +41,7 @@ print(rmsd_value)
 \seealso{
 \code{\link{get_alignment}} for obtaining structural alignment between two
   protein structures.
-\code{\link{optimize}} for optimizing alignment parameters.
+\code{\link{optimize_alignment}} for optimizing alignment parameters.
 \code{\link{estimate_d0}} for estimating initial distance parameters.
 \code{\link{rmsd}} for calculating RMSD.
 }

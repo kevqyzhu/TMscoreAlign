@@ -42,7 +42,7 @@
 #'
 #' @seealso
 #' \code{\link{load_data_alignment}} for loading data for structure alignment.
-#' \code{\link{optimize}} for optimizing alignment parameters.
+#' \code{\link{optimize_alignment}} for optimizing alignment parameters.
 #'
 #' @export
 get_alignment <- function(pdb1, pdb2, chain1 = 'A', chain2 = 'A', method,
@@ -60,7 +60,7 @@ get_alignment <- function(pdb1, pdb2, chain1 = 'A', chain2 = 'A', method,
                     )
   if (optimize) {
     # Optimize the alignment
-    alignment <- optimize(alignment)
+    alignment <- optimize_alignment(alignment)
   }
 
   return(alignment)
@@ -194,7 +194,7 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
 #'                                   chain1 = 'A', chain2 = 'A',
 #'                                   method = "alignment", optimize = FALSE
 #'                                   )
-#' optimized_results <- optimize(alignment_results, restart = TRUE)
+#' optimized_results <- optimize_alignment(alignment_results, restart = TRUE)
 #' print(optimized_results)
 #' }
 #'
@@ -211,7 +211,7 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
 #'
 #' @export
 #' @importFrom stats optim
-optimize <- function(alignment, restart = FALSE, maxit = 300) {
+optimize_alignment <- function(alignment, restart = FALSE, maxit = 300) {
   coord1 <- alignment$coord1
   coord2 <- alignment$coord2
   d0_values <- estimate_d0(alignment$N)

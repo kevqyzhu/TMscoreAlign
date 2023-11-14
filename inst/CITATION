@@ -1,0 +1,12 @@
+citHeader("To cite TMscoreAlign in publications use:")
+
+citEntry(
+  entry    = "Unpublished",
+  title    = "TMscoreAlign: Protein structure alignment with TM-score",
+  author   = "Kevin Zhu",
+  year     = 2023,
+  note     = "Unpublished",
+  textVersion =
+  paste("Zhu, K. (2023) TMscoreAlign: Protein structure alignment with TM-score.
+        Unpublished. URL https://github.com/kevqyzhu/TMscoreAlign.")
+)

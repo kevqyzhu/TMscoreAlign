@@ -53,12 +53,13 @@ rotation values, are initialized. These values can be further optimized
 for TM-score (Template Modeling score) before being returned to the
 user.
 
-`optimize`: This function performs optimization to improve the alignment
-of two protein structures based on their atomic coordinates. This
-function takes in translation and rotation values and aims to find the
-best parameters that minimize the objective function (TM-score). The
-optimization can be restarted with default values or continue from a
-given set of values.
+`optimize_alignment`: This function performs optimization to improve the
+alignment of two protein structures based on their atomic coordinates.
+This function takes in translation and rotation values and aims to find
+the best parameters that minimize the objective function (TM-score).
+Note that this process can be initialized with default values or
+continue from a given set of values. Optimization is performed via the
+limited-memory Broyden–Fletcher–Goldfarb–Shanno algorithm.
 
 `get_tmscore`: This function calculates the TM-score from the alignment
 parameters and coordinates obtained in a structural alignment between
@@ -85,13 +86,13 @@ The package is created by Kevin Zhu. `get_alignment` calls a helper
 function that uses `read.pdb`, `clean.pdb`, `pdbseq`, and `atom.select`
 from the `bio3d` package to read the input PDB files. The
 `pairwiseAlignment` and `subject` functions from `Biostrings` were used
-to generate the sequence alignment. The `optimize` function uses the
-`optim` function from the `stats` package in order to optimize the
-alignment parameters for maximum TM-score. Furthermore, when generating
-the transformation matrix to represent the alignment parameters, the
-`cross` function from the `pracma` package was used to generate the
-vector cross product. The visualization from this package is
-accomplished using `r3dmol`. All functions from this package were
+to generate the sequence alignment. The `optimize_alignment` function
+uses the `optim` function from the `stats` package in order to optimize
+the alignment parameters for maximum TM-score. Furthermore, when
+generating the transformation matrix to represent the alignment
+parameters, the `cross` function from the `pracma` package was used to
+generate the vector cross product. The visualization from this package
+is accomplished using `r3dmol`. All functions from this package were
 written by the author. No generative AI tools were used in the
 development of this package.
 
