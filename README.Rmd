@@ -144,4 +144,58 @@ To submit an issue, use the
 [GitHub issues](https://github.com/kevqyzhu/TMscoreAlign/issues). Many 
 thanks to those who provided feedback to improve this package.
 
-
+## Tree Structure
+``` r
+- TMscoreAlign
+  |- .gitignore
+  |- .Rbuildignore
+  |- .RData
+  |- .Rhistory
+  |- data
+    |- sample_pdb1.rda
+    |- sample_pdb2.rda
+  |- DESCRIPTION
+  |- inst
+    |- CITATION
+    |- extdata
+      |- 1LNIA_decoy1_4.pdb
+      |- 1LNIA_decoy2_180.pdb
+  |- LICENSE
+  |- LICENSE.md
+  |- man
+    |- dist_samples.Rd
+    |- estimate_d0.Rd
+    |- get_alignment.Rd
+    |- get_default_values.Rd
+    |- get_matrix.Rd
+    |- get_rmsd.Rd
+    |- get_tm_samples.Rd
+    |- get_tmscore.Rd
+    |- load_data_alignment.Rd
+    |- optimize_alignment.Rd
+    |- rmsd.Rd
+    |- sample_pdb1.Rd
+    |- sample_pdb2.Rd
+    |- tm.Rd
+    |- tm_samples.Rd
+    |- visualize_alignment_pdb.Rd
+    |- write_pdb.Rd
+  |- NAMESPACE
+  |- TMscoreAlign.Rproj
+  |- R
+    |- aligner.R
+    |- data.R
+    |- pdb_alignment.R
+    |- scoring.R
+    |- transformation_matrix.R
+  |- README.md
+  |- README.RMD
+  |- tests
+    |- testthat
+      |- test-aligner.R
+      |- test-transformation_matrix.R
+    |- testthat.R
+  |- vignettes
+    |- .gitignore
+    |- Introduction_TMscoreAlign.Rmd
+```
