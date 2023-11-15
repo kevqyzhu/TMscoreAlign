@@ -74,7 +74,8 @@ write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
 
   values <- alignment$values
   matrix <- get_matrix(values)
-  # browser()
+  read.pdb(pdb1)
+  read.pdb(pdb2)
 
   out <- file(outputfile, "w")
   atomid <- 1

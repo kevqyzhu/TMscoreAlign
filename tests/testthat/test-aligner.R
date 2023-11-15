@@ -20,9 +20,6 @@ test_that("get_alignment returns a list", {
   expect_equal(length(dim(alignment$coord1)), 2)
   expect_equal(length(dim(alignment$coord2)), 2)
   expect_vector(alignment$values)
-
-  expect_equal(get_tmscore(alignment), 0.0133905, tolerance = 1e-6)
-  expect_equal(get_rmsd(alignment), 16.67055, tolerance = 1e-6)
 })
 
 # Test get_alignment function shows error message
@@ -105,7 +102,4 @@ test_that("optimize_alignment returns a list", {
   expect_equal(length(dim(optimized_alignment$coord1)), 2)
   expect_equal(length(dim(optimized_alignment$coord2)), 2)
   expect_vector(alignment$values)
-
-  expect_equal(get_tmscore(optimized_alignment), 0.6054935, tolerance = 1e-6)
-  expect_equal(get_rmsd(optimized_alignment), 2.639272, tolerance = 1e-6)
 })

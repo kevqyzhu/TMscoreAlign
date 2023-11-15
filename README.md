@@ -195,6 +195,8 @@ those who provided feedback to improve this package.
   |- tests
     |- testthat
       |- test-aligner.R
+      |- test-pdb_alignment.R
+      |- test-scoring.R
       |- test-transformation_matrix.R
     |- testthat.R
   |- vignettes
