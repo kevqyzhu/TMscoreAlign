@@ -80,6 +80,11 @@ alignment is represented by color-coded cartoon-style structures for
 each protein chain. The user can specify the alignment parameters and
 chain coloration.
 
+The package also contains two example PDB files of decoy protein
+structures from the 3DRobot dataset ([Deng, Jia, & Zhang,
+2016](https://doi.org/10.1093/bioinformatics/btv601)) for demonstration
+purposes. Refer to package vignettes for more details.
+
 ## Contributions
 
 The package is created by Kevin Zhu. `get_alignment` calls a helper
@@ -109,7 +114,7 @@ development of this package.
   <https://epubs.siam.org/doi/10.1137/0916069>
 - Deng, H., Jia, Y., and Zhang, Y. (2016). 3DRobot: Automated Generation
   of Diverse and Well-packed Protein Structure Decoys. *Boinformatics*,
-  32, 378-387.https://doi.org/10.1093/bioinformatics/btv601
+  32, 378-387. <https://doi.org/10.1093/bioinformatics/btv601>
 - Grant, B.J. et al. (2006). *Bio3D: An R package for the comparative
   analysis of protein structures*. *Bioinformatics*, 22, 2695–2696.
   <https://doi.org/10.1093/bioinformatics/btl461> R package version
