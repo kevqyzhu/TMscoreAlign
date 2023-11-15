@@ -83,7 +83,10 @@ chain coloration.
 The package also contains two example PDB files of decoy protein
 structures from the 3DRobot dataset ([Deng, Jia, & Zhang,
 2016](https://doi.org/10.1093/bioinformatics/btv601)) for demonstration
-purposes. Refer to package vignettes for more details.
+purposes. Refer to package vignettes for more details. An overview of
+the package is illustrated below.
+
+![](./inst/extdata/overview.png)
 
 ## Contributions
 
@@ -167,6 +170,7 @@ those who provided feedback to improve this package.
     |- extdata
       |- 1LNIA_decoy1_4.pdb
       |- 1LNIA_decoy2_180.pdb
+      |- overview.png
   |- LICENSE
   |- LICENSE.md
   |- man
