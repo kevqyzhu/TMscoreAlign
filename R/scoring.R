@@ -180,6 +180,7 @@ get_rmsd <- function(alignment) {
 #' The square of the estimated d0 value (d02) is returned.
 #'
 #' @param N Numeric. Number of common residues between two structures.
+#'
 #' @return A list containing the following component:\cr
 #'   - d02: The square of the estimated d0 value for structure alignment.
 #'
@@ -224,6 +225,7 @@ estimate_d0 <- function(N) {
 #'  (rows: dimensions, columns: atoms).
 #' @param coord2 Matrix. 3D coordinates of the second structure's atoms
 #'  (rows: dimensions, columns: atoms).
+#'
 #' @return A matrix of Euclidean distances between the transformed coordinates
 #'  (coord) and the original
 #'   coordinates of the first structure (coord1).
@@ -293,6 +295,7 @@ dist_samples <- function(values, coord1, coord2) {
 #'  the TM-Score calculation.
 #'   It represents an effective distance cutoff for defining structural
 #'   similarity.
+#'
 #' @return The TM-Score between the transformed coordinates and the original
 #'  coordinates of the structures.
 #'
@@ -362,6 +365,7 @@ tm_samples <- function(values, coord1, coord2, d02) {
 #' @param d02 Numeric. The square of the d0 parameter, a critical parameter in
 #'  the TM-Score calculation.
 #'   It represents a distance cutoff for defining structural similarity.
+#'
 #' @return The average TM-Score between the transformed coordinates and the
 #'  original coordinates of the structures.
 #'
@@ -425,6 +429,7 @@ tm <- function(values, coord1, coord2, d02) {
 #'  (rows: dimensions, columns: atoms).
 #' @param coord2 Matrix. 3D coordinates of the second structure's atoms
 #'  (rows: dimensions, columns: atoms).
+#'
 #' @return The Root Mean Square Deviation (RMSD) between the transformed
 #'  coordinates and the original
 #'   coordinates of the structures.

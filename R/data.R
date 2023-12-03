@@ -39,6 +39,7 @@
 #'  \item{call}{the matched call}
 #'
 #' }
+#'
 #' @examples
 #' \dontrun{
 #'  sample_pdb1
@@ -80,6 +81,7 @@
 #'  \item{call}{the matched call}
 #'
 #' }
+#'
 #' @examples
 #' \dontrun{
 #'  sample_pdb2

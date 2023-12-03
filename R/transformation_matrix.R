@@ -15,6 +15,7 @@
 #'  (rows: dimensions, columns: atoms).
 #' @param coord2 Matrix. 3D coordinates of the second structure's atoms
 #'  (rows: dimensions, columns: atoms).
+#'
 #' @return A numeric vector containing default values for the structure
 #'   alignment parameters:\cr
 #'   - dx: Translation along the x-axis.\cr
@@ -110,6 +111,7 @@ get_default_values <- function(coord1, coord2) {
 #'   - theta: Rotation angle around the x-axis.\cr
 #'   - phi: Rotation angle around the y-axis.\cr
 #'   - psi: Rotation angle around the z-axis.
+#'
 #' @return A 4x4 transformation matrix for aligning structures based on the
 #'  input alignment parameters.
 #'

@@ -240,7 +240,8 @@ R package version 0.1.2, https://CRAN.R-project.org/package=r3dmol
 
 Zhang, Y., and Skolnick, J. (2004). Scoring function for automated assessment 
 of protein structure template quality. 
-*Proteins, Structure, Function, and Bioinformatics*, 57(4), 702–710. https://doi.org/10.1002/prot.20264
+*Proteins, Structure, Function, and Bioinformatics*, 57(4), 702–710. 
+https://doi.org/10.1002/prot.20264
 
 ----
 

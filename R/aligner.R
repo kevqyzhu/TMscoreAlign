@@ -90,6 +90,7 @@ get_alignment <- function(pdb1, pdb2, chain1 = 'A', chain2 = 'A', method,
 #'      Bioconductor.\cr
 #'   - "index": Use residue indices based on the specified chains to identify
 #'      common residues.
+#'
 #' @return A list containing the following components:\cr
 #'   - coord1: 3D coordinates (matrix) of CA atoms for common residues in the
 #'      first structure.\cr
