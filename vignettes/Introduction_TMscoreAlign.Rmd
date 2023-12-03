@@ -179,14 +179,20 @@ get_rmsd(alignment)
 
 We can also write a PDB file using the alignment parameters. The resulting file
 contains two chains that represent the aligned protein structures. This output
-PDB file can subsequently be visualized.
+PDB file can subsequently be visualized, represented by color-coded structures 
+for each protein chain, as shown below.
 
 ``` r
 write_pdb(alignment, outputfile = "out.pdb", appended = TRUE, 
           pdb_file1, pdb_file2, chain1, chain2
           )
-visualize_alignment_pdb("out.pdb")
+chain1_color <- "#636efa"  # Blue
+chain2_color <- "#ff7f0e"  # Orange
+visualize_alignment_pdb("out.pdb", chain1 = chain1_color,
+                         chain2 = chain2_color
+                         )
 ```
+![](../inst/extdata/aligned_structure.png)
 
 ## Package References
 
