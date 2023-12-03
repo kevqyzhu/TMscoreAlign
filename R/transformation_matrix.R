@@ -137,11 +137,11 @@ get_matrix <- function(values) {
 
   # Create the rotation matrix
   rotation <- matrix(0, nrow = 3, ncol = 3)
-  rotation[1, 1] <- ctheta * cpsi - stheta * cphi * spsi
-  rotation[1, 2] <- ctheta * spsi + stheta * cphi * cpsi
+  rotation[1, 1] <- (ctheta * cpsi) - (stheta * cphi * spsi)
+  rotation[1, 2] <- (ctheta * spsi) + (stheta * cphi * cpsi)
   rotation[1, 3] <- stheta * sphi
-  rotation[2, 1] <- -stheta * cpsi - ctheta * cphi * spsi
-  rotation[2, 2] <- -stheta * spsi + ctheta * cphi * cpsi
+  rotation[2, 1] <- (-stheta * cpsi) - (ctheta * cphi * spsi)
+  rotation[2, 2] <- (-stheta * spsi) + (ctheta * cphi * cpsi)
   rotation[2, 3] <- ctheta * sphi
   rotation[3, 1] <- sphi * spsi
   rotation[3, 2] <- -sphi * cpsi
