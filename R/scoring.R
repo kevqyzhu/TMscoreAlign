@@ -68,20 +68,24 @@ get_tmscore <- function(alignment) {
     stop("The N in alignment must be an integer.")
   }
 
-  if (length(dim(alignment$coord1)) != 2) {
-    stop("The coord1 in alignment must be a 2D matrix")
+  if (length(dim(alignment$coord1)) != 2 |
+      length(dim(alignment$coord2)) != 2) {
+    stop("The coord1 and coord2 matrices in alignment must be 2D matrices.")
   }
 
-  if (length(dim(alignment$coord2)) != 2) {
-    stop("The coord2 in alignment must be a 2D matrix")
+  if (dim(alignment$coord1)[1] != 4 |
+      dim(alignment$coord2)[1] != 4) {
+    stop("The first dimension of coord1 and coord2 matrices must be 4.")
+  }
+
+  if (dim(alignment$coord1)[2] != alignment$N |
+      dim(alignment$coord2)[2] != alignment$N) {
+    stop("The second dimension of coord1 and coord2 matrices must be equal to
+         N.")
   }
 
   if (!is.vector(alignment$values)) {
-    stop("The values in alignment must be a vector")
-  }
-
-  if (!is.vector(alignment$values)) {
-    stop("The values in alignment must be a vector")
+    stop("The values in alignment must be a vector.")
   }
 
   if (!setequal(names(alignment$values),
@@ -160,20 +164,24 @@ get_tm_samples <- function(alignment) {
     stop("The N in alignment must be an integer.")
   }
 
-  if (length(dim(alignment$coord1)) != 2) {
-    stop("The coord1 in alignment must be a 2D matrix")
+  if (length(dim(alignment$coord1)) != 2 |
+      length(dim(alignment$coord2)) != 2) {
+    stop("The coord1 and coord2 matrices in alignment must be 2D matrices.")
   }
 
-  if (length(dim(alignment$coord2)) != 2) {
-    stop("The coord2 in alignment must be a 2D matrix")
+  if (dim(alignment$coord1)[1] != 4 |
+      dim(alignment$coord2)[1] != 4) {
+    stop("The first dimension of coord1 and coord2 matrices must be 4.")
+  }
+
+  if (dim(alignment$coord1)[2] != alignment$N |
+      dim(alignment$coord2)[2] != alignment$N) {
+    stop("The second dimension of coord1 and coord2 matrices must be equal to
+         N.")
   }
 
   if (!is.vector(alignment$values)) {
-    stop("The values in alignment must be a vector")
-  }
-
-  if (!is.vector(alignment$values)) {
-    stop("The values in alignment must be a vector")
+    stop("The values in alignment must be a vector.")
   }
 
   if (!setequal(names(alignment$values),
@@ -248,20 +256,24 @@ get_rmsd <- function(alignment) {
     stop("The N in alignment must be an integer.")
   }
 
-  if (length(dim(alignment$coord1)) != 2) {
-    stop("The coord1 in alignment must be a 2D matrix")
+  if (length(dim(alignment$coord1)) != 2 |
+      length(dim(alignment$coord2)) != 2) {
+    stop("The coord1 and coord2 matrices in alignment must be 2D matrices.")
   }
 
-  if (length(dim(alignment$coord2)) != 2) {
-    stop("The coord2 in alignment must be a 2D matrix")
+  if (dim(alignment$coord1)[1] != 4 |
+      dim(alignment$coord2)[1] != 4) {
+    stop("The first dimension of coord1 and coord2 matrices must be 4.")
+  }
+
+  if (dim(alignment$coord1)[2] != alignment$N |
+      dim(alignment$coord2)[2] != alignment$N) {
+    stop("The second dimension of coord1 and coord2 matrices must be equal to
+         N.")
   }
 
   if (!is.vector(alignment$values)) {
-    stop("The values in alignment must be a vector")
-  }
-
-  if (!is.vector(alignment$values)) {
-    stop("The values in alignment must be a vector")
+    stop("The values in alignment must be a vector.")
   }
 
   if (!setequal(names(alignment$values),
@@ -368,20 +380,28 @@ estimate_d0 <- function(N) {
 #' @export
 dist_samples <- function(values, coord1, coord2) {
   if (!is.vector(values)) {
-    stop("values must be a vector")
+    stop("Values must be a vector.")
   }
 
   if (!setequal(names(values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
-    stop("The values in alignment does not have the correct elements.")
+    stop("Values in alignment does not have the correct elements.")
   }
 
   if (length(dim(coord1)) != 2) {
-    stop("coord1 must be a 2D matrix")
+    stop("coord1 must be a 2D matrix.")
+  }
+
+  if (dim(coord1)[1] != 4) {
+    stop("The first dimension of coord1 must be 4.")
   }
 
   if (length(dim(coord2)) != 2) {
-    stop("coord2 must be a 2D matrix")
+    stop("coord2 must be a 2D matrix.")
+  }
+
+  if (dim(coord2)[1] != 4) {
+    stop("The first dimension of coord2 must be 4.")
   }
 
   # Get the 4x4 transformation matrix from alignment parameters
@@ -456,24 +476,32 @@ dist_samples <- function(values, coord1, coord2) {
 #' @export
 tm_samples <- function(values, coord1, coord2, d02) {
   if (!is.vector(values)) {
-    stop("values must be a vector")
+    stop("Values must be a vector.")
   }
 
   if (!setequal(names(values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
-    stop("The values in alignment does not have the correct elements.")
+    stop("Values in alignment does not have the correct elements.")
   }
 
   if (length(dim(coord1)) != 2) {
-    stop("coord1 must be a 2D matrix")
+    stop("coord1 must be a 2D matrix.")
+  }
+
+  if (dim(coord1)[1] != 4) {
+    stop("The first dimension of coord1 must be 4.")
   }
 
   if (length(dim(coord2)) != 2) {
-    stop("coord2 must be a 2D matrix")
+    stop("coord2 must be a 2D matrix.")
+  }
+
+  if (dim(coord2)[1] != 4) {
+    stop("The first dimension of coord2 must be 4.")
   }
 
   if (!is.numeric(d02)) {
-    stop("d02 must be a number")
+    stop("d02 must be a number.")
   }
 
   # Calculate distances between transformed coordinates
@@ -548,24 +576,32 @@ tm_samples <- function(values, coord1, coord2, d02) {
 #' @export
 tm <- function(values, coord1, coord2, d02) {
   if (!is.vector(values)) {
-    stop("values must be a vector")
+    stop("Values must be a vector.")
   }
 
   if (!setequal(names(values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
-    stop("The values in alignment does not have the correct elements.")
+    stop("Values in alignment does not have the correct elements.")
   }
 
   if (length(dim(coord1)) != 2) {
-    stop("coord1 must be a 2D matrix")
+    stop("coord1 must be a 2D matrix.")
+  }
+
+  if (dim(coord1)[1] != 4) {
+    stop("The first dimension of coord1 must be 4.")
   }
 
   if (length(dim(coord2)) != 2) {
-    stop("coord2 must be a 2D matrix")
+    stop("coord2 must be a 2D matrix.")
+  }
+
+  if (dim(coord2)[1] != 4) {
+    stop("The first dimension of coord2 must be 4.")
   }
 
   if (!is.numeric(d02)) {
-    stop("d02 must be a number")
+    stop("d02 must be a number.")
   }
 
   # Calculate individual TM-Scores
@@ -630,20 +666,28 @@ tm <- function(values, coord1, coord2, d02) {
 #' @export
 rmsd <- function(values, coord1, coord2) {
   if (!is.vector(values)) {
-    stop("values must be a vector")
+    stop("Values must be a vector.")
   }
 
   if (!setequal(names(values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
-    stop("The values in alignment does not have the correct elements.")
+    stop("Values in alignment does not have the correct elements.")
   }
 
   if (length(dim(coord1)) != 2) {
-    stop("coord1 must be a 2D matrix")
+    stop("coord1 must be a 2D matrix.")
+  }
+
+  if (dim(coord1)[1] != 4) {
+    stop("The first dimension of coord1 must be 4.")
   }
 
   if (length(dim(coord2)) != 2) {
-    stop("coord2 must be a 2D matrix")
+    stop("coord2 must be a 2D matrix.")
+  }
+
+  if (dim(coord2)[1] != 4) {
+    stop("The first dimension of coord2 must be 4.")
   }
 
   # Calculate distances between transformed coordinates

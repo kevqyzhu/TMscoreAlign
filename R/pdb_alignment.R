@@ -31,10 +31,8 @@
 #'    transformed coordinates.
 #' @param pdb1 Character. Path to the PDB file of the first protein structure.
 #' @param pdb2 Character. Path to the PDB file of the second protein structure.
-#' @param chain_1 Character. Chain identifier for the first protein structure in
-#'  output file.
-#' @param chain_2 Character. Chain identifier for the second protein structure
-#'  in output file.
+#' @param chain_1 Character. Chain identifier for the first protein structure.
+#' @param chain_2 Character. Chain identifier for the second protein structure.
 #'
 #' @examples
 #' \dontrun{
@@ -71,6 +69,58 @@
 write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
                       pdb1, pdb2, chain_1, chain_2
                       ) {
+  if (typeof(alignment) != "list") {
+    stop("Alignment type must be List.")
+  }
+
+  if (!setequal(names(alignment), c("N", "coord1", "coord2", "values"))) {
+    stop("Alignment does not have the correct elements.")
+  }
+
+  if (typeof(alignment$N) != "integer") {
+    stop("The N in alignment must be an integer.")
+  }
+
+  if (length(dim(alignment$coord1)) != 2 |
+      length(dim(alignment$coord2)) != 2) {
+    stop("The coord1 and coord2 matrices in alignment must be 2D matrices.")
+  }
+
+  if (dim(alignment$coord1)[1] != 4 |
+      dim(alignment$coord2)[1] != 4) {
+    stop("The first dimension of coord1 and coord2 matrices must be 4.")
+  }
+
+  if (dim(alignment$coord1)[2] != alignment$N |
+      dim(alignment$coord2)[2] != alignment$N) {
+    stop("The second dimension of coord1 and coord2 matrices must be equal to
+         N.")
+  }
+
+  if (!is.vector(alignment$values)) {
+    stop("The values in alignment must be a vector.")
+  }
+
+  if (!setequal(names(alignment$values),
+                c("dx", "dy", "dz", "theta", "phi", "psi"))) {
+    stop("The values in alignment does not have the correct elements.")
+  }
+
+  if (typeof(appended) != "logical") {
+    stop("appended must be logical type.")
+  }
+
+  if (!file.exists(pdb1)) {
+    stop("File path to pdb1 does not exist.")
+  }
+
+  if (!file.exists(pdb2)) {
+    stop("File path to pdb2 does not exist.")
+  }
+
+  if (!is.character(chain_1) | !is.character(chain_2)) {
+    stop("Chain identifiers must be characters.")
+  }
 
   values <- alignment$values
   matrix <- get_matrix(values)
@@ -184,6 +234,10 @@ write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
 #' @import r3dmol
 visualize_alignment_pdb <- function(alignment_pdb = "out.pdb",
                                     chain1 = "#636efa", chain2 = "#ff7f0e") {
+  if (!file.exists(alignment_pdb)) {
+    stop("File path to alignment_pdb does not exist.")
+  }
+
   r3dmol(                         # Set up the initial viewer
     viewer_spec = m_viewer_spec(
       cartoonQuality = 40,

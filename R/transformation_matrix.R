@@ -56,6 +56,22 @@
 #' @export
 #' @importFrom pracma cross
 get_default_values <- function(coord1, coord2) {
+  if (length(dim(coord1)) != 2) {
+    stop("coord1 must be a 2D matrix.")
+  }
+
+  if (dim(coord1)[1] != 4) {
+    stop("The first dimension of coord1 must be 4.")
+  }
+
+  if (length(dim(coord2)) != 2) {
+    stop("coord2 must be a 2D matrix.")
+  }
+
+  if (dim(coord2)[1] != 4) {
+    stop("The first dimension of coord2 must be 4.")
+  }
+
   # Initialize a list to store the default values
   values <- list()
 
@@ -130,6 +146,15 @@ get_default_values <- function(coord1, coord2) {
 #'
 #' @export
 get_matrix <- function(values) {
+  if (!is.vector(values)) {
+    stop("Values must be a vector.")
+  }
+
+  if (!setequal(names(values),
+                c("dx", "dy", "dz", "theta", "phi", "psi"))) {
+    stop("Values in alignment does not have the correct elements.")
+  }
+
   ctheta <- cos(values["theta"])
   stheta <- sin(values["theta"])
   cphi <- cos(values["phi"])

@@ -141,6 +141,26 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
                                 chain1 = 'A', chain2 = 'A',
                                 method = "alignment"
                                 ) {
+  if (!file.exists(pdb_file1)) {
+    stop("File path to pdb1 does not exist.")
+  }
+
+  if (!file.exists(pdb_file2)) {
+    stop("File path to pdb2 does not exist.")
+  }
+
+  if (!is.character(chain1) | !is.character(chain2)) {
+    stop("Chain identifiers must be characters.")
+  }
+
+  if (!is.character(method)) {
+    stop("The method identifier must have character data type.")
+  }
+
+  if (!(method %in% c("alignment", "index"))) {
+    stop("The method identifier is not available.")
+  }
+
   # Read PDB structures
   pdb_data1 <- clean.pdb(read.pdb(pdb_file1), fix.chain = TRUE)
   pdb_data2 <- clean.pdb(read.pdb(pdb_file2), fix.chain = TRUE)
@@ -232,6 +252,51 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
 #' @export
 #' @importFrom stats optim
 optimize_alignment <- function(alignment, restart = FALSE, maxit = 300) {
+  if (typeof(alignment) != "list") {
+    stop("Alignment type must be List.")
+  }
+
+  if (!setequal(names(alignment), c("N", "coord1", "coord2", "values"))) {
+    stop("Alignment does not have the correct elements.")
+  }
+
+  if (typeof(alignment$N) != "integer") {
+    stop("The N in alignment must be an integer.")
+  }
+
+  if (length(dim(alignment$coord1)) != 2 |
+      length(dim(alignment$coord2)) != 2) {
+    stop("The coord1 and coord2 matrices in alignment must be 2D matrices.")
+  }
+
+  if (dim(alignment$coord1)[1] != 4 |
+      dim(alignment$coord2)[1] != 4) {
+    stop("The first dimension of coord1 and coord2 matrices must be 4.")
+  }
+
+  if (dim(alignment$coord1)[2] != alignment$N |
+      dim(alignment$coord2)[2] != alignment$N) {
+    stop("The second dimension of coord1 and coord2 matrices must be equal to
+         N.")
+  }
+
+  if (!is.vector(alignment$values)) {
+    stop("The values in alignment must be a vector.")
+  }
+
+  if (!setequal(names(alignment$values),
+                c("dx", "dy", "dz", "theta", "phi", "psi"))) {
+    stop("The values in alignment does not have the correct elements.")
+  }
+
+  if (typeof(restart) != "logical") {
+    stop("restart must be logical type.")
+  }
+
+  if (!(all.equal(maxit, as.integer(maxit)))) {
+    stop("maxit must be an integer.")
+  }
+
   coord1 <- alignment$coord1
   coord2 <- alignment$coord2
   d0_values <- estimate_d0(alignment$N)

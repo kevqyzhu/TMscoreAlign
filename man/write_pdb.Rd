@@ -39,11 +39,9 @@ the original coordinates
 
 \item{pdb2}{Character. Path to the PDB file of the second protein structure.}
 
-\item{chain_1}{Character. Chain identifier for the first protein structure in
-output file.}
+\item{chain_1}{Character. Chain identifier for the first protein structure.}
 
-\item{chain_2}{Character. Chain identifier for the second protein structure
-in output file.}
+\item{chain_2}{Character. Chain identifier for the second protein structure.}
 }
 \description{
 This function writes the transformed coordinates obtained from a structure
