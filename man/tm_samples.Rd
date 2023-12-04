@@ -24,9 +24,8 @@ alignment.
 (rows: dimensions, columns: atoms).}
 
 \item{d02}{Numeric. The square of the d0 parameter, a critical parameter in
-the TM-Score calculation.
- It represents an effective distance cutoff for defining structural
- similarity.}
+the TM-Score calculation. It represents an effective distance cutoff for
+defining structural similarity.}
 }
 \value{
 The TM-Score between the transformed coordinates and the original
@@ -38,7 +37,9 @@ transformed coordinates and the original coordinates of two structures. The
 TM-Score is a measure of structural similarity and is commonly used in
 structural bioinformatics. The alignment parameters, original coordinates of
 the first structure (coord1), original coordinates of the second structure
-(coord2), and the square of the d0 parameter (d02) are required.
+(coord2), and the square of the d0 parameter (d02) are required. Note that
+unlike \code{\link{get_tm_samples}}, this function is a helper function that
+performs the actual calculations to derive the TM local scores.
 }
 \examples{
 \dontrun{

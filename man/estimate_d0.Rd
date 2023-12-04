@@ -15,7 +15,7 @@ A list containing the following component:\cr
 }
 \description{
 This function estimates the d0 parameter for structure alignment based on the
-number of common residues.The formula used for estimation is derived from
+number of common residues. The formula used for estimation is derived from
 empirical observations and is commonly used in structure alignment methods.
 The square of the estimated d0 value (d02) is returned.
 }

@@ -8,7 +8,9 @@
 #'
 #' This function calculates the TM score from the alignment parameters and
 #' coordinates obtained in a structural alignment between two protein
-#' structures.
+#' structures. Note that unlike \code{\link{tm}}, this function is a wrapper
+#' that is directly accessible to the user. This allows the TM-Score to be
+#' easily obtained from the alignment parameters.
 #'
 #' @param alignment List. Structure alignment results, including alignment
 #'   parameters, coordinates, and other information.
@@ -66,7 +68,9 @@ get_tmscore <- function(alignment) {
 #'
 #' This function calculates the TM local scores from the alignment parameters
 #' and coordinates obtained in a structural alignment between two protein
-#' structures.
+#' structures. Note that unlike \code{\link{tm_samples}}, this function is a
+#' wrapper that is directly accessible to the user. This allows the TM local
+#' scores to be easily obtained from the alignment parameters.
 #'
 #' @param alignment List. Structure alignment results, including alignment
 #'   parameters, coordinates, and other information.
@@ -123,7 +127,9 @@ get_tm_samples <- function(alignment) {
 #'
 #' This function calculates the Root Mean Square Deviation (RMSD) from the
 #' alignment parameters and coordinates obtained in a structural alignment
-#' between two protein structures.
+#' between two protein structures. Note that unlike \code{\link{rmsd}}, this
+#' function is a wrapper that is directly accessible to the user. This allows
+#' the RMSD to be easily obtained from the alignment parameters.
 #'
 #' @param alignment List. Structure alignment results, including alignment
 #'   parameters, coordinates, and other information.
@@ -175,7 +181,7 @@ get_rmsd <- function(alignment) {
 #' Estimate d0 for Structure Alignment
 #'
 #' This function estimates the d0 parameter for structure alignment based on the
-#' number of common residues.The formula used for estimation is derived from
+#' number of common residues. The formula used for estimation is derived from
 #' empirical observations and is commonly used in structure alignment methods.
 #' The square of the estimated d0 value (d02) is returned.
 #'
@@ -276,7 +282,9 @@ dist_samples <- function(values, coord1, coord2) {
 #' TM-Score is a measure of structural similarity and is commonly used in
 #' structural bioinformatics. The alignment parameters, original coordinates of
 #' the first structure (coord1), original coordinates of the second structure
-#' (coord2), and the square of the d0 parameter (d02) are required.
+#' (coord2), and the square of the d0 parameter (d02) are required. Note that
+#' unlike \code{\link{get_tm_samples}}, this function is a helper function that
+#' performs the actual calculations to derive the TM local scores.
 #'
 #' @param values Numeric vector. Alignment parameters obtained from structure
 #'  alignment.
@@ -292,9 +300,8 @@ dist_samples <- function(values, coord1, coord2) {
 #' @param coord2 Matrix. 3D coordinates of the second structure's atoms
 #'  (rows: dimensions, columns: atoms).
 #' @param d02 Numeric. The square of the d0 parameter, a critical parameter in
-#'  the TM-Score calculation.
-#'   It represents an effective distance cutoff for defining structural
-#'   similarity.
+#'  the TM-Score calculation. It represents an effective distance cutoff for
+#'  defining structural similarity.
 #'
 #' @return The TM-Score between the transformed coordinates and the original
 #'  coordinates of the structures.
@@ -347,7 +354,8 @@ tm_samples <- function(values, coord1, coord2, d02) {
 #' commonly used in structural bioinformatics. The alignment parameters,
 #' original coordinates of the first structure (coord1), original coordinates of
 #' the second structure (coord2), and the square of the d0 parameter (d02) are
-#' required.
+#' required. Note that unlike \code{\link{get_tmscore}}, this function is a
+#' helper function that performs the actual TM-Score calculation.
 #'
 #' @param values Numeric vector. Alignment parameters obtained from structure
 #'  alignment.
@@ -363,8 +371,8 @@ tm_samples <- function(values, coord1, coord2, d02) {
 #' @param coord2 Matrix. 3D coordinates of the second structure's atoms
 #'  (rows: dimensions, columns: atoms).
 #' @param d02 Numeric. The square of the d0 parameter, a critical parameter in
-#'  the TM-Score calculation.
-#'   It represents a distance cutoff for defining structural similarity.
+#'  the TM-Score calculation. It represents an effective distance cutoff for
+#'  defining structural similarity.
 #'
 #' @return The average TM-Score between the transformed coordinates and the
 #'  original coordinates of the structures.
@@ -414,7 +422,9 @@ tm <- function(values, coord1, coord2, d02) {
 #' RMSD is a measure of the average distance between corresponding atoms in the
 #' two structures after optimal superposition. The alignment parameters,
 #' original coordinates of the first structure (coord1), and original
-#' coordinates of the second structure (coord2) are required.
+#' coordinates of the second structure (coord2) are required. Note that unlike
+#' \code{\link{get_rmsd}}, this function is a helper function that performs
+#' the actual RMSD calculation.
 #'
 #' @param values Numeric vector. Alignment parameters obtained from structure
 #'  alignment.

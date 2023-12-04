@@ -34,7 +34,9 @@ transformed coordinates and the original coordinates of two structures. The
 RMSD is a measure of the average distance between corresponding atoms in the
 two structures after optimal superposition. The alignment parameters,
 original coordinates of the first structure (coord1), and original
-coordinates of the second structure (coord2) are required.
+coordinates of the second structure (coord2) are required. Note that unlike
+\code{\link{get_rmsd}}, this function is a helper function that performs
+the actual RMSD calculation.
 }
 \examples{
 \dontrun{
