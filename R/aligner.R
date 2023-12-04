@@ -54,6 +54,22 @@
 get_alignment <- function(pdb1, pdb2, chain1 = 'A', chain2 = 'A', method,
                           optimize = TRUE
                           ) {
+  if (!file.exists(pdb1)) {
+    stop("File path to pdb1 does not exist.")
+  }
+
+  if (!file.exists(pdb2)) {
+    stop("File path to pdb2 does not exist.")
+  }
+
+  if (!is.character(chain1) | !is.character(chain2)) {
+    stop("Chain identifiers must be characters.")
+  }
+
+  if (typeof(optimize) != "logical") {
+    stop("optimize must be logical type.")
+  }
+
   # Load data alignment
   data <- load_data_alignment(pdb1, pdb2, chain1, chain2, method)
 

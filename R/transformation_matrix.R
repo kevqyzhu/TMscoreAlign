@@ -180,6 +180,6 @@ get_matrix <- function(values) {
   # Combine rotation and translation into the transformation matrix
   matrix <- cbind(rotation, translation)
   matrix <- rbind(matrix, c(0, 0, 0, 1))
-  # browse()
+
   return(matrix)
 }
