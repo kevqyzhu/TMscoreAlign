@@ -35,6 +35,12 @@ devtools::install_github("kevqyzhu/TMscoreAlign", build_vignettes = TRUE)
 library("TMscoreAlign")
 ```
 
+To run the Shiny app:
+
+``` r
+TMscoreAlign::runTMscoreAlign()
+```
+
 ## Overview
 
 ``` r
@@ -179,6 +185,8 @@ those who provided feedback to improve this package.
       |- 1LNIA_decoy1_4.pdb
       |- 1LNIA_decoy2_180.pdb
       |- overview.png
+    |- shiny-scripts
+      |- app.R
   |- LICENSE
   |- LICENSE.md
   |- man
@@ -207,6 +215,7 @@ those who provided feedback to improve this package.
     |- pdb_alignment.R
     |- scoring.R
     |- transformation_matrix.R
+    |- runTMscoreAlign.R
   |- README.md
   |- README.RMD
   |- tests

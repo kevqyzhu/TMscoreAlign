@@ -3,7 +3,7 @@ Type: Package
 Title: TMscoreAlign: Protein Structure Alignment using TM-score
 Version: 0.1.0
 Author: Kevin Zhu
-Maintainer: Kevin Zhu <kevqyzhu@gmail.com.com>
+Maintainer: Kevin Zhu <kevqyzhu@gmail.com>
 Description: 
     The TMscoreAlign package provides tools for performing protein structure 
     alignment using the TM-score metric. It includes functions for optimizing 
@@ -14,7 +14,8 @@ Imports:
     Biostrings,
     bio3d,
     pracma,
-    r3dmol
+    r3dmol,
+    shiny
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
