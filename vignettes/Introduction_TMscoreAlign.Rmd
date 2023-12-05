@@ -77,7 +77,7 @@ that we will perform structural alignment on. Note that PDB files can have
 multiple chains, so it is necessary to also specify for each PDB file which 
 chain we want to use in this analysis.
 
-``` r
+```{r file input, message=FALSE}
 # our first PDB file
 pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb", 
                           package="TMscoreAlign"
@@ -106,7 +106,7 @@ In this case, we input "index" into the `method` parameter. When comparing two
 protein structures that have different residue orderings, a sequence alignment 
 can be performed first by inputting "alignment" into the `method` parameter.
 
-``` r
+```{r get alignment, message=FALSE}
 # aligning residues by index before the structural alignment
 alignment <- get_alignment(pdb_file1, pdb_file2, 
                           chain1, chain2, method="index",
@@ -135,7 +135,7 @@ Note that in the `get_alignment` call, we specified `optimize = FALSE`. This
 initializes the default alignment parameters into `values` but does not optimize
 them.
 
-``` r
+```{r get and optimize alignment, message=FALSE}
 # we can instantiate the alignment parameters and then optimize them directly 
 alignment <- get_alignment(pdb_file1, pdb_file2, 
                           chain1, chain2, method="alignment",
@@ -151,7 +151,7 @@ Now that we have our alignment parameters, we can optimize them. The
 (TM-score). This makes use of the limited-memory 
 Broyden–Fletcher–Goldfarb–Shanno algorithm from the `stats::optim`function.
 
-``` r
+```{r optimize alignment, message=FALSE}
 alignment <- optimize_alignment(alignment)
 
 ```
@@ -160,7 +160,7 @@ We can also change the maximum number of iterations for optimization. This
 optimization step can be initialized with default values or continue from a 
 given set of values using the `restart` parameter
 
-``` r
+```{r restart alignment optimization, message=FALSE}
 alignment <- optimize_alignment(alignment, maxit = 400, restart = TRUE)
 
 ```
@@ -170,7 +170,7 @@ alignment <- optimize_alignment(alignment, maxit = 400, restart = TRUE)
 With the alignment parameters, we can get the TM-score, local TM-scores, and RMSD 
 values of the alignment.
 
-``` r
+```{r get results, message=FALSE}
 get_tmscore(alignment)
 get_tm_samples(alignment)
 get_rmsd(alignment)
@@ -182,7 +182,7 @@ contains two chains that represent the aligned protein structures. This output
 PDB file can subsequently be visualized, represented by color-coded structures 
 for each protein chain, as shown below.
 
-``` r
+```{r write and visualize results, message=FALSE}
 write_pdb(alignment, outputfile = "out.pdb", appended = TRUE, 
           pdb_file1, pdb_file2, chain1, chain2
           )
@@ -192,7 +192,6 @@ visualize_alignment_pdb("out.pdb", chain1 = chain1_color,
                          chain2 = chain2_color
                          )
 ```
-![](../inst/extdata/aligned_structure.png)
 
 ## Package References
 
