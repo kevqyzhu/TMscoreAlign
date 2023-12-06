@@ -238,35 +238,37 @@ visualize_alignment_pdb <- function(alignment_pdb = "out.pdb",
     stop("File path to alignment_pdb does not exist.")
   }
 
-  r3dmol(                         # Set up the initial viewer
-    viewer_spec = m_viewer_spec(
-      cartoonQuality = 40,
-      lowerZoomLimit = 50,
-      upperZoomLimit = 350
+  return(
+    r3dmol(                         # Set up the initial viewer
+      viewer_spec = m_viewer_spec(
+        cartoonQuality = 40,
+        lowerZoomLimit = 50,
+        upperZoomLimit = 350
+      )
+    ) %>%
+      m_add_model(                  # Add model to scene
+        data = alignment_pdb,
+        format = "pdb"
+      ) %>%
+      m_zoom_to() %>%               # Zoom to encompass the whole scene
+      m_set_style(                  # Style the first chain
+        sel = m_sel(chain = "A"),
+        style = m_style_cartoon(
+          color = chain1,
+          arrows = TRUE
+        )
+      ) %>%
+      m_set_style(                  # Style the second chain
+        sel = m_sel(chain = "B"),
+        style = m_style_cartoon(
+          color = chain2,
+          arrows = TRUE
+        )
+      ) %>%
+      m_rotate(                     # Rotate the scene
+        angle = 90,
+        axis = "y"
+      ) %>%
+      m_spin()                      # Animate the chains by spinning them
     )
-  ) %>%
-    m_add_model(                  # Add model to scene
-      data = alignment_pdb,
-      format = "pdb"
-    ) %>%
-    m_zoom_to() %>%               # Zoom to encompass the whole scene
-    m_set_style(                  # Style the first chain
-      sel = m_sel(chain = "A"),
-      style = m_style_cartoon(
-        color = chain1,
-        arrows = TRUE
-      )
-    ) %>%
-    m_set_style(                  # Style the second chain
-      sel = m_sel(chain = "B"),
-      style = m_style_cartoon(
-        color = chain2,
-        arrows = TRUE
-      )
-    ) %>%
-    m_rotate(                     # Rotate the scene
-      angle = 90,
-      axis = "y"
-    ) %>%
-    m_spin()                      # Animate the chains by spinning them
 }

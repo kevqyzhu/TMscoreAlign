@@ -1,42 +1,94 @@
-# k-means only works with numerical variables,
-# so don't give the user the option to select
-# a categorical variable
-vars <- setdiff(names(iris), "Species")
+library(shiny)
+library(r3dmol)
+library(colourpicker)
 
 ui <- pageWithSidebar(
-  headerPanel('Iris k-means clustering'),
+  headerPanel("TMscoreAlign: Protein Structure Alignment using TM-score"),
   sidebarPanel(
-    selectInput('xcol', 'X Variable', vars),
-    selectInput('ycol', 'Y Variable', vars, selected = vars[[2]]),
-    numericInput('clusters', 'Cluster count', 3, min = 1, max = 9)
+    fileInput(
+      inputId = "upload_pdb1",
+      label = "Upload PDB File 1",
+      accept = c(".pdb")
+    ),
+    fileInput(
+      inputId = "upload_pdb2",
+      label = "Upload PDB File 2",
+      accept = c(".pdb")
+    ),
+    colourpicker::colourInput(
+      inputId = "chain1_color",
+      label = "Select Chain 1 Color",
+      closeOnClick = TRUE,
+      value = "#636efa"  # Blue
+    ),
+    colourpicker::colourInput(
+      inputId = "chain2_color",
+      label = "Select Chain 2 Color",
+      closeOnClick = TRUE,
+      value = "#ff7f0e"  # Orange
+    ),
+    textInput(
+      inputId = "chain1_id",
+      label = "Enter Chain ID for PDB File 1",
+      value = "A"
+    ),
+    textInput(
+      inputId = "chain2_id",
+      label = "Enter Chain ID for PDB File 2",
+      value = "A"
+    ),
+    actionButton(
+      inputId = "run_button",
+      label = "Run"
+    )
   ),
   mainPanel(
-    plotOutput('plot1')
+    r3dmolOutput(outputId = "r3dmol", height = "700px"),
   )
 )
 
 server <- function(input, output, session) {
-
-  # Combine the selected variables into a new data frame
-  selectedData <- reactive({
-    iris[, c(input$xcol, input$ycol)]
+  uploaded_pdb1 <- reactive({
+    req(input$upload_pdb1)
+    inFile <- input$upload_pdb1
+    return(inFile$datapath)
   })
 
-  clusters <- reactive({
-    kmeans(selectedData(), input$clusters)
+  uploaded_pdb2 <- reactive({
+    req(input$upload_pdb2)
+    inFile <- input$upload_pdb2
+    return(inFile$datapath)
   })
 
-  output$plot1 <- renderPlot({
-    palette(c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
-              "#FF7F00", "#FFFF33", "#A65628", "#F781BF", "#999999"))
+  observeEvent(input$run_button, {
+    chain1 <- isolate(input$chain1_id)
+    chain2 <- isolate(input$chain2_id)
 
-    par(mar = c(5.1, 4.1, 0, 1))
-    plot(selectedData(),
-         col = clusters()$cluster,
-         pch = 20, cex = 3)
-    points(clusters()$centers, pch = 4, cex = 4, lwd = 4)
+    alignment <- get_alignment(uploaded_pdb1(), uploaded_pdb2(),
+                               chain1, chain2, method = "alignment",
+                               optimize = TRUE
+    )
+    alignment <- optimize_alignment(alignment, maxit = 400, restart = TRUE)
+
+    isolate(print(get_tmscore(alignment)))
+
+    outfile <- tempfile(fileext = '.pdb')
+
+    write_pdb(alignment, outputfile = outfile, appended = TRUE,
+              uploaded_pdb1(), uploaded_pdb2(), chain1, chain2
+    )
+
+    chain1_color <- isolate(input$chain1_color)
+    chain2_color <- isolate(input$chain2_color)
+
+    output$r3dmol <- renderR3dmol({
+      visualize_alignment_pdb(outfile, chain1 = chain1_color,
+                              chain2 = chain2_color
+      )
+    })
+
   })
 
 }
 
-shiny::shinyApp(ui = ui, server = server)
+shinyApp(ui, server)
