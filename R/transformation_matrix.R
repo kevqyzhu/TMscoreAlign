@@ -91,7 +91,7 @@ get_default_values <- function(coord1, coord2) {
   vec2 <- coord2[-nrow(coord2), 2] - coord2[-nrow(coord2), ncol(coord1)]
   vec1 <- vec1 / sqrt(sum(vec1^2))
   vec2 <- vec2 / sqrt(sum(vec2^2))
-  v <- cross(vec1, vec2)
+  v <- pracma::cross(vec1, vec2)
 
   # Calculate rotation parameters
   s <- sqrt(sum(v^2)) + .Machine$double.eps

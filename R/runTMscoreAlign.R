@@ -17,8 +17,10 @@
 #'
 #' @export
 #' @importFrom shiny runApp
+#' @importFrom colourpicker colourInput
 runTMscoreAlign <- function() {
   appDir <- system.file("shiny-scripts", package = "TMscoreAlign")
-  shiny::runApp(appDir, display.mode = "normal")
+  # shiny::runApp(appDir, display.mode = "normal")
+  shiny::runApp(appDir, display.mode = "showcase")
   return()
 }

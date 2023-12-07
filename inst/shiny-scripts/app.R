@@ -15,6 +15,16 @@ ui <- pageWithSidebar(
       label = "Upload PDB File 2",
       accept = c(".pdb")
     ),
+    textInput(
+      inputId = "chain1_id",
+      label = "Enter Chain ID for PDB File 1",
+      value = "A"
+    ),
+    textInput(
+      inputId = "chain2_id",
+      label = "Enter Chain ID for PDB File 2",
+      value = "A"
+    ),
     colourpicker::colourInput(
       inputId = "chain1_color",
       label = "Select Chain 1 Color",
@@ -27,23 +37,21 @@ ui <- pageWithSidebar(
       closeOnClick = TRUE,
       value = "#ff7f0e"  # Orange
     ),
-    textInput(
-      inputId = "chain1_id",
-      label = "Enter Chain ID for PDB File 1",
-      value = "A"
-    ),
-    textInput(
-      inputId = "chain2_id",
-      label = "Enter Chain ID for PDB File 2",
-      value = "A"
-    ),
     actionButton(
       inputId = "run_button",
       label = "Run"
     )
   ),
   mainPanel(
-    r3dmolOutput(outputId = "r3dmol", height = "700px"),
+    tabsetPanel(
+      tabPanel("Visualization", r3dmolOutput(outputId = "r3dmol", height = "700px")),
+      tabPanel("Results",
+               h4("TM-Score:"),
+               textOutput(outputId = "tmscore_output"),
+               h4("RMSD:"),
+               textOutput(outputId = "rmsd_output"),
+               )
+    )
   )
 )
 
@@ -70,25 +78,27 @@ server <- function(input, output, session) {
     )
     alignment <- optimize_alignment(alignment, maxit = 400, restart = TRUE)
 
-    isolate(print(get_tmscore(alignment)))
-
     outfile <- tempfile(fileext = '.pdb')
 
     write_pdb(alignment, outputfile = outfile, appended = TRUE,
               uploaded_pdb1(), uploaded_pdb2(), chain1, chain2
     )
 
-    chain1_color <- isolate(input$chain1_color)
-    chain2_color <- isolate(input$chain2_color)
-
     output$r3dmol <- renderR3dmol({
-      visualize_alignment_pdb(outfile, chain1 = chain1_color,
-                              chain2 = chain2_color
+      visualize_alignment_pdb(outfile, chain1 = input$chain1_color,
+                              chain2 = input$chain2_color
       )
     })
 
-  })
+    # Display additional results in the "Results" tab
+    output$tmscore_output <- renderText({
+      paste(round(get_tmscore(alignment), 3), "\n")
+      })
 
+    output$rmsd_output <- renderText({
+      paste(round(get_rmsd(alignment), 3), "\n")
+      })
+  })
 }
 
 shinyApp(ui, server)

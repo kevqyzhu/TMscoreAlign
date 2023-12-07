@@ -66,6 +66,7 @@
 #'   alignment parameters.
 #'
 #' @export
+#' @importFrom bio3d atom.select read.pdb clean.pdb trim.pdb cat.pdb
 write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
                       pdb1, pdb2, chain_1, chain_2
                       ) {
@@ -122,59 +123,65 @@ write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
     stop("Chain identifiers must be characters.")
   }
 
+  # Extract values from the alignment object
   values <- alignment$values
+
+  # Get the transformation matrix based on alignment values
   matrix <- get_matrix(values)
-  read.pdb(pdb1)
-  read.pdb(pdb2)
 
-  out <- file(outputfile, "w")
-  atomid <- 1
+  # Process the first PDB file
+  pdb_data1 <- bio3d::clean.pdb(
+    bio3d::read.pdb(pdb1),
+    consecutive = FALSE,
+    force.renumber = TRUE,
+    fix.chain = TRUE
+  )
 
-  if (appended) {
-    # Process the first PDB file
-    lines <- readLines(pdb1)
-    for (line in lines) {
-      if (!grepl("^ATOM", line) || (substring(line, 22, 22) != " " &&
-                                    substring(line, 22, 22) != chain_1
-                                    )
-          ) {
-        next
-      }
-      cat(substr(line, 1, 6), sprintf("%4d", atomid), substr(line, 13, 20), "A",
-          substr(line, 24, nchar(line)), "\n", file = out
-          )
-      atomid <- atomid + 1
-    }
-  }
+  # Select atoms from the first chain
+  sele_1 <- atom.select(pdb_data1, chain = chain_1)
+
+  # Trim the PDB data to retain only selected atoms from the first chain
+  pdb1_chain1_data <- bio3d::trim.pdb(pdb_data1, sele_1)
 
   # Process the second PDB file
-  lines <- readLines(pdb2)
-  for (line in lines) {
-    if (!grepl("^ATOM", line) || (substring(line, 22, 22) != " " &&
-                                  substring(line, 22, 22) != chain_2
-                                  )
-        ) {
-      next
-      }
+  pdb_data2 <- clean.pdb(
+    read.pdb(pdb2),
+    consecutive = FALSE,
+    force.renumber = TRUE,
+    fix.chain = TRUE
+  )
 
-    x <- as.numeric(substr(line, 32, 38))
-    y <- as.numeric(substr(line, 39, 46))
-    z <- as.numeric(substr(line, 48, 54))
+  # Select atoms from the second chain
+  sele_2 <- bio3d::atom.select(pdb_data2, chain = chain_2)
 
-    vec <- c(x, y, z, 1)
-    transformed_vec <- matrix %*% vec
+  # Trim the PDB data to retain only selected atoms from the second chain
+  pdb2_chain2_data <- bio3d::trim.pdb(pdb_data2, sele_2)
 
-    cat(substr(line, 1, 6), sprintf("%4d", atomid), substr(line, 13, 20), "B",
-        substr(line, 24, 29),
-        sprintf("%8.3f%8.3f%8.3f", transformed_vec[1], transformed_vec[2],
-                transformed_vec[3]
-                ),
-        substr(line, 56, nchar(line)), "\n", file = out
-        )
-    atomid <- atomid + 1
+  # Transform atom coordinates from second PDB file using the alignment matrix
+  xyz <- cbind(pdb2_chain2_data$atom[, c("x", "y", "z")], 1)
+  transformed_xyz <- matrix %*% t(as.matrix(xyz))
+  transformed_xyz_df <- as.data.frame(t(transformed_xyz))
+  transformed_xyz_df <- transformed_xyz_df[, -ncol(transformed_xyz_df)]
+  pdb2_chain2_data$atom[, c("x", "y", "z")] <- transformed_xyz_df
+  pdb2_chain2_data$xyz[,] <- c(t(transformed_xyz_df))
+
+  # Check if the PDB files need to be appended
+  if (appended) {
+    # Concatenate PDB data if 'appended' is TRUE
+    new.pdb <- bio3d::cat.pdb(
+      pdb1_chain1_data,
+      pdb2_chain2_data,
+      rechain = TRUE,
+      renumber = TRUE
+    )
+  } else {
+    # Otherwise, use only the second PDB data
+    new.pdb <- pdb2_chain2_data
   }
 
-  close(out)
+  # Write the final PDB data to a new file
+  bio3d::write.pdb(pdb = new.pdb, xyz = new.pdb$xyz, file = outputfile)
+
 }
 
 #' Visualize Protein Structure Alignment Using 3Dmol
