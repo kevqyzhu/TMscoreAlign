@@ -137,12 +137,6 @@ write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
     fix.chain = TRUE
   )
 
-  # Select atoms from the first chain
-  sele_1 <- atom.select(pdb_data1, chain = chain_1)
-
-  # Trim the PDB data to retain only selected atoms from the first chain
-  pdb1_chain1_data <- bio3d::trim.pdb(pdb_data1, sele_1)
-
   # Process the second PDB file
   pdb_data2 <- clean.pdb(
     read.pdb(pdb2),
@@ -150,6 +144,18 @@ write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
     force.renumber = TRUE,
     fix.chain = TRUE
   )
+
+  if (!(chain1 %in% unique(pdb_data1$atom$chain)) |
+      !(chain2 %in% unique(pdb_data2$atom$chain))
+  ) {
+    stop("Chain identifier is invalid.")
+  }
+
+  # Select atoms from the first chain
+  sele_1 <- atom.select(pdb_data1, chain = chain_1)
+
+  # Trim the PDB data to retain only selected atoms from the first chain
+  pdb1_chain1_data <- bio3d::trim.pdb(pdb_data1, sele_1)
 
   # Select atoms from the second chain
   sele_2 <- bio3d::atom.select(pdb_data2, chain = chain_2)

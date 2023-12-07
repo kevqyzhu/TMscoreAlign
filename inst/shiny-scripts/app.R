@@ -78,7 +78,7 @@ server <- function(input, output, session) {
                                chain1, chain2, method = "alignment",
                                optimize = FALSE
     )
-    alignment <- optimize_alignment(alignment, maxit = 400, restart = TRUE)
+    alignment <- optimize_alignment(alignment, maxit = 900, restart = TRUE)
 
     outfile <- tempfile(fileext = '.pdb')
 
