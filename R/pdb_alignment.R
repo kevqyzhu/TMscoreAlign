@@ -145,8 +145,8 @@ write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
     fix.chain = TRUE
   )
 
-  if (!(chain1 %in% unique(pdb_data1$atom$chain)) |
-      !(chain2 %in% unique(pdb_data2$atom$chain))
+  if (!(chain_1 %in% unique(pdb_data1$atom$chain)) |
+      !(chain_2 %in% unique(pdb_data2$atom$chain))
   ) {
     stop("Chain identifier is invalid.")
   }
