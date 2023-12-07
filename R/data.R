@@ -14,7 +14,7 @@
 #' @source 3DRobot_set from Zhang Lab \cr
 #' Deng, H., Jia, Y., and Zhang, Y. (2016). 3DRobot: Automated Generation of
 #' Diverse and Well-packed Protein Structure Decoys. \emph{Boinformatics}, 32,
-#' 378-387.\href{https://doi.org/10.1093/bioinformatics/btv601}{Link}
+#' 378-387. \href{https://doi.org/10.1093/bioinformatics/btv601}{Link}
 #'
 #' @format Returns a list of class "pdb" representing the decoy2_180 of the
 #'    1LNIA protein. This list has the following components as described by
@@ -59,7 +59,7 @@
 #' @source 3DRobot_set from Zhang Lab \cr
 #' Deng, H., Jia, Y., and Zhang, Y. (2016). 3DRobot: Automated Generation of
 #' Diverse and Well-packed Protein Structure Decoys. \emph{Boinformatics}, 32,
-#' 378-387.\href{https://doi.org/10.1093/bioinformatics/btv601}{Link}
+#' 378-387. \href{https://doi.org/10.1093/bioinformatics/btv601}{Link}
 #'
 #' @format Returns a list of class "pdb" representing the decoy2_180 of the
 #'    1LNIA protein. This list has the following components as described by
