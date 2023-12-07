@@ -74,7 +74,7 @@ server <- function(input, output, session) {
 
     alignment <- get_alignment(uploaded_pdb1(), uploaded_pdb2(),
                                chain1, chain2, method = "alignment",
-                               optimize = TRUE
+                               optimize = FALSE
     )
     alignment <- optimize_alignment(alignment, maxit = 400, restart = TRUE)
 
