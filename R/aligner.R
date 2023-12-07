@@ -190,16 +190,14 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
                                 )
   # Get residues sequences from PDBs
   seq1 <- paste(bio3d::pdbseq(pdb_data1,
-                              inds = bio3d::atom.select(pdb_data1,
-                                                        'calpha',
+                              inds = bio3d::atom.select(pdb_data1, 'calpha',
                                                         chain=chain1
                                                         ),
                               aa1 = TRUE
                               ), collapse = ""
                 )
   seq2 <- paste(bio3d::pdbseq(pdb_data2,
-                              inds = bio3d::atom.select(pdb_data2,
-                                                        'calpha',
+                              inds = bio3d::atom.select(pdb_data2, 'calpha',
                                                         chain=chain2
                                                         ),
                               aa1 = TRUE
@@ -208,43 +206,36 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
 
   if (method == "alignment") {
     # Perform sequence alignment
-    if (nchar(seq1) > nchar(seq2)){
-      alignment <- Biostrings::pairwiseAlignment(seq1, seq2)
-    } else{
-      alignment <- Biostrings::pairwiseAlignment(seq2, seq1)
-    }
+    alignment <- Biostrings::pairwiseAlignment(seq1, seq2)
 
-    aligned_seq <- Biostrings::subject(alignment)
+    aligned_seq1 <- Biostrings::subject(alignment)
+    aligned_seq2 <- Biostrings::pattern(alignment)
 
     # Convert the aligned sequence to a character string
-    aligned_str <- as.character(aligned_seq)
-    common_residues <- which(strsplit(aligned_str, "")[[1]]!="-")
+    aligned_str1 <- as.character(aligned_seq1)
+    aligned_str2 <- as.character(aligned_seq2)
+
+    common_residues_pdb1 <- which(strsplit(aligned_str1, "")[[1]]!="-")
+    common_residues_pdb2 <- which(strsplit(aligned_str2, "")[[1]]!="-")
+
+
     } else if (method == "index") {
       # Find common residues based on residue indices
-      common_residues <- intersect(
+      common_residues_pdb1 <- intersect(
         unique(pdb_data1$atom[pdb_data1$atom$chain == chain1,]$resno),
         unique(pdb_data2$atom[pdb_data2$atom$chain == chain2,]$resno)
         )
+      common_residues_pdb2 <- common_residues_pdb1
     }
 
-  # Extract coordinates of CA atoms for common residues
-  if (nchar(seq1) > nchar(seq2)){
-    sele_1 <- bio3d::atom.select(pdb_data1, 'calpha',
-                                 resno=common_residues,
-                                 chain=chain1
-                                 )
-    sele_2 <- bio3d::atom.select(pdb_data2, 'calpha',
-                                 chain=chain2
-                                 )
-    } else {
-    sele_1 <- bio3d::atom.select(pdb_data1, 'calpha',
-                                 chain=chain1
-                                 )
-    sele_2 <- bio3d::atom.select(pdb_data2, 'calpha',
-                                 resno=common_residues,
-                                 chain=chain2
-                                 )
-    }
+  sele_1 <- bio3d::atom.select(pdb_data1, 'calpha',
+                               resno=common_residues_pdb1,
+                               chain=chain1
+  )
+  sele_2 <- bio3d::atom.select(pdb_data2, 'calpha',
+                               resno=common_residues_pdb2,
+                               chain=chain2
+  )
 
   # Extract coordinates and prepare matrices
   coord1 <- matrix(pdb_data1$xyz[sele_1$xyz], nrow=3, byrow=FALSE)
@@ -254,7 +245,7 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
   coord2 <- rbind(coord2, rep(1, ncol(coord2)))
 
   # Return the alignment parameters as a list
-  return(list(coord1 = coord1, coord2 = coord2, N = length(common_residues)))
+  return(list(coord1 = coord1, coord2 = coord2, N = dim(coord1)[2]))
 }
 
 #' Optimize Protein Structure Alignment Parameters

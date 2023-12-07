@@ -44,7 +44,9 @@ ui <- pageWithSidebar(
   ),
   mainPanel(
     tabsetPanel(
-      tabPanel("Visualization", r3dmolOutput(outputId = "r3dmol", height = "700px")),
+      tabPanel("Visualization", r3dmolOutput(
+        outputId = "r3dmol", height = "700px"
+        )),
       tabPanel("Results",
                h4("TM-Score:"),
                textOutput(outputId = "tmscore_output"),
