@@ -1,18 +1,20 @@
 library(shiny)
 library(r3dmol)
 library(colourpicker)
-library(shinycssloaders)
+library(xtable)
 
 ui <- pageWithSidebar(
   headerPanel("TMscoreAlign: Protein Structure Alignment using TM-score"),
   sidebarPanel(
     fileInput(
       inputId = "upload_pdb1",
+      placeholder = "sample_pdb1",
       label = "Upload PDB File 1",
       accept = c(".pdb")
     ),
     fileInput(
       inputId = "upload_pdb2",
+      placeholder = "sample_pdb2",
       label = "Upload PDB File 2",
       accept = c(".pdb")
     ),
@@ -55,40 +57,38 @@ ui <- pageWithSidebar(
                  inputId = "tutorial_button",
                  label = "View Tutorial"
                ),
-               ),
-      tabPanel("Tutorial",
-               tags$h3("Instructions:"),
-               uiOutput("instructions"),
-               # tags$h3("Demo:"),
-               # uiOutput("demo"),
-               # actionButton(
-               #   inputId = "demo_button",
-               #   label = "Run Demo"
-               # ),
-               ),
+      ),
       tabPanel("Visualization",
                r3dmolOutput(outputId = "r3dmol", height = "700px")
-               ),
+      ),
       tabPanel("Results",
                h4("TM-Score:"),
                textOutput(outputId = "tmscore_output"),
                h4("RMSD:"),
                textOutput(outputId = "rmsd_output"),
+               h4("Transformation Matrix:"),
+               uiOutput('matrix'),
+               h4("Interpreting Results:"),
+               uiOutput("explain_results"),
                ),
-      )
+      tabPanel("Tutorial",
+               tags$h3("Instructions:"),
+               uiOutput("instructions"),
+      ),
     )
   )
+)
 
 server <- function(input, output, session) {
   output$description <- renderUI(
     HTML("<p> This is a Shiny App for the TMscoreAlign R package
           (Zhu, 2023). <code>TMscoreAlign</code> is an R package that
           implements the TM-align program in R <a href=
-          'https://doi.org/10.1002/prot.20264'>
+          'https://doi.org/10.1093/nar/gki524'>
           (Zhang & Skolnick, 2005)</a>. TM-align is a method for aligning
           proteins based on TM-score (Template Modelling score), which
           calculates topological similarity between two protein structures
-          <a href='https://doi.org/10.1093/nar/gki524'>
+          <a href='https://doi.org/10.1002/prot.20264'>
           (Zhang & Skolnick, 2004)</a>. TM-score improves upon existing
           means of structural comparison such as RMSD (root-mean-square
           deviation) as it is length-independent and more sensitive to
@@ -103,15 +103,16 @@ server <- function(input, output, session) {
     HTML("<p> You can run <code>browseVignettes('TMscoreAlign')</code> to get
           more information about using this package. You can learn how
           to use this Shiny app by going over the tutorial:</p>"
-         )
     )
+  )
   output$instructions <- renderUI(
     HTML("<ol type='1'><li><h5>Upload PDBs:</h5></li>
           <p> First, you nead to read in two PDB files. These will
           contain the protein structures that you will perform
           structural alignment on. Use <b>Upload PDB File 1</b> and
-          <b>Upload PDB File 2</b> to upload your PDB files. You can find
-          sample data here: <a href=
+          <b>Upload PDB File 2</b> to upload your PDB files. Example data has
+          already been provided for you:
+          <a href=
           'https://github.com/kevqyzhu/TMscoreAlign/blob/main/inst/extdata/1LNIA_decoy1_4.pdb'>
           sample_pdb1</a> and
           <a href=
@@ -138,42 +139,65 @@ server <- function(input, output, session) {
           <p> After pressing <b>Run</b>, you will be able to visualize your
           alignments and results, including TM-Score and RMSD.</p>
           </ol>"
-         )
     )
-  output$demo <- renderUI(
-    HTML("<p> Press the button below to run the demo. This will load in the
-    aforementioned sample PDB files and perform the alignment."
+  )
+  output$explain_results <- renderUI(
+    HTML("<p> <b>TM-score</b> (Template Modelling score) calculates topological
+         similarity between two protein structures. It improves upon existing
+         means of structural comparison as it is length-independent and more
+         sensitive to global similarities between structures rather than local
+         deviations. According to <a href='https://doi.org/10.1002/prot.20264'>
+         Zhang & Skolnick (2004)</a>: </p>
+
+         <p style='margin-left: 40px'> 0.0 < TM-score < 0.17 indicates that the
+         proteins have random structural similarity <br>
+         0.5 < TM-score < 1.00 indicates that the proteins are likely in the
+         same structural group</p>
+
+         <p> <b>RMSD</b> (root-mean-square deviation) is the most commonly
+         used measure to assess structural similarity between two proteins. For
+         identical structures, it is 0, with its value increasing as the two
+         structures become more different. </p>
+
+         <p> The <b>Transformation Matrix</b> represents the mathematical
+         transformation (a combination of translation and rotation) applied to
+         one protein to align it with the other structure. The translation and
+         rotation parameters are calculated via optimizing for maximum
+         TM-score. </p>"
     )
   )
   uploaded_pdb1 <- reactive({
-    req(input$upload_pdb1)
-    inFile <- input$upload_pdb1
-    return(inFile$datapath)
+    if (is.null(input$upload_pdb1)) {
+      return (system.file("extdata", "1LNIA_decoy1_4.pdb",
+                          package="TMscoreAlign"
+      ))
+    } else {
+      req(input$upload_pdb1)
+      inFile <- input$upload_pdb1
+      return(inFile$datapath)
+    }
   })
 
   uploaded_pdb2 <- reactive({
-    req(input$upload_pdb2)
-    inFile <- input$upload_pdb2
-    return(inFile$datapath)
+    if (is.null(input$upload_pdb2)) {
+      return (system.file("extdata", "1LNIA_decoy2_180.pdb",
+                          package="TMscoreAlign"
+      ))
+    } else {
+      req(input$upload_pdb2)
+      inFile <- input$upload_pdb2
+      return(inFile$datapath)
+    }
   })
 
   observeEvent(input$tutorial_button, {
     updateTabsetPanel(session, "inTabset", selected = "Tutorial")
   })
 
-  # observeEvent(input$demo_button, {
-  #   demoFilePath <- system.file("extdata", "1LNIA_decoy1_4.pdb",
-  #                               package="TMscoreAlign")
-  #   if (is.null(input$upload_pdb1)) {
-  #     demoFilePath
-  #     }
-  #   })
-
   observeEvent(input$run_button, {
     updateTabsetPanel(session, "inTabset", selected = "Visualization")
     chain1 <- isolate(input$chain1_id)
     chain2 <- isolate(input$chain2_id)
-
     alignment <- get_alignment(uploaded_pdb1(), uploaded_pdb2(),
                                chain1, chain2, method = "alignment",
                                optimize = FALSE
@@ -195,11 +219,19 @@ server <- function(input, output, session) {
     # Display additional results in the "Results" tab
     output$tmscore_output <- renderText({
       paste(round(get_tmscore(alignment), 3), "\n")
-      })
+    })
 
     output$rmsd_output <- renderText({
       paste(round(get_rmsd(alignment), 3), "\n")
-      })
+    })
+
+    output$matrix <- renderTable({
+      values <- alignment$values
+      M <- get_matrix(values)[-4,]
+      rownames(M) <- c('1','2','3')
+      colnames(M) <- c('u(i,1)','u(i,2)','u(i,3)', 'Translation')
+      M
+    }, rownames = TRUE)
   })
 }
 

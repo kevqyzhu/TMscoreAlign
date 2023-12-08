@@ -36,11 +36,11 @@ library(TMscoreAlign)
 
 ## Introduction
 `TMscoreAlign` is an R package that implements the TM-align program in R 
-([Zhang & Skolnick, 2005](https://doi.org/10.1002/prot.20264)). 
+([Zhang & Skolnick, 2005](https://doi.org/10.1093/nar/gki524)). 
 TM-align is a method for aligning proteins based on TM-score 
 (Template Modelling score), which calculates topological similarity between two 
 protein structures 
-([Zhang & Skolnick, 2004](https://doi.org/10.1093/nar/gki524)). TM-score 
+([Zhang & Skolnick, 2004](https://doi.org/10.1002/prot.20264)). TM-score 
 improves upon existing means of structural comparison such as RMSD 
 (root-mean-square deviation) as it is length-independent and more sensitive to 
 global similarities between structures rather than local deviations. This 
