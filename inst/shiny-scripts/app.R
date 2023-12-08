@@ -195,43 +195,56 @@ server <- function(input, output, session) {
   })
 
   observeEvent(input$run_button, {
-    updateTabsetPanel(session, "inTabset", selected = "Visualization")
     chain1 <- isolate(input$chain1_id)
     chain2 <- isolate(input$chain2_id)
-    alignment <- get_alignment(uploaded_pdb1(), uploaded_pdb2(),
-                               chain1, chain2, method = "alignment",
-                               optimize = FALSE
-    )
-    alignment <- optimize_alignment(alignment, maxit = 900, restart = TRUE)
 
-    outfile <- tempfile(fileext = '.pdb')
+    tryCatch({
+      alignment <- get_alignment(uploaded_pdb1(), uploaded_pdb2(),
+                                 chain1, chain2, method = "alignment",
+                                 optimize = FALSE
+                                 )
+      alignment <- optimize_alignment(alignment, maxit = 900, restart = TRUE)
 
-    write_pdb(alignment, outputfile = outfile, appended = TRUE,
-              uploaded_pdb1(), uploaded_pdb2(), chain1, chain2
-    )
+      outfile <- tempfile(fileext = '.pdb')
 
-    output$r3dmol <- renderR3dmol({
-      visualize_alignment_pdb(outfile, chain1 = input$chain1_color,
-                              chain2 = input$chain2_color
+      write_pdb(alignment, outputfile = outfile, appended = TRUE,
+                uploaded_pdb1(), uploaded_pdb2(), chain1, chain2
+                )
+
+      updateTabsetPanel(session, "inTabset", selected = "Visualization")
+
+      output$r3dmol <- renderR3dmol({
+        visualize_alignment_pdb(outfile,
+                                chain1 = input$chain1_color,
+                                chain2 = input$chain2_color
+                                )
+        })
+
+      # Display additional results in the "Results" tab
+      output$tmscore_output <- renderText({
+        paste(round(get_tmscore(alignment), 3), "\n")
+        })
+
+      output$rmsd_output <- renderText({
+        paste(round(get_rmsd(alignment), 3), "\n")
+        })
+
+      output$matrix <- renderTable({
+        values <- alignment$values
+        M <- get_matrix(values)[-4,]
+        rownames(M) <- c('1','2','3')
+        colnames(M) <- c('u(i,1)','u(i,2)','u(i,3)', 'Translation')
+        M
+        }, rownames = TRUE)
+
+      }, error = function(e) {
+        showNotification((paste(e)), type="error")
+        output$r3dmol <- NULL
+        output$tmscore_output <- NULL
+        output$rmsd_output <- NULL
+        output$matrix <- NULL
+        }
       )
-    })
-
-    # Display additional results in the "Results" tab
-    output$tmscore_output <- renderText({
-      paste(round(get_tmscore(alignment), 3), "\n")
-    })
-
-    output$rmsd_output <- renderText({
-      paste(round(get_rmsd(alignment), 3), "\n")
-    })
-
-    output$matrix <- renderTable({
-      values <- alignment$values
-      M <- get_matrix(values)[-4,]
-      rownames(M) <- c('1','2','3')
-      colnames(M) <- c('u(i,1)','u(i,2)','u(i,3)', 'Translation')
-      M
-    }, rownames = TRUE)
   })
 }
 

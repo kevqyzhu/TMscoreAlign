@@ -319,8 +319,9 @@ estimate_d0 <- function(N) {
     stop("N must be an integer.")
   }
 
-  d0 <- 1.24 * (N - 15)^(1/3) - 1.8
+  d0 <- 1.24 * abs(N - 15)^(1/3) - 1.8
   d02 <- d0^2
+
   return(list(d0 = d0, d02 = d02))
 }
 
