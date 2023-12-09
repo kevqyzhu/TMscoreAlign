@@ -17,7 +17,6 @@ Imports:
     r3dmol,
     shiny,
     colourpicker,
-    xtable
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

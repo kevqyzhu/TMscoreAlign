@@ -174,12 +174,12 @@ write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
   # Check if the PDB files need to be appended
   if (appended) {
     # Concatenate PDB data if 'appended' is TRUE
-    new.pdb <- bio3d::cat.pdb(
+    new.pdb <- suppressWarnings(bio3d::cat.pdb(
       pdb1_chain1_data,
       pdb2_chain2_data,
       rechain = TRUE,
       renumber = TRUE
-    )
+    ))
   } else {
     # Otherwise, use only the second PDB data
     new.pdb <- pdb2_chain2_data

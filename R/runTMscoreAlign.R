@@ -16,7 +16,6 @@
 #' TODO: finish documentation for this
 #'
 #' @export
-#' @import xtable
 #' @importFrom shiny runApp
 #' @importFrom colourpicker colourInput
 runTMscoreAlign <- function() {

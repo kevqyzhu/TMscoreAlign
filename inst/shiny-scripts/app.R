@@ -1,7 +1,6 @@
 library(shiny)
 library(r3dmol)
 library(colourpicker)
-library(xtable)
 
 ui <- pageWithSidebar(
   headerPanel("TMscoreAlign: Protein Structure Alignment using TM-score"),
@@ -11,39 +10,39 @@ ui <- pageWithSidebar(
       placeholder = "sample_pdb1",
       label = "Upload PDB File 1",
       accept = c(".pdb")
-    ),
+      ),
     fileInput(
       inputId = "upload_pdb2",
       placeholder = "sample_pdb2",
       label = "Upload PDB File 2",
       accept = c(".pdb")
-    ),
+      ),
     textInput(
       inputId = "chain1_id",
       label = "Enter Chain ID for PDB File 1",
       value = "A"
-    ),
+      ),
     textInput(
       inputId = "chain2_id",
       label = "Enter Chain ID for PDB File 2",
       value = "A"
-    ),
+      ),
     colourpicker::colourInput(
       inputId = "chain1_color",
       label = "Select Chain 1 Color",
       closeOnClick = TRUE,
       value = "#636efa"  # Blue
-    ),
+      ),
     colourpicker::colourInput(
       inputId = "chain2_color",
       label = "Select Chain 2 Color",
       closeOnClick = TRUE,
       value = "#ff7f0e"  # Orange
-    ),
+      ),
     actionButton(
       inputId = "run_button",
       label = "Run"
-    )
+      )
   ),
   mainPanel(
     tabsetPanel(
@@ -137,10 +136,24 @@ server <- function(input, output, session) {
 
           <li><h5>Run and Visualize:</h5></li>
           <p> After pressing <b>Run</b>, you will be able to visualize your
-          alignments and results, including TM-Score and RMSD.</p>
+          alignments and results, including TM-Score, RMSD, and the
+          transformation matrix.</p>
           </ol>"
     )
   )
+
+  default_output <- renderText({paste("----", "\n")})
+  default_matrix <- renderTable({
+    M <- matrix(NA, nrow = 3, ncol = 4)
+    rownames(M) <- c('1','2','3')
+    colnames(M) <- c('Rotation 1','Rotation 2','Rotation 3', 'Translation')
+    return(M)
+    }, rownames = TRUE)
+
+  output$tmscore_output <- default_output
+  output$rmsd_output <- default_output
+  output$matrix <- default_matrix
+
   output$explain_results <- renderUI(
     HTML("<p> <b>TM-score</b> (Template Modelling score) calculates topological
          similarity between two protein structures. It improves upon existing
@@ -160,7 +173,7 @@ server <- function(input, output, session) {
          structures become more different. </p>
 
          <p> The <b>Transformation Matrix</b> represents the mathematical
-         transformation (a combination of translation and rotation) applied to
+         transformation (a combination of rotation and translation) applied to
          one protein to align it with the other structure. The translation and
          rotation parameters are calculated via optimizing for maximum
          TM-score. </p>"
@@ -233,16 +246,16 @@ server <- function(input, output, session) {
         values <- alignment$values
         M <- get_matrix(values)[-4,]
         rownames(M) <- c('1','2','3')
-        colnames(M) <- c('u(i,1)','u(i,2)','u(i,3)', 'Translation')
+        colnames(M) <- c('Rotation 1','Rotation 2','Rotation 3', 'Translation')
         M
         }, rownames = TRUE)
 
       }, error = function(e) {
         showNotification((paste(e)), type="error")
         output$r3dmol <- NULL
-        output$tmscore_output <- NULL
-        output$rmsd_output <- NULL
-        output$matrix <- NULL
+        output$tmscore_output <- default_output
+        output$rmsd_output <- default_output
+        output$matrix <- default_matrix
         }
       )
   })
