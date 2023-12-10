@@ -34,6 +34,8 @@
 #' @param chain_1 Character. Chain identifier for the first protein structure.
 #' @param chain_2 Character. Chain identifier for the second protein structure.
 #'
+#' @return No return value but a PDB file is written.
+#'
 #' @examples
 #' \dontrun{
 #' # Example: Write transformed coordinates to a new PDB file

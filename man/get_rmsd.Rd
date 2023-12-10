@@ -24,9 +24,10 @@ Numeric. Root Mean Square Deviation (RMSD) of the protein structure
 \description{
 This function calculates the Root Mean Square Deviation (RMSD) from the
 alignment parameters and coordinates obtained in a structural alignment
-between two protein structures. Note that unlike \code{\link{rmsd}}, this
-function is a wrapper that is directly accessible to the user. This allows
-the RMSD to be easily obtained from the alignment parameters.
+between two protein structures. Note that unlike
+\code{\link{calculate_rmsd}}, this function is a wrapper that is directly
+accessible to the user. This allows the RMSD to be easily obtained from the
+alignment parameters.
 }
 \examples{
 \dontrun{
@@ -51,5 +52,5 @@ print(rmsd_value)
   protein structures.
 \code{\link{optimize_alignment}} for optimizing alignment parameters.
 \code{\link{estimate_d0}} for estimating initial distance parameters.
-\code{\link{rmsd}} for calculating RMSD.
+\code{\link{calculate_rmsd}} for calculating RMSD.
 }

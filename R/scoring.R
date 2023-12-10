@@ -8,9 +8,9 @@
 #'
 #' This function calculates the TM score from the alignment parameters and
 #' coordinates obtained in a structural alignment between two protein
-#' structures. Note that unlike \code{\link{tm}}, this function is a wrapper
-#' that is directly accessible to the user. This allows the TM-Score to be
-#' easily obtained from the alignment parameters.
+#' structures. Note that unlike \code{\link{calculate_tmscore}}, this function
+#' is a wrapper that is directly accessible to the user. This allows the
+#' TM-Score to be easily obtained from the alignment parameters.
 #'
 #' @param alignment List. Structure alignment results, including alignment
 #'   parameters, coordinates, and other information.
@@ -52,52 +52,53 @@
 #' \code{\link{get_alignment}} for obtaining alignment details.
 #' \code{\link{optimize_alignment}} for optimizing alignment parameters.
 #' \code{\link{estimate_d0}} for estimating initial distance parameters.
-#' \code{\link{tm}} for calculating TM-score.
+#' \code{\link{calculate_tmscore}} for calculating TM-score.
 #'
 #' @export
 get_tmscore <- function(alignment) {
   if (typeof(alignment) != "list") {
     stop("Alignment type must be List.")
-  }
+    }
 
   if (!setequal(names(alignment), c("N", "coord1", "coord2", "values"))) {
     stop("Alignment does not have the correct elements.")
-  }
+    }
 
   if (typeof(alignment$N) != "integer") {
     stop("The N in alignment must be an integer.")
-  }
+    }
 
   if (length(dim(alignment$coord1)) != 2 |
       length(dim(alignment$coord2)) != 2) {
     stop("The coord1 and coord2 matrices in alignment must be 2D matrices.")
-  }
+    }
 
   if (dim(alignment$coord1)[1] != 4 |
       dim(alignment$coord2)[1] != 4) {
     stop("The first dimension of coord1 and coord2 matrices must be 4.")
-  }
+    }
 
   if (dim(alignment$coord1)[2] != alignment$N |
       dim(alignment$coord2)[2] != alignment$N) {
     stop("The second dimension of coord1 and coord2 matrices must be equal to
          N.")
-  }
+    }
 
   if (!is.vector(alignment$values)) {
     stop("The values in alignment must be a vector.")
-  }
+    }
 
   if (!setequal(names(alignment$values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
     stop("The values in alignment does not have the correct elements.")
-  }
+    }
 
   # Return the TM-Score from the alignment
-  tmscore <- tm(alignment$values,
-                alignment$coord1,
-                alignment$coord2,
-                estimate_d0(alignment$N)$d02)
+  tmscore <- calculate_tmscore(alignment$values,
+                               alignment$coord1,
+                               alignment$coord2,
+                               estimate_d0(alignment$N)$d02
+                               )
   return(tmscore)
 }
 
@@ -105,9 +106,9 @@ get_tmscore <- function(alignment) {
 #'
 #' This function calculates the TM local scores from the alignment parameters
 #' and coordinates obtained in a structural alignment between two protein
-#' structures. Note that unlike \code{\link{tm_samples}}, this function is a
-#' wrapper that is directly accessible to the user. This allows the TM local
-#' scores to be easily obtained from the alignment parameters.
+#' structures. Note that unlike \code{\link{calculate_tm_samples}}, this
+#' function is a wrapper that is directly accessible to the user. This allows
+#' the TM local scores to be easily obtained from the alignment parameters.
 #'
 #' @param alignment List. Structure alignment results, including alignment
 #'   parameters, coordinates, and other information.
@@ -148,52 +149,53 @@ get_tmscore <- function(alignment) {
 #' \code{\link{get_alignment}} for obtaining alignment details.
 #' \code{\link{optimize_alignment}} for optimizing alignment parameters.
 #' \code{\link{estimate_d0}} for estimating initial distance parameters.
-#' \code{\link{tm_samples}} for calculating TM local scores
+#' \code{\link{calculate_tm_samples}} for calculating TM local scores
 #'
 #' @export
 get_tm_samples <- function(alignment) {
   if (typeof(alignment) != "list") {
     stop("Alignment type must be List.")
-  }
+    }
 
   if (!setequal(names(alignment), c("N", "coord1", "coord2", "values"))) {
     stop("Alignment does not have the correct elements.")
-  }
+    }
 
   if (typeof(alignment$N) != "integer") {
     stop("The N in alignment must be an integer.")
-  }
+    }
 
   if (length(dim(alignment$coord1)) != 2 |
       length(dim(alignment$coord2)) != 2) {
     stop("The coord1 and coord2 matrices in alignment must be 2D matrices.")
-  }
+    }
 
   if (dim(alignment$coord1)[1] != 4 |
       dim(alignment$coord2)[1] != 4) {
     stop("The first dimension of coord1 and coord2 matrices must be 4.")
-  }
+    }
 
   if (dim(alignment$coord1)[2] != alignment$N |
       dim(alignment$coord2)[2] != alignment$N) {
     stop("The second dimension of coord1 and coord2 matrices must be equal to
          N.")
-  }
+    }
 
   if (!is.vector(alignment$values)) {
     stop("The values in alignment must be a vector.")
-  }
+    }
 
   if (!setequal(names(alignment$values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
     stop("The values in alignment does not have the correct elements.")
-  }
+    }
 
   # Return the TM-samoles from the alignment
-  tm_samples <- tm_samples(alignment$values,
-                           alignment$coord1,
-                           alignment$coord2,
-                           estimate_d0(alignment$N)$d02)
+  tm_samples <- calculate_tm_samples(alignment$values,
+                                     alignment$coord1,
+                                     alignment$coord2,
+                                     estimate_d0(alignment$N)$d02
+                                     )
   return(tm_samples)
 }
 
@@ -201,9 +203,10 @@ get_tm_samples <- function(alignment) {
 #'
 #' This function calculates the Root Mean Square Deviation (RMSD) from the
 #' alignment parameters and coordinates obtained in a structural alignment
-#' between two protein structures. Note that unlike \code{\link{rmsd}}, this
-#' function is a wrapper that is directly accessible to the user. This allows
-#' the RMSD to be easily obtained from the alignment parameters.
+#' between two protein structures. Note that unlike
+#' \code{\link{calculate_rmsd}}, this function is a wrapper that is directly
+#' accessible to the user. This allows the RMSD to be easily obtained from the
+#' alignment parameters.
 #'
 #' @param alignment List. Structure alignment results, including alignment
 #'   parameters, coordinates, and other information.
@@ -240,50 +243,51 @@ get_tm_samples <- function(alignment) {
 #'   protein structures.
 #' \code{\link{optimize_alignment}} for optimizing alignment parameters.
 #' \code{\link{estimate_d0}} for estimating initial distance parameters.
-#' \code{\link{rmsd}} for calculating RMSD.
+#' \code{\link{calculate_rmsd}} for calculating RMSD.
 #'
 #' @export
 get_rmsd <- function(alignment) {
   if (typeof(alignment) != "list") {
     stop("Alignment type must be List.")
-  }
+    }
 
   if (!setequal(names(alignment), c("N", "coord1", "coord2", "values"))) {
     stop("Alignment does not have the correct elements.")
-  }
+    }
 
   if (typeof(alignment$N) != "integer") {
     stop("The N in alignment must be an integer.")
-  }
+    }
 
   if (length(dim(alignment$coord1)) != 2 |
       length(dim(alignment$coord2)) != 2) {
     stop("The coord1 and coord2 matrices in alignment must be 2D matrices.")
-  }
+    }
 
   if (dim(alignment$coord1)[1] != 4 |
       dim(alignment$coord2)[1] != 4) {
     stop("The first dimension of coord1 and coord2 matrices must be 4.")
-  }
+    }
 
   if (dim(alignment$coord1)[2] != alignment$N |
       dim(alignment$coord2)[2] != alignment$N) {
     stop("The second dimension of coord1 and coord2 matrices must be equal to
          N.")
-  }
+    }
 
   if (!is.vector(alignment$values)) {
     stop("The values in alignment must be a vector.")
-  }
+    }
 
   if (!setequal(names(alignment$values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
     stop("The values in alignment does not have the correct elements.")
-  }
+    }
 
-  rmsd <- rmsd(alignment$values,
-               alignment$coord1,
-               alignment$coord2)
+  rmsd <- calculate_rmsd(alignment$values,
+                         alignment$coord1,
+                         alignment$coord2
+                         )
 
   # Return the Root Mean Square Deviation (RMSD)
   return(rmsd)
@@ -317,7 +321,7 @@ get_rmsd <- function(alignment) {
 estimate_d0 <- function(N) {
   if (typeof(N) != "integer") {
     stop("N must be an integer.")
-  }
+    }
 
   d0 <- 1.24 * abs(N - 15)^(1/3) - 1.8
   d02 <- d0^2
@@ -349,8 +353,7 @@ estimate_d0 <- function(N) {
 #'  (rows: dimensions, columns: atoms).
 #'
 #' @return A matrix of Euclidean distances between the transformed coordinates
-#'  (coord) and the original
-#'   coordinates of the first structure (coord1).
+#'  (coord) and the original coordinates of the first structure (coord1).
 #'
 #' @examples
 #' \dontrun{
@@ -364,9 +367,9 @@ estimate_d0 <- function(N) {
 #' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7, 1, 8), nrow = 4,
 #'                                   byrow = TRUE
 #'                                   )
-#' distances <- dist_samples(alignment_params, original_coordinates,
-#'                           transformed_coordinates
-#'                           )
+#' distances <- calculate_dist_samples(alignment_params, original_coordinates,
+#'                                     transformed_coordinates
+#'                                    )
 #' }
 #'
 #' @references
@@ -379,31 +382,31 @@ estimate_d0 <- function(N) {
 #'   alignment parameters.
 #'
 #' @export
-dist_samples <- function(values, coord1, coord2) {
+calculate_dist_samples <- function(values, coord1, coord2) {
   if (!is.vector(values)) {
     stop("Values must be a vector.")
-  }
+    }
 
   if (!setequal(names(values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
     stop("Values in alignment does not have the correct elements.")
-  }
+    }
 
   if (length(dim(coord1)) != 2) {
     stop("coord1 must be a 2D matrix.")
-  }
+    }
 
   if (dim(coord1)[1] != 4) {
     stop("The first dimension of coord1 must be 4.")
-  }
+    }
 
   if (length(dim(coord2)) != 2) {
     stop("coord2 must be a 2D matrix.")
-  }
+    }
 
   if (dim(coord2)[1] != 4) {
     stop("The first dimension of coord2 must be 4.")
-  }
+    }
 
   # Get the 4x4 transformation matrix from alignment parameters
   matrix <- get_matrix(values)
@@ -460,8 +463,9 @@ dist_samples <- function(values, coord1, coord2) {
 #'                                   byrow = TRUE
 #'                                   )
 #' d0_squared <- 5.0
-#' tm_score <- tm_samples(alignment_params, original_coordinates,
-#'                        transformed_coordinates, d0_squared)
+#' tm_score <- calculate_tm_samples(alignment_params, original_coordinates,
+#'                                  transformed_coordinates, d0_squared
+#'                                  )
 #' }
 #'
 #' @references
@@ -471,42 +475,42 @@ dist_samples <- function(values, coord1, coord2) {
 #' \href{https://doi.org/10.1002/prot.20264}{Link}
 #'
 #' @seealso
-#' \code{\link{dist_samples}} for calculating distances between transformed
-#'   coordinates.
+#' \code{\link{calculate_dist_samples}} for calculating distances between
+#' transformed coordinates.
 #'
 #' @export
-tm_samples <- function(values, coord1, coord2, d02) {
+calculate_tm_samples <- function(values, coord1, coord2, d02) {
   if (!is.vector(values)) {
     stop("Values must be a vector.")
-  }
+    }
 
   if (!setequal(names(values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
     stop("Values in alignment does not have the correct elements.")
-  }
+    }
 
   if (length(dim(coord1)) != 2) {
     stop("coord1 must be a 2D matrix.")
-  }
+    }
 
   if (dim(coord1)[1] != 4) {
     stop("The first dimension of coord1 must be 4.")
-  }
+    }
 
   if (length(dim(coord2)) != 2) {
     stop("coord2 must be a 2D matrix.")
-  }
+    }
 
   if (dim(coord2)[1] != 4) {
     stop("The first dimension of coord2 must be 4.")
-  }
+    }
 
   if (!is.numeric(d02)) {
     stop("d02 must be a number.")
-  }
+    }
 
   # Calculate distances between transformed coordinates
-  dist <- dist_samples(values, coord1, coord2)
+  dist <- calculate_dist_samples(values, coord1, coord2)
 
   # Calculate the sum of squared distances
   d_i2 <- colSums(dist^2)
@@ -560,9 +564,9 @@ tm_samples <- function(values, coord1, coord2, d02) {
 #'                                   byrow = TRUE
 #'                                   )
 #' d0_squared <- 5.0
-#' avg_tm_score <- tm(alignment_params, original_coordinates,
-#'                    transformed_coordinates, d0_squared
-#'                    )
+#' avg_tm_score <- calculate_tmscore(alignment_params, original_coordinates,
+#'                                   transformed_coordinates, d0_squared
+#'                                   )
 #' }
 #'
 #' @references
@@ -572,41 +576,41 @@ tm_samples <- function(values, coord1, coord2, d02) {
 #' \href{https://doi.org/10.1002/prot.20264}{Link}
 #'
 #' @seealso
-#' \code{\link{tm_samples}} for calculating individual TM-Scores.
+#' \code{\link{calculate_tm_samples}} for calculating individual TM-Scores.
 #'
 #' @export
-tm <- function(values, coord1, coord2, d02) {
+calculate_tmscore <- function(values, coord1, coord2, d02) {
   if (!is.vector(values)) {
     stop("Values must be a vector.")
-  }
+    }
 
   if (!setequal(names(values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
     stop("Values in alignment does not have the correct elements.")
-  }
+    }
 
   if (length(dim(coord1)) != 2) {
     stop("coord1 must be a 2D matrix.")
-  }
+    }
 
   if (dim(coord1)[1] != 4) {
     stop("The first dimension of coord1 must be 4.")
-  }
+    }
 
   if (length(dim(coord2)) != 2) {
     stop("coord2 must be a 2D matrix.")
-  }
+    }
 
   if (dim(coord2)[1] != 4) {
     stop("The first dimension of coord2 must be 4.")
-  }
+    }
 
   if (!is.numeric(d02)) {
     stop("d02 must be a number.")
-  }
+    }
 
   # Calculate individual TM-Scores
-  tm_scores <- tm_samples(values, coord1, coord2, d02)
+  tm_scores <- calculate_tm_samples(values, coord1, coord2, d02)
 
   # Calculate the average TM-Score
   avg_tm_score <- mean(tm_scores)
@@ -640,8 +644,7 @@ tm <- function(values, coord1, coord2, d02) {
 #'  (rows: dimensions, columns: atoms).
 #'
 #' @return The Root Mean Square Deviation (RMSD) between the transformed
-#'  coordinates and the original
-#'   coordinates of the structures.
+#' coordinates and the original coordinates of the structures.
 #'
 #' @examples
 #' \dontrun{
@@ -655,44 +658,44 @@ tm <- function(values, coord1, coord2, d02) {
 #' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7, 1, 8), nrow = 4,
 #'                                   byrow = TRUE
 #'                                   )
-#' rmsd_value <- rmsd(alignment_params, original_coordinates,
-#'                    transformed_coordinates
-#'                    )
+#' rmsd_value <- calculate_rmsd(alignment_params, original_coordinates,
+#'                              transformed_coordinates
+#'                              )
 #' }
 #'
 #' @seealso
-#' \code{\link{dist_samples}} for calculating distances between transformed
-#'   coordinates.
+#' \code{\link{calculate_dist_samples}} for calculating distances between
+#' transformed coordinates.
 #'
 #' @export
-rmsd <- function(values, coord1, coord2) {
+calculate_rmsd <- function(values, coord1, coord2) {
   if (!is.vector(values)) {
     stop("Values must be a vector.")
-  }
+    }
 
   if (!setequal(names(values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
     stop("Values in alignment does not have the correct elements.")
-  }
+    }
 
   if (length(dim(coord1)) != 2) {
     stop("coord1 must be a 2D matrix.")
-  }
+    }
 
   if (dim(coord1)[1] != 4) {
     stop("The first dimension of coord1 must be 4.")
-  }
+    }
 
   if (length(dim(coord2)) != 2) {
     stop("coord2 must be a 2D matrix.")
-  }
+    }
 
   if (dim(coord2)[1] != 4) {
     stop("The first dimension of coord2 must be 4.")
-  }
+    }
 
   # Calculate distances between transformed coordinates
-  dist <- dist_samples(values, coord1, coord2)
+  dist <- calculate_dist_samples(values, coord1, coord2)
 
   # Calculate the Root Mean Square Deviation (RMSD)
   rmsd_value <- sqrt(mean(dist^2))

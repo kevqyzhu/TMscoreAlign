@@ -23,9 +23,9 @@ Numeric. TM score of the protein structure alignment.
 \description{
 This function calculates the TM score from the alignment parameters and
 coordinates obtained in a structural alignment between two protein
-structures. Note that unlike \code{\link{tm}}, this function is a wrapper
-that is directly accessible to the user. This allows the TM-Score to be
-easily obtained from the alignment parameters.
+structures. Note that unlike \code{\link{calculate_tmscore}}, this function
+is a wrapper that is directly accessible to the user. This allows the
+TM-Score to be easily obtained from the alignment parameters.
 }
 \examples{
 \dontrun{
@@ -56,5 +56,5 @@ and Bioinformatics}, 57(4), 702–710.
 \code{\link{get_alignment}} for obtaining alignment details.
 \code{\link{optimize_alignment}} for optimizing alignment parameters.
 \code{\link{estimate_d0}} for estimating initial distance parameters.
-\code{\link{tm}} for calculating TM-score.
+\code{\link{calculate_tmscore}} for calculating TM-score.
 }

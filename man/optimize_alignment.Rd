@@ -56,6 +56,7 @@ A limited memory algorithm for bound constrained optimization.
 }
 \seealso{
 \code{\link{get_default_values}} for parameter initialization.
-\code{\link{tm}} and \code{\link{rmsd}} for TM-score and RMSD calculation.
 \code{\link{optim}} for optimization functions.
+\code{\link{calculate_tmscore}} and \code{\link{calculate_rmsd}} for
+TM-score and RMSD calculation.
 }

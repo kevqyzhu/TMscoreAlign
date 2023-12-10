@@ -311,8 +311,9 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
 #'
 #' @seealso
 #' \code{\link{get_default_values}} for parameter initialization.
-#' \code{\link{tm}} and \code{\link{rmsd}} for TM-score and RMSD calculation.
 #' \code{\link{optim}} for optimization functions.
+#' \code{\link{calculate_tmscore}} and \code{\link{calculate_rmsd}} for
+#' TM-score and RMSD calculation.
 #'
 #' @export
 #' @importFrom stats optim
@@ -374,7 +375,7 @@ optimize_alignment <- function(alignment, restart = FALSE, maxit = 300) {
   }
 
   method <- "L-BFGS-B"
-  result <- stats::optim(par = default_values, fn = tm,
+  result <- stats::optim(par = default_values, fn = calculate_tmscore,
                          coord1 = coord1, coord2 = coord2, d02 = d02,
                          method = method,
                          control = list(fnscale = -1, maxit = maxit),
