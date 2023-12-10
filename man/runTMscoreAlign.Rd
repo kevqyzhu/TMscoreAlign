@@ -7,11 +7,14 @@
 runTMscoreAlign()
 }
 \value{
-No return value but open up a shiny page.
+No return value but a shiny page is opened.
 }
 \description{
 A function that launches the shiny app for this package.
-TODO: finish documentation for this
+The shiny app provides an interface giving the user the ability to perform
+structural alignment to perform protein structure alignment using the
+TM-score metric. Extra results, such as the actual TM-score, RMSD, and
+transformation matrix are also provided to the user.
 }
 \examples{
 \dontrun{
@@ -20,8 +23,8 @@ runTMscoreAlign()
 
 }
 \references{
-TODO: finish documentation for this
-}
-\author{
-Kevin Zhu, \email{kevqyzhu@gmail.com} # is this needed?
+Zhang, Y., and Skolnick, J. (2004). Scoring function for automated assessment
+of protein structure template quality. \emph{Proteins, Structure, Function,
+and Bioinformatics}, 57(4), 702–710.
+\href{https://doi.org/10.1002/prot.20264}{Link}
 }

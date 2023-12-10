@@ -1,6 +1,6 @@
 # Purpose: Instantiate and optimize alignment
 # Author: Kevin Zhu
-# Date: 11.14.2023
+# Date: 12.10.2023
 # Version: 1.0.0
 # Bugs and Issues: N/A
 
@@ -153,6 +153,7 @@ get_alignment <- function(pdb1, pdb2, chain1 = 'A', chain2 = 'A', method,
 #' @export
 #' @importFrom bio3d read.pdb clean.pdb pdbseq atom.select
 #' @importFrom Biostrings pairwiseAlignment subject
+#' @importFrom BiocGenerics start
 load_data_alignment <- function(pdb_file1, pdb_file2,
                                 chain1 = 'A', chain2 = 'A',
                                 method = "alignment"
@@ -215,15 +216,24 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
     # Perform sequence alignment
     alignment <- Biostrings::pairwiseAlignment(seq1, seq2)
 
-    aligned_seq1 <- Biostrings::subject(alignment)
-    aligned_seq2 <- Biostrings::pattern(alignment)
+    aligned_seq1 <- Biostrings::pattern(alignment)
+    aligned_seq2 <- Biostrings::subject(alignment)
 
     # Convert the aligned sequence to a character string
-    aligned_str1 <- as.character(aligned_seq1)
-    aligned_str2 <- as.character(aligned_seq2)
+    aligned_vec1 <- strsplit(as.character(aligned_seq1), "")[[1]]
+    aligned_vec2 <- strsplit(as.character(aligned_seq2), "")[[1]]
 
-    common_residues_pdb1 <- which(strsplit(aligned_str1, "")[[1]]!="-")
-    common_residues_pdb2 <- which(strsplit(aligned_str2, "")[[1]]!="-")
+    non_dash_indices <- which(aligned_vec1 != '-' & aligned_vec2 != '-')
+    aligned_vec1[non_dash_indices] <- '*'
+    aligned_vec2[non_dash_indices] <- '*'
+
+    aligned_str1 <- gsub("-", "", paste(aligned_vec1, collapse=""))
+    aligned_str2 <- gsub("-", "", paste(aligned_vec2, collapse=""))
+
+    common_residues_pdb1 <- which(strsplit(aligned_str1, "")[[1]]=="*") +
+      (BiocGenerics::start(aligned_seq1) - 1)
+    common_residues_pdb2 <- which(strsplit(aligned_str2, "")[[1]]=="*") +
+      (BiocGenerics::start(aligned_seq2) - 1)
 
 
     } else if (method == "index") {

@@ -12,6 +12,7 @@ Description:
     minimization algorithm.
 Imports:
     Biostrings,
+    BiocGenerics,
     bio3d,
     pracma,
     r3dmol,
