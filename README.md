@@ -114,8 +114,8 @@ from the `stats` package in order to optimize the alignment parameters
 for maximum TM-score. Furthermore, when generating the transformation
 matrix to represent the alignment parameters, the `cross` function from
 the `pracma` package is used to calculate the vector cross product. The
-`write_pdb` function uses `trim.pdb` `cat.pdb` `write.pdb` from the
-`bio3d` package to write the aligned outputs. The visualization from
+`write_pdb` function uses `trim.pdb`, `cat.pdb`, and `write.pdb` from
+the `bio3d` package to write the aligned outputs. The visualization from
 this package is accomplished using `r3dmol`. Color-picking in the
 `shiny` app is accomplished using the `colourInput` function from
 `colourpicker`. All functions from this package were written by the
