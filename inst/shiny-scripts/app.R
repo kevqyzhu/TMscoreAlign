@@ -55,11 +55,11 @@ ui <- pageWithSidebar(
                actionButton(
                  inputId = "tutorial_button",
                  label = "View Tutorial"
+                 ),
                ),
-      ),
       tabPanel("Visualization",
                r3dmol::r3dmolOutput(outputId = "r3dmol", height = "700px")
-      ),
+               ),
       tabPanel("Results",
                h4("TM-Score:"),
                textOutput(outputId = "tmscore_output"),
@@ -73,10 +73,10 @@ ui <- pageWithSidebar(
       tabPanel("Tutorial",
                tags$h3("Instructions:"),
                uiOutput("instructions"),
-      ),
+               ),
+      )
     )
   )
-)
 
 server <- function(input, output, session) {
   output$description <- renderUI(
@@ -96,14 +96,14 @@ server <- function(input, output, session) {
           who may use this package to investigate different conformations
           of the same protein, informing a structural basis of protein
           functions. </p>"
+         )
     )
-  )
   output$how_to <- renderUI(
     HTML("<p> You can run <code>browseVignettes('TMscoreAlign')</code> to get
           more information about using this package. You can learn how
           to use this Shiny app by going over the tutorial:</p>"
+         )
     )
-  )
   output$instructions <- renderUI(
     HTML("<ol type='1'><li><h5>Upload PDBs:</h5></li>
           <p> First, the user needs to read in two PDB files. These files will
@@ -139,8 +139,8 @@ server <- function(input, output, session) {
           ability to visualize their alignments and results, including
           TM-Score, RMSD, and the transformation matrix.</p>
           </ol>"
+         )
     )
-  )
 
   default_output <- renderText({paste("----", "\n")})
   default_matrix <- renderTable({
@@ -177,35 +177,37 @@ server <- function(input, output, session) {
          one protein to align it with the other structure. The translation and
          rotation parameters are calculated via optimizing for maximum
          TM-score. </p>"
+         )
     )
-  )
   uploaded_pdb1 <- reactive({
     if (is.null(input$upload_pdb1)) {
       return (system.file("extdata", "1LNIA_decoy1_4.pdb",
                           package="TMscoreAlign"
-      ))
-    } else {
-      req(input$upload_pdb1)
-      inFile <- input$upload_pdb1
-      return(inFile$datapath)
-    }
-  })
+                          )
+              )
+      } else {
+        req(input$upload_pdb1)
+        inFile <- input$upload_pdb1
+        return(inFile$datapath)
+        }
+    })
 
   uploaded_pdb2 <- reactive({
     if (is.null(input$upload_pdb2)) {
       return (system.file("extdata", "1LNIA_decoy2_180.pdb",
                           package="TMscoreAlign"
-      ))
-    } else {
-      req(input$upload_pdb2)
-      inFile <- input$upload_pdb2
-      return(inFile$datapath)
-    }
-  })
+                          )
+              )
+      } else {
+        req(input$upload_pdb2)
+        inFile <- input$upload_pdb2
+        return(inFile$datapath)
+        }
+    })
 
   observeEvent(input$tutorial_button, {
     updateTabsetPanel(session, "inTabset", selected = "Tutorial")
-  })
+    })
 
   observeEvent(input$run_button, {
     chain1 <- isolate(input$chain1_id)
