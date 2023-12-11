@@ -11,6 +11,7 @@ estimate_d0(N)
 }
 \value{
 A list containing the following component:\cr
+  - d0: The estimated d0 value for structure alignment.
   - d02: The square of the estimated d0 value for structure alignment.
 }
 \description{
@@ -22,7 +23,7 @@ The square of the estimated d0 value (d02) is returned.
 \examples{
 \dontrun{
 # Example: Estimate d0 for structure alignment with 50 common residues
-d0_values <- estimate_d0(N = 50)
+d0_values <- estimate_d0(N = 50L)
 }
 
 }
