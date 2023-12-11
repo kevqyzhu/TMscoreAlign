@@ -71,7 +71,7 @@ limited-memory Broyden–Fletcher–Goldfarb–Shanno algorithm.
 parameters and coordinates obtained in a structural alignment between
 two protein structures.
 
-`get_tm_samples`:This function calculates the TM local scores from the
+`get_tm_samples`: This function calculates the TM local scores from the
 alignment parameters and coordinates obtained in a structural alignment
 between two protein structures.
 
