@@ -147,11 +147,12 @@ write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
     fix.chain = TRUE
   )
 
-  if (!(chain_1 %in% unique(pdb_data1$atom$chain)) |
-      !(chain_2 %in% unique(pdb_data2$atom$chain))
-  ) {
-    stop("Chain identifier is invalid.")
-  }
+  if (!(chain_1 %in% unique(pdb_data1$atom$chain))) {
+    stop("Chain 1 ID is invalid.")
+    }
+  if (!(chain_2 %in% unique(pdb_data2$atom$chain))) {
+    stop("Chain 2 ID is invalid.")
+    }
 
   # Select atoms from the first chain
   sele_1 <- atom.select(pdb_data1, chain = chain_1)

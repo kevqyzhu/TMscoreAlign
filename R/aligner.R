@@ -190,11 +190,12 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
                                 fix.chain = TRUE
                                 )
 
-  if (!(chain1 %in% unique(pdb_data1$atom$chain)) |
-      !(chain2 %in% unique(pdb_data2$atom$chain))
-      ) {
-    stop("Chain identifier is invalid.")
-  }
+  if (!(chain1 %in% unique(pdb_data1$atom$chain))) {
+    stop("Chain 1 ID is invalid.")
+    }
+  if (!(chain2 %in% unique(pdb_data2$atom$chain))) {
+    stop("Chain 2 ID is invalid.")
+    }
 
   # Get residues sequences from PDBs
   seq1 <- paste(bio3d::pdbseq(pdb_data1,
