@@ -348,9 +348,19 @@ estimate_d0 <- function(N) {
 #'   - phi: Rotation angle around the y-axis.\cr
 #'   - psi: Rotation angle around the z-axis.
 #' @param coord1 Matrix. 3D coordinates of the first structure's atoms
-#'  (rows: dimensions, columns: atoms).
+#'   (rows: dimensions, columns: atoms). This parameter should be a 4xN matrix,
+#'   where N is the number of atoms. The matrix is structured such that each
+#'   column corresponds to the 3D coordinates of an alpha-carbon atom in the
+#'   first structure, and each row represents a dimension (x, y, z, and a
+#'   placeholder coordinate). The placeholder coordinate is set to 1 for each
+#'   atom, facilitating matrix transformations.
 #' @param coord2 Matrix. 3D coordinates of the second structure's atoms
-#'  (rows: dimensions, columns: atoms).
+#'   (rows: dimensions, columns: atoms). This parameter should be a 4xN matrix,
+#'   where N is the number of atoms. The matrix is structured such that each
+#'   column corresponds to the 3D coordinates of an alpha-carbon atom in the
+#'   second structure, and each row represents a dimension (x, y, z, and a
+#'   placeholder coordinate). The placeholder coordinate is set to 1 for each
+#'   atom, facilitating matrix transformations.
 #'
 #' @return A matrix of Euclidean distances between the transformed coordinates
 #'  (coord) and the original coordinates of the first structure (coord1).
@@ -440,9 +450,19 @@ calculate_dist_samples <- function(values, coord1, coord2) {
 #'   - phi: Rotation angle around the y-axis.\cr
 #'   - psi: Rotation angle around the z-axis.
 #' @param coord1 Matrix. 3D coordinates of the first structure's atoms
-#'  (rows: dimensions, columns: atoms).
+#'   (rows: dimensions, columns: atoms). This parameter should be a 4xN matrix,
+#'   where N is the number of atoms. The matrix is structured such that each
+#'   column corresponds to the 3D coordinates of an alpha-carbon atom in the
+#'   first structure, and each row represents a dimension (x, y, z, and a
+#'   placeholder coordinate). The placeholder coordinate is set to 1 for each
+#'   atom, facilitating matrix transformations.
 #' @param coord2 Matrix. 3D coordinates of the second structure's atoms
-#'  (rows: dimensions, columns: atoms).
+#'   (rows: dimensions, columns: atoms). This parameter should be a 4xN matrix,
+#'   where N is the number of atoms. The matrix is structured such that each
+#'   column corresponds to the 3D coordinates of an alpha-carbon atom in the
+#'   second structure, and each row represents a dimension (x, y, z, and a
+#'   placeholder coordinate). The placeholder coordinate is set to 1 for each
+#'   atom, facilitating matrix transformations.
 #' @param d02 Numeric. The square of the d0 parameter, a critical parameter in
 #'  the TM-Score calculation. It represents an effective distance cutoff for
 #'  defining structural similarity.
@@ -541,9 +561,19 @@ calculate_tm_samples <- function(values, coord1, coord2, d02) {
 #'   - phi: Rotation angle around the y-axis.\cr
 #'   - psi: Rotation angle around the z-axis.
 #' @param coord1 Matrix. 3D coordinates of the first structure's atoms
-#'  (rows: dimensions, columns: atoms).
+#'   (rows: dimensions, columns: atoms). This parameter should be a 4xN matrix,
+#'   where N is the number of atoms. The matrix is structured such that each
+#'   column corresponds to the 3D coordinates of an alpha-carbon atom in the
+#'   first structure, and each row represents a dimension (x, y, z, and a
+#'   placeholder coordinate). The placeholder coordinate is set to 1 for each
+#'   atom, facilitating matrix transformations.
 #' @param coord2 Matrix. 3D coordinates of the second structure's atoms
-#'  (rows: dimensions, columns: atoms).
+#'   (rows: dimensions, columns: atoms). This parameter should be a 4xN matrix,
+#'   where N is the number of atoms. The matrix is structured such that each
+#'   column corresponds to the 3D coordinates of an alpha-carbon atom in the
+#'   second structure, and each row represents a dimension (x, y, z, and a
+#'   placeholder coordinate). The placeholder coordinate is set to 1 for each
+#'   atom, facilitating matrix transformations.
 #' @param d02 Numeric. The square of the d0 parameter, a critical parameter in
 #'  the TM-Score calculation. It represents an effective distance cutoff for
 #'  defining structural similarity.
@@ -639,9 +669,19 @@ calculate_tmscore <- function(values, coord1, coord2, d02) {
 #'   - phi: Rotation angle around the y-axis.\cr
 #'   - psi: Rotation angle around the z-axis.
 #' @param coord1 Matrix. 3D coordinates of the first structure's atoms
-#'  (rows: dimensions, columns: atoms).
+#'   (rows: dimensions, columns: atoms). This parameter should be a 4xN matrix,
+#'   where N is the number of atoms. The matrix is structured such that each
+#'   column corresponds to the 3D coordinates of an alpha-carbon atom in the
+#'   first structure, and each row represents a dimension (x, y, z, and a
+#'   placeholder coordinate). The placeholder coordinate is set to 1 for each
+#'   atom, facilitating matrix transformations.
 #' @param coord2 Matrix. 3D coordinates of the second structure's atoms
-#'  (rows: dimensions, columns: atoms).
+#'   (rows: dimensions, columns: atoms). This parameter should be a 4xN matrix,
+#'   where N is the number of atoms. The matrix is structured such that each
+#'   column corresponds to the 3D coordinates of an alpha-carbon atom in the
+#'   second structure, and each row represents a dimension (x, y, z, and a
+#'   placeholder coordinate). The placeholder coordinate is set to 1 for each
+#'   atom, facilitating matrix transformations.
 #'
 #' @return The Root Mean Square Deviation (RMSD) between the transformed
 #' coordinates and the original coordinates of the structures.

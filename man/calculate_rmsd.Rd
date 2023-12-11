@@ -18,10 +18,20 @@ alignment.
  - psi: Rotation angle around the z-axis.}
 
 \item{coord1}{Matrix. 3D coordinates of the first structure's atoms
-(rows: dimensions, columns: atoms).}
+(rows: dimensions, columns: atoms). This parameter should be a 4xN matrix,
+where N is the number of atoms. The matrix is structured such that each
+column corresponds to the 3D coordinates of an alpha-carbon atom in the
+first structure, and each row represents a dimension (x, y, z, and a
+placeholder coordinate). The placeholder coordinate is set to 1 for each
+atom, facilitating matrix transformations.}
 
 \item{coord2}{Matrix. 3D coordinates of the second structure's atoms
-(rows: dimensions, columns: atoms).}
+(rows: dimensions, columns: atoms). This parameter should be a 4xN matrix,
+where N is the number of atoms. The matrix is structured such that each
+column corresponds to the 3D coordinates of an alpha-carbon atom in the
+second structure, and each row represents a dimension (x, y, z, and a
+placeholder coordinate). The placeholder coordinate is set to 1 for each
+atom, facilitating matrix transformations.}
 }
 \value{
 The Root Mean Square Deviation (RMSD) between the transformed
