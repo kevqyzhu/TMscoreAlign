@@ -223,13 +223,18 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
     aligned_vec1 <- strsplit(as.character(aligned_seq1), "")[[1]]
     aligned_vec2 <- strsplit(as.character(aligned_seq2), "")[[1]]
 
+    # Find indices where both strings have values not equal to '-'
     non_dash_indices <- which(aligned_vec1 != '-' & aligned_vec2 != '-')
+
+    # Replace non-'-' values with '*'
     aligned_vec1[non_dash_indices] <- '*'
     aligned_vec2[non_dash_indices] <- '*'
 
+    # Remove all occurrences of "-"
     aligned_str1 <- gsub("-", "", paste(aligned_vec1, collapse=""))
     aligned_str2 <- gsub("-", "", paste(aligned_vec2, collapse=""))
 
+    # Find indices in each string where character is equal to '*'
     common_residues_pdb1 <- which(strsplit(aligned_str1, "")[[1]]=="*") +
       (BiocGenerics::start(aligned_seq1) - 1)
     common_residues_pdb2 <- which(strsplit(aligned_str2, "")[[1]]=="*") +
