@@ -106,38 +106,38 @@ server <- function(input, output, session) {
   )
   output$instructions <- renderUI(
     HTML("<ol type='1'><li><h5>Upload PDBs:</h5></li>
-          <p> First, you nead to read in two PDB files. These will
-          contain the protein structures that you will perform
-          structural alignment on. Use <b>Upload PDB File 1</b> and
-          <b>Upload PDB File 2</b> to upload your PDB files. Example data has
-          already been provided for you:
+          <p> First, the user needs to read in two PDB files. These files will
+          contain the protein structures for which structural alignment will be
+          performed. The user should utilize <b>Upload PDB File 1</b> and
+          <b>Upload PDB File 2</b> to upload the PDB files. Example data has
+          already been provided:
           <a href=
           'https://github.com/kevqyzhu/TMscoreAlign/blob/main/inst/extdata/1LNIA_decoy1_4.pdb'>
           sample_pdb1</a> and
           <a href=
           'https://github.com/kevqyzhu/TMscoreAlign/blob/main/inst/extdata/1LNIA_decoy2_180.pdb'>
-          sample_pdb2</a>. You can get more information about this data by
+          sample_pdb2</a>. Users can obtain more information about this data by
           running <code>?sample_pdb1</code> and <code>?sample_pdb2</code>.</p>
 
           <li><h5>Specify Chain IDs:</h5></li>
-          <p> PDB files can have multiple chains, so you must also specify for
-          each PDB file which chain you want to use in this analysis. Use
-          <b>Enter Chain ID for PDB File 1</b> and
-          <b>Enter Chain ID for PDB File 2</b> to specify which chain
-          you want to use for your first and second PDB files
+          <p> Users need to consider that PDB files might contain multiple
+          chains. Consequently, for each PDB file, it is necessary to specify
+          the chain intended for use in the analysis. Utilize <b>Enter Chain ID
+          for PDB File 1</b> and <b>Enter Chain ID for PDB File 2</b> to
+          designate the desired chain for the first and second PDB files,
           respectively.</p>
 
           <li><h5>Specify Chain Colors:</h5></li>
-          <p> The final alignment structure will have two chains,
-          one for each PDB you uploaded as inputs. Use
-          <b>Select Chain 1 Color</b> and
-          <b>Select Chain 2 Color</b> to specify the color you want to
-          visualize for your first and second chains respectively.</p>
+          <p> The resulting alignment structure will consist of two chains,
+          each corresponding to the PDB file uploaded as input. Utilize
+          <b>Select Chain 1 Color</b> and <b>Select Chain 2 Color</b> to
+          determine the color for visualizing the first and second chains,
+          respectively.</p>
 
           <li><h5>Run and Visualize:</h5></li>
-          <p> After pressing <b>Run</b>, you will be able to visualize your
-          alignments and results, including TM-Score, RMSD, and the
-          transformation matrix.</p>
+          <p> Upon initiating the <b>Run</b> process, users will gain the
+          ability to visualize their alignments and results, including
+          TM-Score, RMSD, and the transformation matrix.</p>
           </ol>"
     )
   )
