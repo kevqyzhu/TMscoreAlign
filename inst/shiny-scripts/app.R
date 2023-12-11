@@ -58,7 +58,7 @@ ui <- pageWithSidebar(
                ),
       ),
       tabPanel("Visualization",
-               r3dmolOutput(outputId = "r3dmol", height = "700px")
+               r3dmol::r3dmolOutput(outputId = "r3dmol", height = "700px")
       ),
       tabPanel("Results",
                h4("TM-Score:"),
@@ -226,7 +226,7 @@ server <- function(input, output, session) {
 
       updateTabsetPanel(session, "inTabset", selected = "Visualization")
 
-      output$r3dmol <- renderR3dmol({
+      output$r3dmol <- r3dmol::renderR3dmol({
         visualize_alignment_pdb(outfile,
                                 chain1 = input$chain1_color,
                                 chain2 = input$chain2_color
