@@ -3,16 +3,13 @@ set.seed(1) # for exact reproducibility
 # Define test cases for get_default_values function
 test_that("get_default_values calculates default alignment parameters", {
   pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
-                           package = "TMscoreAlign"
-  )
+                           package = "TMscoreAlign")
   pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb",
-                           package = "TMscoreAlign"
-  )
+                           package = "TMscoreAlign")
 
   alignment <- get_alignment(pdb_file1, pdb_file2,
                              chain1 = 'A', chain2 = 'A', method = "alignment",
-                             optimize = FALSE
-  )
+                             optimize = FALSE)
 
   coord1 <- alignment$coord1
   coord2 <- alignment$coord2
@@ -29,16 +26,13 @@ test_that("get_default_values calculates default alignment parameters", {
 # Define test cases for get_matrix function
 test_that("get_matrix constructs correct transformation matrix", {
   pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
-                           package = "TMscoreAlign"
-  )
+                           package = "TMscoreAlign")
   pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb",
-                           package = "TMscoreAlign"
-  )
+                           package = "TMscoreAlign")
 
   alignment <- get_alignment(pdb_file1, pdb_file2,
                              chain1 = 'A', chain2 = 'A', method = "alignment",
-                             optimize = FALSE
-  )
+                             optimize = FALSE)
 
   coord1 <- alignment$coord1
   coord2 <- alignment$coord2
