@@ -73,7 +73,7 @@ of protein structures. \emph{Bioinformatics}, 22, 2695--2696.
 Pagès H, Aboyoun P, Gentleman R, DebRoy S (2023). Biostrings: Efficient
 manipulation of biological strings.
 \href{https://doi.org/10.18129/B9.bioc.Biostrings}{Link}, R package version
-2.68.1, \href{https://bioconductor.org/packages/Biostrings}{Link}.
+2.68.1, \href{https://bioconductor.org/packages/Biostrings}{Link}
 }
 \seealso{
 \code{\link{pairwiseAlignment}} for sequence alignment.

@@ -159,6 +159,9 @@ the development of this package.
   assessment of protein structure template quality. *Proteins,
   Structure, Function, and Bioinformatics*, 57(4), 702–710.
   <https://doi.org/10.1002/prot.20264>
+- Zhang, Y., and Skolnick, J. (2005). TM-align: a protein structure
+  alignment algorithm based on the TM-score. *Nucleic Acids Res*, 33(7),
+  2302-2309. <https://doi.org/10.1093%2Fnar%2Fgki524>
 
 ## Acknowledgements
 
