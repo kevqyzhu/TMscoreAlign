@@ -64,7 +64,7 @@
 #'   alignment parameters.
 #'
 #' @export
-#' @importFrom bio3d atom.select read.pdb clean.pdb trim.pdb cat.pdb
+#' @importFrom bio3d atom.select read.pdb clean.pdb trim.pdb cat.pdb write.pdb
 write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
                       pdb1, pdb2, chain_1, chain_2) {
   if (typeof(alignment) != "list") {

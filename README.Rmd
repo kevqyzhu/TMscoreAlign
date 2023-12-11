@@ -112,16 +112,18 @@ are shown.
 The package is created by Kevin Zhu. `get_alignment` calls a helper function 
 that uses `read.pdb`, `clean.pdb`, `pdbseq`, and `atom.select` from the `bio3d`
 package to read the input PDB files. The `pairwiseAlignment` and `subject` 
-functions from `Biostrings`, as well as `start` from `BiocGenerics` were used 
+functions from `Biostrings`, as well as `start` from `BiocGenerics`, are used 
 to generate the sequence alignment. The `optimize_alignment` function uses the 
 `optim` function from the `stats` package in order to optimize the alignment 
 parameters for maximum TM-score. Furthermore, when generating the transformation 
 matrix to represent the alignment parameters, the `cross` function from the 
-`pracma` package was used to generate the vector cross product. The 
-visualization from this package is accomplished using `r3dmol`. Color-picking 
-in the `shiny` app was accomplished using the `colourInput` function from
-`colourpicker`. All functions from this package were written by the 
-author. No generative AI tools were used in the development of this package. 
+`pracma` package is used to calculate the vector cross product. The `write_pdb`
+function uses `trim.pdb` `cat.pdb` `write.pdb` from the `bio3d` package to 
+write the aligned outputs. The visualization from this package is accomplished 
+using `r3dmol`. Color-picking in the `shiny` app is accomplished using the 
+`colourInput` function from `colourpicker`. All functions from this package 
+were written by the author. No generative AI tools were used in the development 
+of this package. 
 
 ## References
 - Berman, H., Henrick, K. and Nakamura, H. Announcing the worldwide Protein Data
