@@ -107,16 +107,18 @@ functions are shown.
 The package is created by Kevin Zhu. `get_alignment` calls a helper
 function that uses `read.pdb`, `clean.pdb`, `pdbseq`, and `atom.select`
 from the `bio3d` package to read the input PDB files. The
-`pairwiseAlignment` and `subject` functions from `Biostrings` were used
-to generate the sequence alignment. The `optimize_alignment` function
-uses the `optim` function from the `stats` package in order to optimize
-the alignment parameters for maximum TM-score. Furthermore, when
-generating the transformation matrix to represent the alignment
-parameters, the `cross` function from the `pracma` package was used to
-generate the vector cross product. The visualization from this package
-is accomplished using `r3dmol`. All functions from this package were
-written by the author. No generative AI tools were used in the
-development of this package.
+`pairwiseAlignment` and `subject` functions from `Biostrings`, as well
+as `start` from `BiocGenerics` were used to generate the sequence
+alignment. The `optimize_alignment` function uses the `optim` function
+from the `stats` package in order to optimize the alignment parameters
+for maximum TM-score. Furthermore, when generating the transformation
+matrix to represent the alignment parameters, the `cross` function from
+the `pracma` package was used to generate the vector cross product. The
+visualization from this package is accomplished using `r3dmol`.
+Color-picking in the `shiny` app was accomplished using the
+`colourInput` function from `colourpicker`. All functions from this
+package were written by the author. No generative AI tools were used in
+the development of this package.
 
 ## References
 
@@ -190,7 +192,10 @@ those who provided feedback to improve this package.
   |- LICENSE
   |- LICENSE.md
   |- man
-    |- dist_samples.Rd
+    |- calculate_dist_samples.Rd
+    |- calculate_rmsd.Rd
+    |- calculate_tm_samples.Rd
+    |- calculate_tmscore.Rd
     |- estimate_d0.Rd
     |- get_alignment.Rd
     |- get_default_values.Rd
@@ -200,11 +205,9 @@ those who provided feedback to improve this package.
     |- get_tmscore.Rd
     |- load_data_alignment.Rd
     |- optimize_alignment.Rd
-    |- rmsd.Rd
+    |- runTMscoreAlign.Rd
     |- sample_pdb1.Rd
     |- sample_pdb2.Rd
-    |- tm.Rd
-    |- tm_samples.Rd
     |- visualize_alignment_pdb.Rd
     |- write_pdb.Rd
   |- NAMESPACE
