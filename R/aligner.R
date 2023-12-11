@@ -235,6 +235,7 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
     aligned_str2 <- gsub("-", "", paste(aligned_vec2, collapse=""))
 
     # Find indices in each string where character is equal to '*'
+    # Offset these indices using the start index of the alignment
     common_residues_pdb1 <- which(strsplit(aligned_str1, "")[[1]]=="*") +
       (BiocGenerics::start(aligned_seq1) - 1)
     common_residues_pdb2 <- which(strsplit(aligned_str2, "")[[1]]=="*") +
