@@ -28,15 +28,12 @@
 #' \dontrun{
 #' # Example: Calculate TM score from alignment
 #' pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
-#'                           package="TMscoreAlign"
-#'                           )
+#'                           package="TMscoreAlign")
 #' pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb",
-#'                           package="TMscoreAlign"
-#'                           )
+#'                           package="TMscoreAlign")
 #' alignment_results <- get_alignment(pdb_file1, pdb_file2,
 #'                                   chain1 = 'A', chain2 = 'A',
-#'                                   method = "alignment"
-#'                                   )
+#'                                   method = "alignment")
 #' optimized_alignment <- optimize_alignment(alignment_results)
 #' tmscore <- get_tmscore(optimized_alignment)
 #' print(tmscore)
@@ -58,47 +55,46 @@
 get_tmscore <- function(alignment) {
   if (typeof(alignment) != "list") {
     stop("Alignment type must be List.")
-    }
+  }
 
   if (!setequal(names(alignment), c("N", "coord1", "coord2", "values"))) {
     stop("Alignment does not have the correct elements.")
-    }
+  }
 
   if (typeof(alignment$N) != "integer") {
     stop("The N in alignment must be an integer.")
-    }
+  }
 
   if (length(dim(alignment$coord1)) != 2 |
       length(dim(alignment$coord2)) != 2) {
     stop("The coord1 and coord2 matrices in alignment must be 2D matrices.")
-    }
+  }
 
   if (dim(alignment$coord1)[1] != 4 |
       dim(alignment$coord2)[1] != 4) {
     stop("The first dimension of coord1 and coord2 matrices must be 4.")
-    }
+  }
 
   if (dim(alignment$coord1)[2] != alignment$N |
       dim(alignment$coord2)[2] != alignment$N) {
     stop("The second dimension of coord1 and coord2 matrices must be equal to
          N.")
-    }
+  }
 
   if (!is.vector(alignment$values)) {
     stop("The values in alignment must be a vector.")
-    }
+  }
 
   if (!setequal(names(alignment$values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
     stop("The values in alignment does not have the correct elements.")
-    }
+  }
 
   # Return the TM-Score from the alignment
   tmscore <- calculate_tmscore(alignment$values,
                                alignment$coord1,
                                alignment$coord2,
-                               estimate_d0(alignment$N)$d02
-                               )
+                               estimate_d0(alignment$N)$d02)
   return(tmscore)
 }
 
@@ -126,15 +122,12 @@ get_tmscore <- function(alignment) {
 #' \dontrun{
 #' # Example: Calculate TM samples from alignment
 #' pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
-#'                           package="TMscoreAlign"
-#'                           )
+#'                           package="TMscoreAlign")
 #' pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb",
-#'                           package="TMscoreAlign"
-#'                           )
+#'                           package="TMscoreAlign")
 #' alignment_results <- get_alignment(pdb_file1, pdb_file2,
 #'                                   chain1 = 'A', chain2 = 'A',
-#'                                   method = "alignment"
-#'                                   )
+#'                                   method = "alignment")
 #' tm_samples <- get_tm_samples(alignment_results)
 #' print(tm_samples)
 #' }
@@ -155,47 +148,46 @@ get_tmscore <- function(alignment) {
 get_tm_samples <- function(alignment) {
   if (typeof(alignment) != "list") {
     stop("Alignment type must be List.")
-    }
+  }
 
   if (!setequal(names(alignment), c("N", "coord1", "coord2", "values"))) {
     stop("Alignment does not have the correct elements.")
-    }
+  }
 
   if (typeof(alignment$N) != "integer") {
     stop("The N in alignment must be an integer.")
-    }
+  }
 
   if (length(dim(alignment$coord1)) != 2 |
       length(dim(alignment$coord2)) != 2) {
     stop("The coord1 and coord2 matrices in alignment must be 2D matrices.")
-    }
+  }
 
   if (dim(alignment$coord1)[1] != 4 |
       dim(alignment$coord2)[1] != 4) {
     stop("The first dimension of coord1 and coord2 matrices must be 4.")
-    }
+  }
 
   if (dim(alignment$coord1)[2] != alignment$N |
       dim(alignment$coord2)[2] != alignment$N) {
     stop("The second dimension of coord1 and coord2 matrices must be equal to
          N.")
-    }
+  }
 
   if (!is.vector(alignment$values)) {
     stop("The values in alignment must be a vector.")
-    }
+  }
 
   if (!setequal(names(alignment$values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
     stop("The values in alignment does not have the correct elements.")
-    }
+  }
 
   # Return the TM-samoles from the alignment
   tm_samples <- calculate_tm_samples(alignment$values,
                                      alignment$coord1,
                                      alignment$coord2,
-                                     estimate_d0(alignment$N)$d02
-                                     )
+                                     estimate_d0(alignment$N)$d02)
   return(tm_samples)
 }
 
@@ -225,15 +217,12 @@ get_tm_samples <- function(alignment) {
 #' \dontrun{
 #' # Example: Calculate RMSD from alignment
 #' pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
-#'                           package="TMscoreAlign"
-#'                           )
+#'                           package="TMscoreAlign")
 #' pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb",
-#'                           package="TMscoreAlign"
-#'                           )
+#'                           package="TMscoreAlign")
 #' alignment_results <- get_alignment(pdb_file1, pdb_file2,
 #'                                   chain1 = 'A', chain2 = 'A',
-#'                                   method = "alignment"
-#'                                   )
+#'                                   method = "alignment")
 #' rmsd_value <- get_rmsd(alignment_results)
 #' print(rmsd_value)
 #' }
@@ -249,45 +238,44 @@ get_tm_samples <- function(alignment) {
 get_rmsd <- function(alignment) {
   if (typeof(alignment) != "list") {
     stop("Alignment type must be List.")
-    }
+  }
 
   if (!setequal(names(alignment), c("N", "coord1", "coord2", "values"))) {
     stop("Alignment does not have the correct elements.")
-    }
+  }
 
   if (typeof(alignment$N) != "integer") {
     stop("The N in alignment must be an integer.")
-    }
+  }
 
   if (length(dim(alignment$coord1)) != 2 |
       length(dim(alignment$coord2)) != 2) {
     stop("The coord1 and coord2 matrices in alignment must be 2D matrices.")
-    }
+  }
 
   if (dim(alignment$coord1)[1] != 4 |
       dim(alignment$coord2)[1] != 4) {
     stop("The first dimension of coord1 and coord2 matrices must be 4.")
-    }
+  }
 
   if (dim(alignment$coord1)[2] != alignment$N |
       dim(alignment$coord2)[2] != alignment$N) {
     stop("The second dimension of coord1 and coord2 matrices must be equal to
          N.")
-    }
+  }
 
   if (!is.vector(alignment$values)) {
     stop("The values in alignment must be a vector.")
-    }
+  }
 
   if (!setequal(names(alignment$values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
     stop("The values in alignment does not have the correct elements.")
-    }
+  }
 
   rmsd <- calculate_rmsd(alignment$values,
                          alignment$coord1,
-                         alignment$coord2
-                         )
+                         alignment$coord2)
 
   # Return the Root Mean Square Deviation (RMSD)
   return(rmsd)
@@ -321,7 +309,7 @@ get_rmsd <- function(alignment) {
 estimate_d0 <- function(N) {
   if (typeof(N) != "integer") {
     stop("N must be an integer.")
-    }
+  }
 
   d0 <- 1.24 * abs(N - 15)^(1/3) - 1.8
   d02 <- d0^2
@@ -369,17 +357,13 @@ estimate_d0 <- function(N) {
 #' \dontrun{
 #' # Example: Calculate distances between transformed coordinates
 #' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
-#'                       psi = 0.3
-#'                       )
+#'                       psi = 0.3)
 #' original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8), nrow = 4,
-#'                                byrow = TRUE
-#'                                )
+#'                                byrow = TRUE)
 #' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7, 1, 8), nrow = 4,
-#'                                   byrow = TRUE
-#'                                   )
+#'                                   byrow = TRUE)
 #' distances <- calculate_dist_samples(alignment_params, original_coordinates,
-#'                                     transformed_coordinates
-#'                                    )
+#'                                     transformed_coordinates)
 #' }
 #'
 #' @references
@@ -395,28 +379,28 @@ estimate_d0 <- function(N) {
 calculate_dist_samples <- function(values, coord1, coord2) {
   if (!is.vector(values)) {
     stop("Values must be a vector.")
-    }
+  }
 
   if (!setequal(names(values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
     stop("Values in alignment does not have the correct elements.")
-    }
+  }
 
   if (length(dim(coord1)) != 2) {
     stop("coord1 must be a 2D matrix.")
-    }
+  }
 
   if (dim(coord1)[1] != 4) {
     stop("The first dimension of coord1 must be 4.")
-    }
+  }
 
   if (length(dim(coord2)) != 2) {
     stop("coord2 must be a 2D matrix.")
-    }
+  }
 
   if (dim(coord2)[1] != 4) {
     stop("The first dimension of coord2 must be 4.")
-    }
+  }
 
   # Get the 4x4 transformation matrix from alignment parameters
   matrix <- get_matrix(values)
@@ -474,18 +458,14 @@ calculate_dist_samples <- function(values, coord1, coord2) {
 #' \dontrun{
 #' # Example: Calculate TM-Score between transformed coordinates
 #' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
-#'                       psi = 0.3
-#'                       )
+#'                       psi = 0.3)
 #' original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8), nrow = 4,
-#'                                byrow = TRUE
-#'                                )
+#'                                byrow = TRUE)
 #' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7, 1, 8), nrow = 4,
-#'                                   byrow = TRUE
-#'                                   )
+#'                                   byrow = TRUE)
 #' d0_squared <- 5.0
 #' tm_score <- calculate_tm_samples(alignment_params, original_coordinates,
-#'                                  transformed_coordinates, d0_squared
-#'                                  )
+#'                                  transformed_coordinates, d0_squared)
 #' }
 #'
 #' @references
@@ -502,32 +482,32 @@ calculate_dist_samples <- function(values, coord1, coord2) {
 calculate_tm_samples <- function(values, coord1, coord2, d02) {
   if (!is.vector(values)) {
     stop("Values must be a vector.")
-    }
+  }
 
   if (!setequal(names(values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
     stop("Values in alignment does not have the correct elements.")
-    }
+  }
 
   if (length(dim(coord1)) != 2) {
     stop("coord1 must be a 2D matrix.")
-    }
+  }
 
   if (dim(coord1)[1] != 4) {
     stop("The first dimension of coord1 must be 4.")
-    }
+  }
 
   if (length(dim(coord2)) != 2) {
     stop("coord2 must be a 2D matrix.")
-    }
+  }
 
   if (dim(coord2)[1] != 4) {
     stop("The first dimension of coord2 must be 4.")
-    }
+  }
 
   if (!is.numeric(d02)) {
     stop("d02 must be a number.")
-    }
+  }
 
   # Calculate distances between transformed coordinates
   dist <- calculate_dist_samples(values, coord1, coord2)
@@ -612,32 +592,32 @@ calculate_tm_samples <- function(values, coord1, coord2, d02) {
 calculate_tmscore <- function(values, coord1, coord2, d02) {
   if (!is.vector(values)) {
     stop("Values must be a vector.")
-    }
+  }
 
   if (!setequal(names(values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
     stop("Values in alignment does not have the correct elements.")
-    }
+  }
 
   if (length(dim(coord1)) != 2) {
     stop("coord1 must be a 2D matrix.")
-    }
+  }
 
   if (dim(coord1)[1] != 4) {
     stop("The first dimension of coord1 must be 4.")
-    }
+  }
 
   if (length(dim(coord2)) != 2) {
     stop("coord2 must be a 2D matrix.")
-    }
+  }
 
   if (dim(coord2)[1] != 4) {
     stop("The first dimension of coord2 must be 4.")
-    }
+  }
 
   if (!is.numeric(d02)) {
     stop("d02 must be a number.")
-    }
+  }
 
   # Calculate individual TM-Scores
   tm_scores <- calculate_tm_samples(values, coord1, coord2, d02)
@@ -690,17 +670,13 @@ calculate_tmscore <- function(values, coord1, coord2, d02) {
 #' \dontrun{
 #' # Example: Calculate RMSD between transformed coordinates
 #' alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
-#'                       psi = 0.3
-#'                       )
+#'                       psi = 0.3)
 #' original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8), nrow = 4,
-#'                                byrow = TRUE
-#'                                )
+#'                                byrow = TRUE)
 #' transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7, 1, 8), nrow = 4,
-#'                                   byrow = TRUE
-#'                                   )
+#'                                   byrow = TRUE)
 #' rmsd_value <- calculate_rmsd(alignment_params, original_coordinates,
-#'                              transformed_coordinates
-#'                              )
+#'                              transformed_coordinates)
 #' }
 #'
 #' @seealso
@@ -711,28 +687,28 @@ calculate_tmscore <- function(values, coord1, coord2, d02) {
 calculate_rmsd <- function(values, coord1, coord2) {
   if (!is.vector(values)) {
     stop("Values must be a vector.")
-    }
+  }
 
   if (!setequal(names(values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
     stop("Values in alignment does not have the correct elements.")
-    }
+  }
 
   if (length(dim(coord1)) != 2) {
     stop("coord1 must be a 2D matrix.")
-    }
+  }
 
   if (dim(coord1)[1] != 4) {
     stop("The first dimension of coord1 must be 4.")
-    }
+  }
 
   if (length(dim(coord2)) != 2) {
     stop("coord2 must be a 2D matrix.")
-    }
+  }
 
   if (dim(coord2)[1] != 4) {
     stop("The first dimension of coord2 must be 4.")
-    }
+  }
 
   # Calculate distances between transformed coordinates
   dist <- calculate_dist_samples(values, coord1, coord2)

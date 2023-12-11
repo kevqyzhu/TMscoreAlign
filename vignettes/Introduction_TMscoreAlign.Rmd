@@ -80,12 +80,11 @@ chain we want to use in this analysis.
 ```{r file input, message=FALSE}
 # our first PDB file
 pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb", 
-                          package="TMscoreAlign"
-                          )
+                          package="TMscoreAlign")
+
 # our second PDB file
 pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb", 
-                          package="TMscoreAlign"
-                          )
+                          package="TMscoreAlign")
 
 # the chain identifier for pdb_file1
 chain1 <- 'A'
@@ -110,14 +109,12 @@ can be performed first by inputting "alignment" into the `method` parameter.
 # aligning residues by index before the structural alignment
 alignment <- get_alignment(pdb_file1, pdb_file2, 
                           chain1, chain2, method="index",
-                          optimize = FALSE
-                          )
+                          optimize = FALSE)
                           
 # using a sequence alignment before the structural alignment
 alignment <- get_alignment(pdb_file1, pdb_file2, 
                           chain1, chain2, method="alignment",
-                          optimize = FALSE
-                          )
+                          optimize = FALSE)
 ```
 
 The output of this function is a `List` that contains structure alignment 
@@ -139,8 +136,7 @@ them.
 # we can instantiate the alignment parameters and then optimize them directly 
 alignment <- get_alignment(pdb_file1, pdb_file2, 
                           chain1, chain2, method="alignment",
-                          optimize = TRUE
-                          )
+                          optimize = TRUE)
 ```
 
 ### Step 3: Optimize alignment
@@ -184,13 +180,11 @@ for each protein chain, as shown below.
 
 ```{r write and visualize results, message=FALSE}
 write_pdb(alignment, outputfile = "out.pdb", appended = TRUE, 
-          pdb_file1, pdb_file2, chain1, chain2
-          )
+          pdb_file1, pdb_file2, chain1, chain2)
 chain1_color <- "#636efa"  # Blue
 chain2_color <- "#ff7f0e"  # Orange
 visualize_alignment_pdb("out.pdb", chain1 = chain1_color,
-                         chain2 = chain2_color
-                         )
+                         chain2 = chain2_color)
 ```
 
 ## Package References

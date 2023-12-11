@@ -10,39 +10,39 @@ ui <- pageWithSidebar(
       placeholder = "sample_pdb1",
       label = "Upload PDB File 1",
       accept = c(".pdb")
-      ),
+    ),
     fileInput(
       inputId = "upload_pdb2",
       placeholder = "sample_pdb2",
       label = "Upload PDB File 2",
       accept = c(".pdb")
-      ),
+    ),
     textInput(
       inputId = "chain1_id",
       label = "Enter Chain ID for PDB File 1",
       value = "A"
-      ),
+    ),
     textInput(
       inputId = "chain2_id",
       label = "Enter Chain ID for PDB File 2",
       value = "A"
-      ),
+    ),
     colourpicker::colourInput(
       inputId = "chain1_color",
       label = "Select Chain 1 Color",
       closeOnClick = TRUE,
       value = "#636efa"  # Blue
-      ),
+    ),
     colourpicker::colourInput(
       inputId = "chain2_color",
       label = "Select Chain 2 Color",
       closeOnClick = TRUE,
       value = "#ff7f0e"  # Orange
-      ),
+    ),
     actionButton(
       inputId = "run_button",
       label = "Run"
-      )
+    )
   ),
   mainPanel(
     tabsetPanel(
@@ -54,12 +54,11 @@ ui <- pageWithSidebar(
                uiOutput("how_to"),
                actionButton(
                  inputId = "tutorial_button",
-                 label = "View Tutorial"
-                 ),
-               ),
+                 label = "View Tutorial")
+      ),
       tabPanel("Visualization",
                r3dmol::r3dmolOutput(outputId = "r3dmol", height = "700px")
-               ),
+      ),
       tabPanel("Results",
                h4("TM-Score:"),
                textOutput(outputId = "tmscore_output"),
@@ -69,14 +68,14 @@ ui <- pageWithSidebar(
                uiOutput('matrix'),
                h4("Interpreting Results:"),
                uiOutput("explain_results"),
-               ),
+      ),
       tabPanel("Tutorial",
                tags$h3("Instructions:"),
                uiOutput("instructions"),
-               ),
-      )
+      ),
     )
   )
+)
 
 server <- function(input, output, session) {
   output$description <- renderUI(
@@ -95,15 +94,13 @@ server <- function(input, output, session) {
           deviations. This package is targeted for structural biologists
           who may use this package to investigate different conformations
           of the same protein, informing a structural basis of protein
-          functions. </p>"
-         )
-    )
+          functions. </p>")
+  )
   output$how_to <- renderUI(
     HTML("<p> You can run <code>browseVignettes('TMscoreAlign')</code> to get
           more information about using this package. You can learn how
-          to use this Shiny app by going over the tutorial:</p>"
-         )
-    )
+          to use this Shiny app by going over the tutorial:</p>")
+  )
   output$instructions <- renderUI(
     HTML("<ol type='1'><li><h5>Upload PDBs:</h5></li>
           <p> First, the user needs to read in two PDB files. These files will
@@ -138,9 +135,8 @@ server <- function(input, output, session) {
           <p> Upon initiating the <b>Run</b> process, users will gain the
           ability to visualize their alignments and results, including
           TM-Score, RMSD, and the transformation matrix.</p>
-          </ol>"
-         )
-    )
+          </ol>")
+  )
 
   default_output <- renderText({paste("----", "\n")})
   default_matrix <- renderTable({
@@ -148,7 +144,7 @@ server <- function(input, output, session) {
     rownames(M) <- c('1','2','3')
     colnames(M) <- c('Rotation 1','Rotation 2','Rotation 3', 'Translation')
     return(M)
-    }, rownames = TRUE)
+  }, rownames = TRUE)
 
   output$tmscore_output <- default_output
   output$rmsd_output <- default_output
@@ -176,38 +172,33 @@ server <- function(input, output, session) {
          transformation (a combination of rotation and translation) applied to
          one protein to align it with the other structure. The translation and
          rotation parameters are calculated via optimizing for maximum
-         TM-score. </p>"
-         )
-    )
+         TM-score. </p>")
+  )
   uploaded_pdb1 <- reactive({
     if (is.null(input$upload_pdb1)) {
       return (system.file("extdata", "1LNIA_decoy1_4.pdb",
-                          package="TMscoreAlign"
-                          )
-              )
-      } else {
-        req(input$upload_pdb1)
-        inFile <- input$upload_pdb1
-        return(inFile$datapath)
-        }
-    })
+                          package="TMscoreAlign"))
+    } else {
+      req(input$upload_pdb1)
+      inFile <- input$upload_pdb1
+      return(inFile$datapath)
+    }
+  })
 
   uploaded_pdb2 <- reactive({
     if (is.null(input$upload_pdb2)) {
       return (system.file("extdata", "1LNIA_decoy2_180.pdb",
-                          package="TMscoreAlign"
-                          )
-              )
-      } else {
-        req(input$upload_pdb2)
-        inFile <- input$upload_pdb2
-        return(inFile$datapath)
-        }
-    })
+                          package="TMscoreAlign"))
+    } else {
+      req(input$upload_pdb2)
+      inFile <- input$upload_pdb2
+      return(inFile$datapath)
+    }
+  })
 
   observeEvent(input$tutorial_button, {
     updateTabsetPanel(session, "inTabset", selected = "Tutorial")
-    })
+  })
 
   observeEvent(input$run_button, {
     chain1 <- isolate(input$chain1_id)
@@ -216,33 +207,30 @@ server <- function(input, output, session) {
     tryCatch({
       alignment <- get_alignment(uploaded_pdb1(), uploaded_pdb2(),
                                  chain1, chain2, method = "alignment",
-                                 optimize = FALSE
-                                 )
+                                 optimize = FALSE)
       alignment <- optimize_alignment(alignment, maxit = 900, restart = TRUE)
 
       outfile <- tempfile(fileext = '.pdb')
 
       write_pdb(alignment, outputfile = outfile, appended = TRUE,
-                uploaded_pdb1(), uploaded_pdb2(), chain1, chain2
-                )
+                uploaded_pdb1(), uploaded_pdb2(), chain1, chain2)
 
       updateTabsetPanel(session, "inTabset", selected = "Visualization")
 
       output$r3dmol <- r3dmol::renderR3dmol({
         visualize_alignment_pdb(outfile,
                                 chain1 = input$chain1_color,
-                                chain2 = input$chain2_color
-                                )
-        })
+                                chain2 = input$chain2_color)
+      })
 
       # Display additional results in the "Results" tab
       output$tmscore_output <- renderText({
         paste(round(get_tmscore(alignment), 3), "\n")
-        })
+      })
 
       output$rmsd_output <- renderText({
         paste(round(get_rmsd(alignment), 3), "\n")
-        })
+      })
 
       output$matrix <- renderTable({
         values <- alignment$values
@@ -250,16 +238,15 @@ server <- function(input, output, session) {
         rownames(M) <- c('1','2','3')
         colnames(M) <- c('Rotation 1','Rotation 2','Rotation 3', 'Translation')
         M
-        }, rownames = TRUE)
+      }, rownames = TRUE)
 
-      }, error = function(e) {
-        showNotification((paste(e)), type="error")
-        output$r3dmol <- NULL
-        output$tmscore_output <- default_output
-        output$rmsd_output <- default_output
-        output$matrix <- default_matrix
-        }
-      )
+    }, error = function(e) {
+      showNotification((paste(e)), type="error")
+      output$r3dmol <- NULL
+      output$tmscore_output <- default_output
+      output$rmsd_output <- default_output
+      output$matrix <- default_matrix
+    })
   })
 }
 

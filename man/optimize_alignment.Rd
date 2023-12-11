@@ -34,15 +34,12 @@ performed via the limited-memory Broyden–Fletcher–Goldfarb–Shanno algorith
 \dontrun{
 # Example: Optimize alignment parameters
 pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
-                          package="TMscoreAlign"
-                          )
+                          package="TMscoreAlign")
 pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb",
-                          package="TMscoreAlign"
-                          )
+                          package="TMscoreAlign")
 alignment_results <- get_alignment(pdb_file1, pdb_file2,
                                   chain1 = 'A', chain2 = 'A',
-                                  method = "alignment", optimize = FALSE
-                                  )
+                                  method = "alignment", optimize = FALSE)
 optimized_results <- optimize_alignment(alignment_results, restart = TRUE)
 print(optimized_results)
 }

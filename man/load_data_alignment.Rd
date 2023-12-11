@@ -47,15 +47,12 @@ coordinates along with the number of common residues.
 \dontrun{
 # Example 1: Perform sequence alignment
 pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
-                          package="TMscoreAlign"
-                          )
+                          package="TMscoreAlign")
 pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb",
-                          package="TMscoreAlign"
-                          )
+                          package="TMscoreAlign")
 result_alignment <- load_data_alignment(pdb_file1,
                                         pdb_file2,
-                                        method = "alignment"
-                                        )
+                                        method = "alignment")
 
 # Example 2: Use residue indices for common residue selection
 result_index <- load_data_alignment(pdb_file1,

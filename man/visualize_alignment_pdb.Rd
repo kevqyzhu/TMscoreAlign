@@ -34,25 +34,20 @@ structures for each protein chain.
 \dontrun{
 # Example: Visualize protein structure alignment
 pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
-                          package="TMscoreAlign"
-                          )
+                          package="TMscoreAlign")
 pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb",
-                          package="TMscoreAlign"
-                          )
+                          package="TMscoreAlign")
 alignment_results <- get_alignment(pdb_file1, pdb_file2,
                                     chain1 = 'A', chain2 = 'A',
-                                    method = "alignment"
-                                    )
+                                    method = "alignment")
 write_pdb(alignment_results, outputfile = "aligned_structure.pdb",
          appended = TRUE, pdb1 = pdb_file1, pdb2 = pdb_file2,
-         chain_1 = 'A', chain_2 = 'A'
-         )
+         chain_1 = 'A', chain_2 = 'A')
 alignment_pdb_file <- "aligned_structure.pdb"
 chain1_color <- "#636efa"  # Blue
 chain2_color <- "#ff7f0e"  # Orange
 visualize_alignment_pdb(alignment_pdb_file, chain1 = chain1_color,
-                        chain2 = chain2_color
-                        )
+                        chain2 = chain2_color)
 }
 
 }

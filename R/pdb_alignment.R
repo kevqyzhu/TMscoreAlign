@@ -40,19 +40,15 @@
 #' \dontrun{
 #' # Example: Write transformed coordinates to a new PDB file
 #' pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
-#'                           package="TMscoreAlign"
-#'                           )
+#'                           package="TMscoreAlign")
 #' pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb",
-#'                           package="TMscoreAlign"
-#'                           )
+#'                           package="TMscoreAlign")
 #' alignment_results <- get_alignment(pdb_file1, pdb_file2,
 #'                                     chain1 = 'A', chain2 = 'A',
-#'                                     method = "alignment"
-#'                                     )
+#'                                     method = "alignment")
 #' write_pdb(alignment_results, outputfile = "aligned_structure.pdb",
 #'          appended = TRUE, pdb1 = pdb_file1, pdb2 = pdb_file2,
-#'          chain_1 = 'A', chain_2 = 'A'
-#'          )
+#'          chain_1 = 'A', chain_2 = 'A')
 #' }
 #'
 #' @references
@@ -70,60 +66,59 @@
 #' @export
 #' @importFrom bio3d atom.select read.pdb clean.pdb trim.pdb cat.pdb
 write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
-                      pdb1, pdb2, chain_1, chain_2
-                      ) {
+                      pdb1, pdb2, chain_1, chain_2) {
   if (typeof(alignment) != "list") {
     stop("Alignment type must be List.")
-    }
+  }
 
   if (!setequal(names(alignment), c("N", "coord1", "coord2", "values"))) {
     stop("Alignment does not have the correct elements.")
-    }
+  }
 
   if (typeof(alignment$N) != "integer") {
     stop("The N in alignment must be an integer.")
-    }
+  }
 
   if (length(dim(alignment$coord1)) != 2 |
       length(dim(alignment$coord2)) != 2) {
     stop("The coord1 and coord2 matrices in alignment must be 2D matrices.")
-    }
+  }
 
   if (dim(alignment$coord1)[1] != 4 |
       dim(alignment$coord2)[1] != 4) {
     stop("The first dimension of coord1 and coord2 matrices must be 4.")
-    }
+  }
 
   if (dim(alignment$coord1)[2] != alignment$N |
       dim(alignment$coord2)[2] != alignment$N) {
     stop("The second dimension of coord1 and coord2 matrices must be equal to
          N.")
-    }
+  }
 
   if (!is.vector(alignment$values)) {
     stop("The values in alignment must be a vector.")
-    }
+  }
 
   if (!setequal(names(alignment$values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
     stop("The values in alignment does not have the correct elements.")
-    }
+  }
 
   if (typeof(appended) != "logical") {
     stop("appended must be logical type.")
-    }
+  }
 
   if (!file.exists(pdb1)) {
     stop("File path to pdb1 does not exist.")
-    }
+  }
 
   if (!file.exists(pdb2)) {
     stop("File path to pdb2 does not exist.")
-    }
+  }
 
   if (!is.character(chain_1) | !is.character(chain_2)) {
     stop("Chain identifiers must be characters.")
-    }
+  }
 
   # Extract values from the alignment object
   values <- alignment$values
@@ -136,23 +131,21 @@ write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
     bio3d::read.pdb(pdb1),
     consecutive = FALSE,
     force.renumber = TRUE,
-    fix.chain = TRUE
-    )
+    fix.chain = TRUE)
 
   # Process the second PDB file
   pdb_data2 <- clean.pdb(
     read.pdb(pdb2),
     consecutive = FALSE,
     force.renumber = TRUE,
-    fix.chain = TRUE
-    )
+    fix.chain = TRUE)
 
   if (!(chain_1 %in% unique(pdb_data1$atom$chain))) {
     stop("Chain 1 ID is invalid.")
-    }
+  }
   if (!(chain_2 %in% unique(pdb_data2$atom$chain))) {
     stop("Chain 2 ID is invalid.")
-    }
+  }
 
   # Select atoms from the first chain
   sele_1 <- atom.select(pdb_data1, chain = chain_1)
@@ -181,12 +174,11 @@ write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
       pdb1_chain1_data,
       pdb2_chain2_data,
       rechain = TRUE,
-      renumber = TRUE
-      ))
-    } else {
-      # Otherwise, use only the second PDB data
-      new.pdb <- pdb2_chain2_data
-      }
+      renumber = TRUE))
+  } else {
+    # Otherwise, use only the second PDB data
+    new.pdb <- pdb2_chain2_data
+  }
 
   # Write the final PDB data to a new file
   bio3d::write.pdb(pdb = new.pdb, xyz = new.pdb$xyz, file = outputfile)
@@ -214,25 +206,20 @@ write_pdb <- function(alignment, outputfile = "out.pdb", appended = TRUE,
 #' \dontrun{
 #' # Example: Visualize protein structure alignment
 #' pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
-#'                           package="TMscoreAlign"
-#'                           )
+#'                           package="TMscoreAlign")
 #' pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb",
-#'                           package="TMscoreAlign"
-#'                           )
+#'                           package="TMscoreAlign")
 #' alignment_results <- get_alignment(pdb_file1, pdb_file2,
 #'                                     chain1 = 'A', chain2 = 'A',
-#'                                     method = "alignment"
-#'                                     )
+#'                                     method = "alignment")
 #' write_pdb(alignment_results, outputfile = "aligned_structure.pdb",
 #'          appended = TRUE, pdb1 = pdb_file1, pdb2 = pdb_file2,
-#'          chain_1 = 'A', chain_2 = 'A'
-#'          )
+#'          chain_1 = 'A', chain_2 = 'A')
 #' alignment_pdb_file <- "aligned_structure.pdb"
 #' chain1_color <- "#636efa"  # Blue
 #' chain2_color <- "#ff7f0e"  # Orange
 #' visualize_alignment_pdb(alignment_pdb_file, chain1 = chain1_color,
-#'                         chain2 = chain2_color
-#'                         )
+#'                         chain2 = chain2_color)
 #' }
 #'
 #' @references
@@ -252,10 +239,10 @@ visualize_alignment_pdb <- function(alignment_pdb = "out.pdb",
                                     chain1 = "#636efa", chain2 = "#ff7f0e") {
   if (!file.exists(alignment_pdb)) {
     stop("File path to alignment_pdb does not exist.")
-    }
+  }
   if (!is.character(chain1) | !is.character(chain2)) {
     stop("Chain color identifiers must be characters.")
-    }
+  }
 
   return(
     r3dmol(                         # Set up the initial viewer
@@ -263,31 +250,31 @@ visualize_alignment_pdb <- function(alignment_pdb = "out.pdb",
         cartoonQuality = 40,
         lowerZoomLimit = 50,
         upperZoomLimit = 350
-        )
-      ) %>%
+      )
+    ) %>%
       m_add_model(                  # Add model to scene
         data = alignment_pdb,
         format = "pdb"
-        ) %>%
+      ) %>%
       m_zoom_to() %>%               # Zoom to encompass the whole scene
       m_set_style(                  # Style the first chain
         sel = m_sel(chain = "A"),
         style = m_style_cartoon(
           color = chain1,
           arrows = TRUE
-          )
-        ) %>%
+        )
+      ) %>%
       m_set_style(                  # Style the second chain
         sel = m_sel(chain = "B"),
         style = m_style_cartoon(
           color = chain2,
           arrows = TRUE
-          )
-        ) %>%
+        )
+      ) %>%
       m_rotate(                     # Rotate the scene
         angle = 90,
         axis = "y"
-        ) %>%
+      ) %>%
       m_spin()                      # Animate the chains by spinning them
-    )
+  )
 }

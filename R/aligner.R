@@ -35,11 +35,9 @@
 #' \dontrun{
 #' # Example: Get structural alignment
 #' pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
-#'                           package="TMscoreAlign"
-#'                           )
+#'                           package="TMscoreAlign")
 #' pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb",
-#'                           package="TMscoreAlign"
-#'                           )
+#'                           package="TMscoreAlign")
 #' alignment_results <- get_alignment(pdb_file1, pdb_file2,
 #'                                   chain1 = 'A', chain2 = 'A',
 #'                                   method = "alignment", optimize = TRUE)
@@ -52,23 +50,22 @@
 #'
 #' @export
 get_alignment <- function(pdb1, pdb2, chain1 = 'A', chain2 = 'A', method,
-                          optimize = TRUE
-                          ) {
+                          optimize = TRUE) {
   if (!file.exists(pdb1)) {
     stop("File path to pdb1 does not exist.")
-    }
+  }
 
   if (!file.exists(pdb2)) {
     stop("File path to pdb2 does not exist.")
-    }
+  }
 
   if (!is.character(chain1) | !is.character(chain2)) {
     stop("Chain identifiers must be characters.")
-    }
+  }
 
   if (typeof(optimize) != "logical") {
     stop("optimize must be logical type.")
-    }
+  }
 
   # Load data alignment
   data <- load_data_alignment(pdb1, pdb2, chain1, chain2, method)
@@ -78,12 +75,11 @@ get_alignment <- function(pdb1, pdb2, chain1 = 'A', chain2 = 'A', method,
   alignment <- list(N = data$N,
                     coord1 = data$coord1,
                     coord2 = data$coord2,
-                    values = default_values
-                    )
+                    values = default_values)
   if (optimize) {
     # Optimize the alignment
     alignment <- optimize_alignment(alignment)
-    }
+  }
 
   return(alignment)
 }
@@ -118,15 +114,12 @@ get_alignment <- function(pdb1, pdb2, chain1 = 'A', chain2 = 'A', method,
 #' \dontrun{
 #' # Example 1: Perform sequence alignment
 #' pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
-#'                           package="TMscoreAlign"
-#'                           )
+#'                           package="TMscoreAlign")
 #' pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb",
-#'                           package="TMscoreAlign"
-#'                           )
+#'                           package="TMscoreAlign")
 #' result_alignment <- load_data_alignment(pdb_file1,
 #'                                         pdb_file2,
-#'                                         method = "alignment"
-#'                                         )
+#'                                         method = "alignment")
 #'
 #' # Example 2: Use residue indices for common residue selection
 #' result_index <- load_data_alignment(pdb_file1,
@@ -156,62 +149,53 @@ get_alignment <- function(pdb1, pdb2, chain1 = 'A', chain2 = 'A', method,
 #' @importFrom BiocGenerics start
 load_data_alignment <- function(pdb_file1, pdb_file2,
                                 chain1 = 'A', chain2 = 'A',
-                                method = "alignment"
-                                ) {
+                                method = "alignment") {
   if (!file.exists(pdb_file1)) {
     stop("File path to pdb1 does not exist.")
-    }
+  }
 
   if (!file.exists(pdb_file2)) {
     stop("File path to pdb2 does not exist.")
-    }
+  }
 
   if (!is.character(chain1) | !is.character(chain2)) {
     stop("Chain identifiers must be characters.")
-    }
+  }
 
   if (!is.character(method)) {
     stop("The method identifier must have character data type.")
-    }
+  }
 
   if (!(method %in% c("alignment", "index"))) {
     stop("The method identifier is not available.")
-    }
+  }
 
   # Read PDB structures
   pdb_data1 <- bio3d::clean.pdb(bio3d::read.pdb(pdb_file1),
                                 consecutive = FALSE,
                                 force.renumber = TRUE,
-                                fix.chain = TRUE
-                                )
+                                fix.chain = TRUE)
   pdb_data2 <- bio3d::clean.pdb(bio3d::read.pdb(pdb_file2),
                                 consecutive = FALSE,
                                 force.renumber = TRUE,
-                                fix.chain = TRUE
-                                )
+                                fix.chain = TRUE)
 
   if (!(chain1 %in% unique(pdb_data1$atom$chain))) {
     stop("Chain 1 ID is invalid.")
-    }
+  }
   if (!(chain2 %in% unique(pdb_data2$atom$chain))) {
     stop("Chain 2 ID is invalid.")
-    }
+  }
 
   # Get residues sequences from PDBs
   seq1 <- paste(bio3d::pdbseq(pdb_data1,
                               inds = bio3d::atom.select(pdb_data1, 'calpha',
-                                                        chain=chain1
-                                                        ),
-                              aa1 = TRUE
-                              ), collapse = ""
-                )
+                                                        chain=chain1),
+                              aa1 = TRUE), collapse = "")
   seq2 <- paste(bio3d::pdbseq(pdb_data2,
                               inds = bio3d::atom.select(pdb_data2, 'calpha',
-                                                        chain=chain2
-                                                        ),
-                              aa1 = TRUE
-                              ), collapse = ""
-                )
+                                                        chain=chain2),
+                              aa1 = TRUE), collapse = "")
 
   if (method == "alignment") {
     # Perform sequence alignment
@@ -243,23 +227,20 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
       (BiocGenerics::start(aligned_seq2) - 1)
 
 
-    } else if (method == "index") {
-      # Find common residues based on residue indices
-      common_residues_pdb1 <- intersect(
-        unique(pdb_data1$atom[pdb_data1$atom$chain == chain1,]$resno),
-        unique(pdb_data2$atom[pdb_data2$atom$chain == chain2,]$resno)
-        )
-      common_residues_pdb2 <- common_residues_pdb1
-      }
+  } else if (method == "index") {
+    # Find common residues based on residue indices
+    common_residues_pdb1 <- intersect(
+      unique(pdb_data1$atom[pdb_data1$atom$chain == chain1,]$resno),
+      unique(pdb_data2$atom[pdb_data2$atom$chain == chain2,]$resno))
+    common_residues_pdb2 <- common_residues_pdb1
+  }
 
   sele_1 <- bio3d::atom.select(pdb_data1, 'calpha',
                                resno=common_residues_pdb1,
-                               chain=chain1
-                               )
+                               chain=chain1)
   sele_2 <- bio3d::atom.select(pdb_data2, 'calpha',
                                resno=common_residues_pdb2,
-                               chain=chain2
-                               )
+                               chain=chain2)
 
   # Extract coordinates and prepare matrices
   coord1 <- matrix(pdb_data1$xyz[sele_1$xyz], nrow=3, byrow=FALSE)
@@ -297,15 +278,12 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
 #' \dontrun{
 #' # Example: Optimize alignment parameters
 #' pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
-#'                           package="TMscoreAlign"
-#'                           )
+#'                           package="TMscoreAlign")
 #' pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb",
-#'                           package="TMscoreAlign"
-#'                           )
+#'                           package="TMscoreAlign")
 #' alignment_results <- get_alignment(pdb_file1, pdb_file2,
 #'                                   chain1 = 'A', chain2 = 'A',
-#'                                   method = "alignment", optimize = FALSE
-#'                                   )
+#'                                   method = "alignment", optimize = FALSE)
 #' optimized_results <- optimize_alignment(alignment_results, restart = TRUE)
 #' print(optimized_results)
 #' }
@@ -327,48 +305,48 @@ load_data_alignment <- function(pdb_file1, pdb_file2,
 optimize_alignment <- function(alignment, restart = FALSE, maxit = 300) {
   if (typeof(alignment) != "list") {
     stop("Alignment type must be List.")
-    }
+  }
 
   if (!setequal(names(alignment), c("N", "coord1", "coord2", "values"))) {
     stop("Alignment does not have the correct elements.")
-    }
+  }
 
   if (typeof(alignment$N) != "integer") {
     stop("The N in alignment must be an integer.")
-    }
+  }
 
   if (length(dim(alignment$coord1)) != 2 |
       length(dim(alignment$coord2)) != 2) {
     stop("The coord1 and coord2 matrices in alignment must be 2D matrices.")
-    }
+  }
 
   if (dim(alignment$coord1)[1] != 4 |
       dim(alignment$coord2)[1] != 4) {
     stop("The first dimension of coord1 and coord2 matrices must be 4.")
-    }
+  }
 
   if (dim(alignment$coord1)[2] != alignment$N |
       dim(alignment$coord2)[2] != alignment$N) {
     stop("The second dimension of coord1 and coord2 matrices must be equal to
          N.")
-    }
+  }
 
   if (!is.vector(alignment$values)) {
     stop("The values in alignment must be a vector.")
-    }
+  }
 
   if (!setequal(names(alignment$values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
     stop("The values in alignment does not have the correct elements.")
-    }
+  }
 
   if (typeof(restart) != "logical") {
     stop("restart must be logical type.")
-    }
+  }
 
   if (!(all.equal(maxit, as.integer(maxit)))) {
     stop("maxit must be an integer.")
-    }
+  }
 
   coord1 <- alignment$coord1
   coord2 <- alignment$coord2
@@ -377,16 +355,15 @@ optimize_alignment <- function(alignment, restart = FALSE, maxit = 300) {
 
   if (restart) {
     default_values <- get_default_values(coord1, coord2)
-    } else {
-      default_values <- alignment$values
-      }
+  } else {
+    default_values <- alignment$values
+  }
 
   method <- "L-BFGS-B"
   result <- stats::optim(par = default_values, fn = calculate_tmscore,
                          coord1 = coord1, coord2 = coord2, d02 = d02,
                          method = method,
-                         control = list(fnscale = -1, maxit = maxit),
-                         )
+                         control = list(fnscale = -1, maxit = maxit))
   alignment$values <- result$par
   return(alignment)
 }

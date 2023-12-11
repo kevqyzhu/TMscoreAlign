@@ -31,15 +31,12 @@ TM-Score to be easily obtained from the alignment parameters.
 \dontrun{
 # Example: Calculate TM score from alignment
 pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
-                          package="TMscoreAlign"
-                          )
+                          package="TMscoreAlign")
 pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb",
-                          package="TMscoreAlign"
-                          )
+                          package="TMscoreAlign")
 alignment_results <- get_alignment(pdb_file1, pdb_file2,
                                   chain1 = 'A', chain2 = 'A',
-                                  method = "alignment"
-                                  )
+                                  method = "alignment")
 optimized_alignment <- optimize_alignment(alignment_results)
 tmscore <- get_tmscore(optimized_alignment)
 print(tmscore)

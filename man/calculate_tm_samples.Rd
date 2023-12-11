@@ -55,18 +55,14 @@ performs the actual calculations to derive the TM local scores.
 \dontrun{
 # Example: Calculate TM-Score between transformed coordinates
 alignment_params <- c(dx = 1.0, dy = 2.0, dz = 0.5, theta = 0.1, phi = 0.2,
-                      psi = 0.3
-                      )
+                      psi = 0.3)
 original_coordinates <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8), nrow = 4,
-                               byrow = TRUE
-                               )
+                               byrow = TRUE)
 transformed_coordinates <- matrix(c(2, 3, 4, 5, 6, 7, 1, 8), nrow = 4,
-                                  byrow = TRUE
-                                  )
+                                  byrow = TRUE)
 d0_squared <- 5.0
 tm_score <- calculate_tm_samples(alignment_params, original_coordinates,
-                                 transformed_coordinates, d0_squared
-                                 )
+                                 transformed_coordinates, d0_squared)
 }
 
 }

@@ -39,15 +39,12 @@
 #' \dontrun{
 #' # Example: Get default values for structure alignment parameters
 #' pdb_file1 <- system.file("extdata", "1LNIA_decoy1_4.pdb",
-#'                           package="TMscoreAlign"
-#'                           )
+#'                           package="TMscoreAlign")
 #' pdb_file2 <- system.file("extdata", "1LNIA_decoy2_180.pdb",
-#'                           package="TMscoreAlign"
-#'                           )
+#'                           package="TMscoreAlign")
 #' alignment_results <- get_alignment(pdb_file1, pdb_file2,
 #'                                   chain1 = 'A', chain2 = 'A',
-#'                                   method = "alignment", optimize = FALSE
-#'                                   )
+#'                                   method = "alignment", optimize = FALSE)
 #' coord1 <- alignment_results$coord1
 #' coord2 <- alignment_results$coord2
 #' default_values <- get_default_values(coord1, coord2)
@@ -68,19 +65,19 @@
 get_default_values <- function(coord1, coord2) {
   if (length(dim(coord1)) != 2) {
     stop("coord1 must be a 2D matrix.")
-    }
+  }
 
   if (dim(coord1)[1] != 4) {
     stop("The first dimension of coord1 must be 4.")
-    }
+  }
 
   if (length(dim(coord2)) != 2) {
     stop("coord2 must be a 2D matrix.")
-    }
+  }
 
   if (dim(coord2)[1] != 4) {
     stop("The first dimension of coord2 must be 4.")
-    }
+  }
 
   # Initialize a list to store the default values
   values <- list()
@@ -107,13 +104,11 @@ get_default_values <- function(coord1, coord2) {
   s <- sqrt(sum(v^2)) + .Machine$double.eps
   c <- sum(vec1 * vec2)
   vx <- matrix(c(0, -v[3], v[2], v[3], 0, -v[1], -v[2], v[1], 0),
-               nrow = 3, byrow = TRUE
-               )
+               nrow = 3, byrow = TRUE)
   rotation_matrix <- diag(3) + vx + vx%*%vx * (1 - c) / (s * s)
   values$theta <- atan2(rotation_matrix[3, 2], rotation_matrix[3, 3])
   values$phi <- atan2(-rotation_matrix[3, 1],
-                      sqrt(rotation_matrix[3, 2]^2 + rotation_matrix[3, 3]^2)
-                      )
+                      sqrt(rotation_matrix[3, 2]^2 + rotation_matrix[3, 3]^2))
   values$psi <- atan2(rotation_matrix[2, 1], rotation_matrix[1, 1])
 
   # Convert the list to a numeric vector
@@ -158,12 +153,12 @@ get_default_values <- function(coord1, coord2) {
 get_matrix <- function(values) {
   if (!is.vector(values)) {
     stop("Values must be a vector.")
-    }
+  }
 
   if (!setequal(names(values),
                 c("dx", "dy", "dz", "theta", "phi", "psi"))) {
     stop("Values in alignment does not have the correct elements.")
-    }
+  }
 
   ctheta <- cos(values["theta"])
   stheta <- sin(values["theta"])
